@@ -1,19 +1,19 @@
 import os
 
-from flask import Flask, send_file
+from flask import Flask, send_file, 
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return send_file('src/index.html')
+    return render_template('src/templates/index.html')
 
-@app.route("/contato")
+@app.route("/login")
 def contato():
-    return send_file('src/contato.html')
+    return render_template('src/templates/login.html')
 
 def main():
-    app.run(port=int(os.environ.get('PORT', 80)))
+    app.run(debug="True", host'127.0.0.1', port=5000)
 
 if __name__ == "__main__":
     main()
