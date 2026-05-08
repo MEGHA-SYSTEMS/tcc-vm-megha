@@ -1,16 +1,12 @@
 import os
 
-from flask import Flask, send_file
+from flask import render_template, Flask
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return send_file('src/index.html')
-
-@app.route("/contato")
-def contato():
-    return send_file('src/contato.html')
+    return render_template('index.html')
 
 def main():
     app.run(port=int(os.environ.get('PORT', 80)))
