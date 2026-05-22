@@ -6,7 +6,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+   nome = "PoupeMais.com.br"
+   return render_template('index.html', site = nome)
+
+@app.route("/login")
+def login():
+    nome = 'PoupeMais'
+    return render_template('login/login.html')
 
 def main():
     app.run(port=int(os.environ.get('PORT', 80)))
