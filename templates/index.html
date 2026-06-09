@@ -7,6 +7,7 @@
   <title>Plataforma de PoupeMais</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 
 <body>
@@ -15,8 +16,8 @@
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            <img src="{{url_for('static',filename='logo.png')}}" alt="logo" width="40px" Heigh="40px" 
-            class="d-inline-block align-text-top">
+            <img src="{{url_for('static',filename='logo.png')}}" alt="logo" width="40px" Heigh="40px"
+              class="d-inline-block align-text-top">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +39,344 @@
   </header>
   <main>
 
+    <section class="container py-5">
+      <div class="row align-items-center">
+
+        <div class="col-md-6">
+
+          <h1 class="display-4 fw-bold">
+            Economizar em remédios e cuidar da saúde com inteligência
+          </h1>
+
+          <p class="lead mt-3">
+            Compare preços de medicamentos e encontre as melhores ofertas para você.
+          </p>
+
+          <a href="#" class="btn btn-primary btn-lg mt-3">
+            Saiba Mais
+          </a>
+
+        </div>
+
+        <div class="col-md-6 text-center">
+
+          <img src="{{url_for('static',filename='idosa.png')}}" class="img-fluid" alt="Idosa">
+
+        </div>
+
+      </div>
+      <!-- HERO SECTION -->
+      <section class="container py-5">
+
+      </section>
+
+      <section class="container-fluid py-5">
+
+        <div class="scroll-produtos">
+
+          <img src="{{url_for('static',filename='img/Produto1.jpg')}}" draggable="false">
+
+          <img src="{{url_for('static',filename='img/Produto2.jpg')}}" draggable="false">
+
+          <img src="{{url_for('static',filename='img/Produto3.jpg')}}" draggable="false">
+
+          <img src="{{url_for('static',filename='img/Produto4.jpg')}}" draggable="false">
+
+        </div>
+
+      </section>
+
+      <!-- BENEFÍCIOS -->
+      <div class="beneficios-box">
+
+        <div class="row g-0">
+
+          <div class="col-md-4 item-beneficio">
+
+            <img src="{{url_for('static',filename='img/icone1.jpg')}}" class="icone-card">
+
+            <p>Descubra o mais barato para você.</p>
+
+          </div>
+
+          <div class="col-md-4 item-beneficio">
+
+            <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
+
+            <p>Encontre a farmácia mais perto de você.</p>
+
+          </div>
+
+          <div class="col-md-4 item-beneficio">
+
+            <img src="{{url_for('static',filename='img/icone3.jpg')}}" class="icone-card">
+
+            <p>Confira nosso catálogo de produtos.</p>
+
+          </div>
+
+        </div>
+
+      </div>
+      <section class="container py-5">
+
+        <div class="produtos-destaque">
+
+          <div class="row text-center">
+
+            <div class="col-auto">
+              <img src="{{url_for('static',filename='img/produtoA.jpg')}}" class="produto-card">
+            </div>
+
+            <div class="col-auto">
+              <img src="{{url_for('static',filename='img/produtoB.jpg')}}" class="produto-card">
+            </div>
+
+            <div class="col-auto">
+              <img src="{{url_for('static',filename='img/produtoC.jpg')}}" class="produto-card">
+            </div>
+
+            <div class="col-auto">
+              <img src="{{url_for('static',filename='img/produtoD.jpg')}}" class="produto-card">
+
+            </div>
+
+          </div>
+
+      </section>
+
+
+
+
+      <section class="container py-5 secao-idoso">
+
+        <div class="row align-items-center g-0">
+
+          <div class="col-md-6">
+
+            <div class="texto-idoso">
+              Este espaço foi criado com muito carinho e dedicação,
+              pensando em facilitar o seu dia a dia.
+              Nosso objetivo é cuidar de seu bolso para que você
+              possa focar no que realmente importa:
+              sua saúde e bem-estar.
+            </div>
+
+          </div>
+
+          <div class="col-md-6 text-center">
+
+            <img src="{{url_for('static',filename='img/idoso.jpg')}}" class="img-idoso" alt="Idoso">
+
+          </div>
+
+        </div>
+
+    <h2 class="titulo-produtos">
+    Veja todos os nossos produtos
+</h2>
+
+<section class="catalogo-produtos">
+
+    <h2 class="text-center mb-4">
+        Veja todos os nossos produtos
+    </h2>
+
+    <div class="grid-produtos">
+
+        <div class="produto-card">
+            <h5>Produto 1</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto5.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 10,40</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 2</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto6.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 14,50</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 3</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto7.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 8,10</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 4</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto8.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 9,60</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 5</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto9.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 13,40</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 6</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto10.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 19,10</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 7</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto11.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 9,99</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 8</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto13.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 10,90</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 9</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto14.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 4,60</div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <h5>Produto 10</h5>
+            <div class="produto-conteudo">
+                <img src="{{url_for('static',filename='img/produto15.jpg')}}" alt="">
+                <div class="preco"><span>R$</span> 7,99</div>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="ver-mais">Ver mais</p>
+
+</section>
+      <section class="container py-5">
+
+        <div class="row g-4">
+
+          <div class="col-md-4">
+            <div class="card text-center p-4 h-100">
+
+              <h4>📞</h4>
+
+              <h5>Central de Atendimento</h5>
+
+              <p>
+                Tire dúvidas e entre em contato com nossa equipe.
+              </p>
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card text-center p-4 h-100">
+
+              <h4>📝</h4>
+
+              <h5>Faça seu Cadastro</h5>
+
+              <p>
+                Crie sua conta e acompanhe suas pesquisas.
+              </p>
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card text-center p-4 h-100">
+
+              <h4>❓</h4>
+
+              <h5>Precisa de Ajuda?</h5>
+
+              <p>
+                Consulte nossa equipe para receber suporte.
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+      <section class="container-fluid py-5 mt-5">
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <h4>PoupeMais</h4>
+
+            <p>
+              Plataforma para comparação de preços de medicamentos.
+            </p>
+          </div>
+
+          <div class="col-md-4">
+
+            <h5>Links</h5>
+
+            <ul class="list-unstyled">
+              <li>Início</li>
+              <li>Produtos</li>
+              <li>Farmácias</li>
+              <li>Contato</li>
+            </ul>
+
+          </div>
+
+          <div class="col-md-4 text-center">
+
+            <div class="border rounded p-4">
+              IMAGEM DA IDOSA
+            </div>
+
+          </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <strong>Formas de pagamento</strong>
+          </div>
+
+          <div class="col-md-6 text-end">
+            VISA • PIX • MASTERCARD
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+
+
+
+
+  </main>
+
   </main>
   <footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -51,6 +390,35 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
+  <script>
+    const slider = document.querySelector('.scroll-produtos');
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+
+      e.preventDefault();
+
+      const walk = e.pageX - startX;
+
+      slider.scrollLeft = scrollLeft - walk;
+    });
+  </script>
+
+</body>
 </body>
 
 </html>
