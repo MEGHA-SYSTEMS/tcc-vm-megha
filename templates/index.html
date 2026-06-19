@@ -10,54 +10,86 @@
   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 
-<body>
-  <header>
-    <section name="navbar-site">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="{{url_for('static',filename='logo.png')}}" alt="logo" width="40px" Heigh="40px"
-              class="d-inline-block align-text-top">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-poupemais">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand d-flex align-items-center" href="#">
+
+           <img src="{{url_for('static',filename='logo.png')}}"
+     alt="logo"
+     class="logo-nav">
+
+            <span class="ms-2 nome-site">
+                PoupeMais
+            </span>
+
+            <img src="{{url_for('static',filename='img/search.png')}}"
+                 class="icone-nav-img ms-3"
+                 alt="Buscar">
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">{{site}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="login">Login</a>
-              </li>
-            </ul>
-          </div>
+
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end"
+             id="navbarNav">
+
+            <div class="d-flex align-items-center gap-4">
+
+                <a href="login"
+                   class="btn btn-primary btn-cadastro">
+
+                    É farmácia? Cadastre-se aqui
+
+                </a>
+
+                <img src="{{url_for('static',filename='img/location.png')}}"
+                     class="icone-nav-img"
+                     alt="Localização">
+
+            </div>
+
         </div>
-      </nav>
-    </section>
-  </header>
+
+    </div>
+
+</nav>
   <main>
 
     <section class="container py-5">
       <div class="row align-items-center">
 
-        <div class="col-md-6">
+ <div class="col-md-6">
 
-          <h1 class="display-4 fw-bold">
-            Economizar em remédios e cuidar da saúde com inteligência
-          </h1>
+    <span class="hero-topo">
+        SEU ALIADO NA BUSCA POR<br>
+        MEDICAMENTOS MAIS ACESSÍVEIS
+    </span>
 
-          <p class="lead mt-3">
-            Compare preços de medicamentos e encontre as melhores ofertas para você.
-          </p>
+    <h1>
+        Compare os preços de medicamentos e economize no cuidado com quem mais importa.
+    </h1>
 
-          <a href="#" class="btn btn-primary btn-lg mt-3">
-            Saiba Mais
-          </a>
+    <p>
+        “Economizar em remédios é cuidar da saúde com inteligência.”
+    </p>
 
-        </div>
+    <a href="#" class="btn btn-primary">
+        Saiba mais
+    </a>
 
+</div>
         <div class="col-md-6 text-center">
 
           <img src="{{url_for('static',filename='img/idosa.jpg')}}"
@@ -68,86 +100,103 @@
 
       </div>
       <!-- HERO SECTION -->
-      <section class="container py-5">
+   
 
       </section>
+<section class="container py-4">
 
-      <section class="container-fluid py-5">
+    <div class="scroll-produtos">
 
-        <div class="scroll-produtos">
+        <img src="{{url_for('static',filename='img/Produto1.jpg')}}" draggable="false">
+        <img src="{{url_for('static',filename='img/Produto2.jpg')}}" draggable="false">
+        <img src="{{url_for('static',filename='img/Produto3.jpg')}}" draggable="false">
+        <img src="{{url_for('static',filename='img/Produto4.jpg')}}" draggable="false">
 
-          <img src="{{url_for('static',filename='img/Produto1.jpg')}}" draggable="false">
+    </div>
 
-          <img src="{{url_for('static',filename='img/Produto2.jpg')}}" draggable="false">
-
-          <img src="{{url_for('static',filename='img/Produto3.jpg')}}" draggable="false">
-
-          <img src="{{url_for('static',filename='img/Produto4.jpg')}}" draggable="false">
-
-        </div>
-
-      </section>
+</section>
+    
 
       <!-- BENEFÍCIOS -->
       <div class="beneficios-box">
 
-        <div class="row g-0">
+    <div class="row g-0">
 
-          <div class="col-md-4 item-beneficio">
+        <div class="col-md-4">
+            <a href="#" class="item-beneficio">
 
-            <img src="{{url_for('static',filename='img/icone1.jpg')}}" class="icone-card">
+                <img src="{{url_for('static',filename='img/icone1.jpg')}}" class="icone-card">
 
-            <p>Descubra o mais barato para você.</p>
+                <p>Descubra o mais barato para você.</p>
 
-          </div>
+            </a>
+        </div>
 
-          <div class="col-md-4 item-beneficio">
+        <div class="col-md-4">
+            <a href="#" class="item-beneficio">
 
-            <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
+                <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
 
-            <p>Encontre a farmácia mais perto de você.</p>
+                <p>Encontre a farmácia mais perto de você.</p>
 
-          </div>
+            </a>
+        </div>
 
-          <div class="col-md-4 item-beneficio">
+        <div class="col-md-4">
+            <a href="#" class="item-beneficio">
 
-            <img src="{{url_for('static',filename='img/icone3.jpg')}}" class="icone-card">
+                <img src="{{url_for('static',filename='img/icone3.jpg')}}" class="icone-card">
 
-            <p>Confira nosso catálogo de produtos.</p>
+                <p>Confira nosso catálogo de produtos.</p>
 
-          </div>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+      <section class="container py-5">
+
+    <div class="produtos-destaque">
+         <h2 class="titulo-destaque">
+            Cuide do seu bem estar
+        </h2>
+
+        <div class="row text-center">
+
+            <div class="col-auto">
+                <a href="#">
+                    <img src="{{url_for('static',filename='img/produtoA.jpg')}}"
+                         class="produto-card">
+                </a>
+            </div>
+
+            <div class="col-auto">
+                <a href="#">
+                    <img src="{{url_for('static',filename='img/produtoB.jpg')}}"
+                         class="produto-card">
+                </a>
+            </div>
+
+            <div class="col-auto">
+                <a href="#">
+                    <img src="{{url_for('static',filename='img/produtoC.jpg')}}"
+                         class="produto-card">
+                </a>
+            </div>
+
+            <div class="col-auto">
+                <a href="#">
+                    <img src="{{url_for('static',filename='img/produtoD.jpg')}}"
+                         class="produto-card">
+                </a>
+            </div>
 
         </div>
 
-      </div>
-      <section class="container py-5">
+    </div>
 
-        <div class="produtos-destaque">
-
-          <div class="row text-center">
-
-            <div class="col-auto">
-              <img src="{{url_for('static',filename='img/produtoA.jpg')}}" class="produto-card">
-            </div>
-
-            <div class="col-auto">
-              <img src="{{url_for('static',filename='img/produtoB.jpg')}}" class="produto-card">
-            </div>
-
-            <div class="col-auto">
-              <img src="{{url_for('static',filename='img/produtoC.jpg')}}" class="produto-card">
-            </div>
-
-            <div class="col-auto">
-              <img src="{{url_for('static',filename='img/produtoD.jpg')}}" class="produto-card">
-
-            </div>
-
-          </div>
-
-      </section>
-
-
+</section>
 
 
       <section class="container py-5 secao-idoso">
@@ -174,9 +223,7 @@
 
         </div>
 
-    <h2 class="titulo-produtos">
-    Veja todos os nossos produtos
-</h2>
+
 
 <section class="catalogo-produtos">
 
@@ -267,37 +314,64 @@
         </div>
 
     </div>
+<p class="ver-mais">Ver mais</p>
 
-    <p class="ver-mais">Ver mais</p>
+</section> 
 
-</section>
+
+<hr class="divisor-secao">
+
 <section class="container py-5 atendimento-area">
 
-  <div class="cards-atendimento">
+    <div class="cards-atendimento">
 
-      <div class="atendimento-card">
-          <h5>🎧 Central de Atendimento</h5>
-          <p>Fale conosco</p>
-      </div>
+        <a href="#" class="atendimento-card">
 
-      <div class="atendimento-card">
-          <h5>❓ Precisa de ajuda?</h5>
-          <p>Suporte</p>
-      </div>
+            <img src="{{url_for('static',filename='img/atendimento1.jpg')}}"
+                 class="icone-atendimento"
+                 alt="Atendimento">
 
-  </div>
+            <div class="info-atendimento">
 
-  <div class="texto-informativo">
+                <h5>Central de Atendimento</h5>
 
-      O envelhecimento populacional no Brasil impõe desafios
-      significativos à saúde pública, especialmente no que
-      tange ao acesso farmacoterapêutico de uma população
-      cuja renda é, muitas vezes, limitada por benefícios
-      previdenciários fixos.
+                <p>Fale conosco</p>
 
-  </div>
+            </div>
+
+        </a>
+
+        <a href="#" class="atendimento-card">
+
+            <img src="{{url_for('static',filename='img/atendimento2.jpg')}}"
+                 class="icone-atendimento"
+                 alt="Suporte">
+
+            <div class="info-atendimento">
+
+                <h5>Precisa de ajuda?</h5>
+
+                <p>Suporte</p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="texto-informativo">
+
+        O envelhecimento populacional no Brasil impõe desafios
+        significativos à saúde pública, especialmente no que
+        tange ao acesso farmacoterapêutico de uma população
+        cuja renda é, muitas vezes, limitada por benefícios
+        previdenciários fixos.
+
+    </div>
 
 </section>
+
+<hr class="divisor-secao">
 <section class="footer-poupemais">
 
   <div class="container">
@@ -313,12 +387,14 @@
 
               <h5>Nossas redes:</h5>
 
-              <div class="redes">
-                  <span>🐦</span>
-                  <span>📘</span>
-                  <span>📷</span>
-                  <span>💼</span>
-              </div>
+             <div class="redes">
+
+    <img src="{{url_for('static',filename='img/twitter.png')}}" alt="">
+    <img src="{{url_for('static',filename='img/facebook.png')}}" alt="">
+    <img src="{{url_for('static',filename='img/instagram.png')}}" alt="">
+    <img src="{{url_for('static',filename='img/linkedin.png')}}" alt="">
+
+</div>
           </div>
 
           <div class="footer-col">
