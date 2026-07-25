@@ -62,3 +62,28 @@ Se você tem entre 20 e 45 anos e quer fazer parte de uma revolução tecnológi
 
 _Projeto TCC - Iniciativa ESG Icoma_
 _ETEC Sylvio de Mattos Carvalho - Matão_
+---
+
+# Documentação Técnica
+
+A documentação referente à arquitetura, deploy, integração com Firebase e automação encontra-se na pasta `docs`.
+
+## Arquivos
+
+- `docs/arquitetura.md` — Arquitetura do sistema.
+- `docs/deploy.md` — Processo de deploy e infraestrutura.
+- `docs/firebase.md` — Integração com os serviços Firebase.
+- `docs/autenticacao.md` — Estratégia de autenticação.
+- `docs/github-actions.md` — Workflow de validação da documentação.
+
+---
+
+## Infraestrutura
+
+Este projeto utiliza os seguintes serviços:
+
+- GitHub para versionamento;
+- GitHub Actions para automação;
+- Firebase Firestore para armazenamento de dados;
+- Firebase Authentication para controle de acesso;
+- Firebase Hosting como parte da infraestrutura documentada.

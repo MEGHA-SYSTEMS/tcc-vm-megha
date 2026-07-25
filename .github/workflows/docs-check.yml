@@ -1,0 +1,31 @@
+name: Verificação da Documentação
+
+on:
+  push:
+    branches:
+      - main
+      - arquitetura-firebase
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Verificar documentação
+        run: |
+          test -d docs
+          test -f docs/arquitetura.md
+          test -f docs/deploy.md
+          test -f docs/firebase.md
+          test -f docs/autenticacao.md
+          test -f docs/github-actions.md
+
+      - name: Documentação validada
+        run: echo "Todos os arquivos obrigatórios estão presentes."
