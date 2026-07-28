@@ -130,9 +130,10 @@
             </a>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4"
+        onclick="window.location.href='localizacao'">
             <a href="#" class="item-beneficio">
-
+                
                 <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
 
                 <p>Encontre a farmácia mais perto de você.</p>
@@ -500,6 +501,36 @@
     });
   </script>
 
+ 
+<div id="modal-localizacao" class="modal">
+
+    <div class="modal-box">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <h2>
+            Permitir que o PoupeMais utilize da sua localização?
+        </h2>
+
+        <div class="botoes">
+
+            <button id="negar">
+                Negar
+            </button>
+
+            <button id="permitir">
+                Permitir
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/static/js/localizacao.js"></script>
+
+</body>
 </body>
 </body>
 

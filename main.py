@@ -13,8 +13,13 @@ def index():
 def login():
     return render_template('login/login.html')
 
+@app.route("/localizacao")
+def localizacao():
+    return render_template('pages/localizacao.html')    
+
 def main():
     app.run(port=int(os.environ.get('PORT', 80)))
 
 if __name__ == "__main__":
     main()
+
