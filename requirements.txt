@@ -5,5 +5,3 @@ autopep8
 # App
 flask
 firebase-admin
-pyserial
-google-generativeai
