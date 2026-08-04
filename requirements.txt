@@ -6,5 +6,4 @@ autopep8
 flask
 firebase-admin
 pyserial
-pandas
 google-generativeai
