@@ -12,61 +12,287 @@
 
 <body>
 
-    <header>
+    <!-- ==========================================
+     NAVBAR
+========================================== -->
 
-        <div class="menu">
-            ☰
-        </div>
-        <div class="logoloca">
+    <nav class="navbar navbar-expand-lg navbar-poupemais">
 
-        <img src="{{url_for('static',filename='logo.png')}}">
-        </div>
+        <div class="container-fluid">
 
-        <button class="cadastro">
-            É farmácia? Cadastre-se aqui
-        </button>
+            <a class="navbar-brand d-flex align-items-center" href="#">
 
-        <div class="pin">
-            📍
-        </div>
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo PoupeMais" class="logo-nav">
 
-    </header>
+                <span class="ms-2 nome-site">
+                    PoupeMais
+                </span>
 
+                <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}" class="icone-nav-img ms-3"
+                    alt="Buscar">
 
-    <section class="conteudo">
+            </a>
 
-        <div class="mapa">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
 
-            <div id="map"></div>
+                <span class="navbar-toggler-icon"></span>
 
-        </div>
-
-        <div class="formulario">
-
-            <h2>Endereço</h2>
-
-            <label>Bairro</label>
-            <input id="bairro" type="text" placeholder="ex: Centro">
-
-            <label>Rua</label>
-            <input id="rua" type="text" placeholder="ex: 15 de novembro">
-
-            <label>CEP</label>
-            <input id="cep" type="text" placeholder="ex: 15990-000">
-
-            <label>Número</label>
-            <input id="numero" type="text" placeholder="12">
-
-            <label>Complemento</label>
-            <input id="complemento" type="text" placeholder="Apartamento">
-
-            <button id="buscar">
-                Buscar
             </button>
 
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+                <div class="d-flex align-items-center gap-4">
+
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-cadastro">
+
+                        É farmácia? Cadastre-se aqui
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-    </section>
+    </nav>
+
+
+    <main>
+
+
+        <section class="conteudo">
+
+            <div class="mapa">
+
+                <div id="map"></div>
+
+            </div>
+
+            <div class="formulario">
+
+                <h2>Endereço</h2>
+
+                <label>Bairro</label>
+                <input id="bairro" type="text" placeholder="ex: Centro">
+
+                <label>Rua</label>
+                <input id="rua" type="text" placeholder="ex: 15 de novembro">
+
+                <label>CEP</label>
+                <input id="cep" type="text" placeholder="ex: 15990-000">
+
+                <label>Número</label>
+                <input id="numero" type="text" placeholder="12">
+
+                <label>Complemento</label>
+                <input id="complemento" type="text" placeholder="Apartamento">
+
+                <button id="buscar">
+                    Buscar
+                </button>
+
+            </div>
+
+        </section>
+        <!-- ==========================================
+     ÁREA DE ATENDIMENTO
+========================================== -->
+        <section class="atendimento-area">
+
+            <div class="container">
+
+                <div class="cards-atendimento">
+
+                    <a href="#" class="atendimento-card">
+
+                        <img src="{{url_for('static',filename='img/atendimento1.jpg')}}" class="icone-atendimento"
+                            alt="Atendimento">
+
+                        <div class="info-atendimento">
+
+                            <h5>Central de Atendimento</h5>
+
+                            <p>Fale conosco</p>
+
+                        </div>
+
+                    </a>
+
+                    <a href="{{ url_for('contato') }}" class="atendimento-card">
+
+                        <img src="{{url_for('static',filename='img/atendimento2.jpg')}}" class="icone-atendimento"
+                            alt="Suporte">
+
+                        <div class="info-atendimento">
+
+                            <h5>Precisa de ajuda?</h5>
+
+                            <p>Suporte</p>
+
+                        </div>
+
+                    </a>
+                </div>
+
+                <div class="texto-informativo">
+                    O envelhecimento populacional no Brasil impõe desafios
+                    significativos à saúde pública, especialmente no que
+                    tange ao acesso farmacoterapêutico de uma população
+                    cuja renda é, muitas vezes, limitada por benefícios
+                    previdenciários fixos.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <hr class="divisor-secao">
+
+
+        <!-- ==========================================
+     RODAPÉ
+========================================== -->
+
+        <section class="footer-poupemais">
+
+            <div class="container">
+
+                <div class="footer-top">
+
+                    <div class="footer-col">
+
+                        <h3>
+                            Poupemais
+                        </h3>
+
+                        <p>
+                            Preços justos para um cuidado contínuo
+                        </p>
+
+                        <h5>
+                            Nossas redes:
+                        </h5>
+
+                        <div class="redes">
+
+                            <img src="{{ url_for('static', filename='img/twitter.png') }}" alt="Twitter">
+
+                            <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
+
+                            <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
+
+                            <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="footer-col">
+
+                        <h6>
+                            Companhia
+                        </h6>
+
+                        <a href="#">
+                            Contate-nos
+                        </a>
+
+                        <a href="{{ url_for('team') }}">
+                            Sobre nós
+                        </a>
+
+                        <a href="{{ url_for('termos') }}">
+                            Privacidade e política
+                        </a>
+
+                    </div>
+
+
+                    <div class="footer-col">
+
+                        <h6>
+                            Perfil
+                        </h6>
+
+                        <a href="#">
+                            Editar endereço
+                        </a>
+
+                    </div>
+
+
+                    <div class="footer-col">
+
+                        <h6>
+                            Atendimento
+                        </h6>
+
+                        <a href="#">
+                            Tire suas dúvidas
+                        </a>
+
+                        <a href="https://wa.me/55SEUNUMERO" target="_blank">
+                            por Whatsapp
+                        </a>
+
+                        <a href="#">
+                            Central de atendimento
+                        </a>
+
+                    </div>
+
+
+                    <div class="footer-imagem">
+
+                        <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosa">
+
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="footer-bottom">
+
+                    <div>
+
+                        <h4>
+                            Formas de pagamento
+                        </h4>
+
+                        <p>
+                            Parcele em até 3x sem juros!
+                        </p>
+
+                        <div class="pagamentos">
+                            PIX • VISA • MASTERCARD
+                        </div>
+
+                    </div>
+
+
+                    <div class="logo-final">
+                        POUPE MAIS
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{{ url_for('static', filename='js/localizacao.js') }}"></script>

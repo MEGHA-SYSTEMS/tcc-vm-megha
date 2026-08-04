@@ -29,7 +29,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
 }).addTo(map);
 
-<<<<<<< HEAD
 const farmacias = [
 
     {
@@ -55,8 +54,6 @@ const farmacias = [
 
 ];
 
-=======
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
 
 if (navigator.geolocation) {
 
@@ -69,11 +66,7 @@ if (navigator.geolocation) {
 
         L.marker([latitude, longitude])
             .addTo(map)
-<<<<<<< HEAD
             .bindPopup("local atual")
-=======
-            .bindPopup("Você está aqui.")
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
             .openPopup();
 
     }, function () {
@@ -90,11 +83,7 @@ if (navigator.geolocation) {
 
 document.getElementById("buscar").addEventListener("click", buscarEndereco);
 
-<<<<<<< HEAD
 async function buscarEndereco() {
-=======
-async function buscarEndereco(){
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
 
     const bairro = document.getElementById("bairro").value;
     const rua = document.getElementById("rua").value;
@@ -109,11 +98,7 @@ async function buscarEndereco(){
 
     const dados = await resposta.json();
 
-<<<<<<< HEAD
     if (dados.length == 0) {
-=======
-    if(dados.length == 0){
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
 
         alert("Endereço não encontrado.");
 
@@ -121,7 +106,6 @@ async function buscarEndereco(){
 
     }
 
-<<<<<<< HEAD
     const lat = parseFloat(dados[0].lat);
     const lon = parseFloat(dados[0].lon);
 
@@ -171,16 +155,5 @@ async function mostrarFarmacias(lat, lon){
             .bindPopup(`<b>${nome}</b>`);
 
     });
-=======
-    const lat = dados[0].lat;
-    const lon = dados[0].lon;
-
-    map.setView([lat, lon],17);
-
-    L.marker([lat,lon])
-        .addTo(map)
-        .bindPopup(endereco)
-        .openPopup();
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
 
 }

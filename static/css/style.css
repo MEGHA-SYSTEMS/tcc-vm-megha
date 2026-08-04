@@ -15,11 +15,11 @@ body {
    HERO SECTION (TOPO DA PÁGINA)
 ==================================== */
 
-.hero-section{
+.hero-section {
     padding: 50px 0;
 }
 
-.hero-topo{
+.hero-topo {
     display: block;
 
     color: #e25b5b;
@@ -34,27 +34,27 @@ body {
     margin-bottom: 18px;
 }
 
-.hero-section h1{
+.hero-section h1 {
     font-size: 52px;
     font-weight: 700;
     line-height: 1.1;
     color: #1f2235;
 }
 
-.hero-section p{
+.hero-section p {
     font-size: 18px;
     color: #555;
     margin-top: 20px;
 }
 
-.hero-section .btn{
+.hero-section .btn {
     background: #6c63ff;
     border: none;
     padding: 10px 35px;
     border-radius: 8px;
 }
 
-.imagem-hero{
+.imagem-hero {
     width: 100%;
     max-width: 350px;
 
@@ -118,11 +118,12 @@ body {
     user-select: none;
     -webkit-user-drag: none;
 }
+
 /* ====================================
    BENEFÍCIOS
 ==================================== */
 
-.beneficios-box{
+.beneficios-box {
     background: #E6E3FF;
 
     max-width: 1200px;
@@ -134,11 +135,11 @@ body {
     overflow: hidden;
 }
 
-.beneficios-box .row{
+.beneficios-box .row {
     align-items: stretch;
 }
 
-.item-beneficio{
+.item-beneficio {
     text-decoration: none;
 
     color: #333;
@@ -160,15 +161,15 @@ body {
     cursor: pointer;
 }
 
-.item-beneficio:hover{
-    background: rgba(255,255,255,.35);
+.item-beneficio:hover {
+    background: rgba(255, 255, 255, .35);
 }
 
-.col-md-4:not(:last-child){
+.col-md-4:not(:last-child) {
     border-right: 2px solid #CFC8FF;
 }
 
-.icone-card{
+.icone-card {
     width: 60px;
     height: 60px;
 
@@ -177,7 +178,7 @@ body {
     margin-bottom: 18px;
 }
 
-.item-beneficio p{
+.item-beneficio p {
     margin: 0;
 
     font-size: 18px;
@@ -202,25 +203,27 @@ body {
     max-width: 240px;
     height: auto;
 }
-.produto-card{
+
+.produto-card {
     transition: 0.3s;
     cursor: pointer;
 }
 
-.produto-card:hover{
+.produto-card:hover {
     transform: translateY(-5px);
 }
+
 /* ====================================
    TÍTULO PRODUTOS DESTAQUE
 ==================================== */
 
-.produtos-destaque{
+.produtos-destaque {
     border-top: 1px solid #7a7a7a;
 
     padding-top: 35px;
 }
 
-.titulo-destaque{
+.titulo-destaque {
     text-align: center;
 
     font-size: 32px;
@@ -261,7 +264,8 @@ body {
 
     font-weight: 500;
 }
-.img-idoso{
+
+.img-idoso {
     width: 100%;
     max-width: 500px;
 
@@ -276,7 +280,7 @@ body {
 
 
 .titulo-produtos {
-         text-align: center;
+    text-align: center;
 
     font-size: 34px;
     font-weight: 700;
@@ -288,7 +292,7 @@ body {
    CATÁLOGO DE PRODUTOS
 ==================================== */
 
-.catalogo-produtos{
+.catalogo-produtos {
     background: #eceaea;
     max-width: 1150px;
 
@@ -299,14 +303,14 @@ body {
     border-radius: 35px;
 }
 
-.catalogo-produtos h2{
+.catalogo-produtos h2 {
     font-size: 36px;
     font-weight: 700;
 
     margin-bottom: 30px;
 }
 
-.grid-produtos{
+.grid-produtos {
     display: grid;
 
     grid-template-columns: repeat(2, 1fr);
@@ -314,7 +318,7 @@ body {
     gap: 20px;
 }
 
-.produto-card{
+.produto-card {
     background: white;
 
     border-radius: 16px;
@@ -324,7 +328,7 @@ body {
     transition: .3s;
 }
 
-.produto-card h5{
+.produto-card h5 {
     text-align: center;
 
     font-size: 24px;
@@ -335,7 +339,7 @@ body {
     margin-bottom: 15px;
 }
 
-.produto-conteudo{
+.produto-conteudo {
     display: flex;
 
     align-items: center;
@@ -343,7 +347,7 @@ body {
     gap: 20px;
 }
 
-.produto-conteudo img{
+.produto-conteudo img {
     width: 280px;
     height: 180px;
 
@@ -352,7 +356,7 @@ body {
     flex-shrink: 0;
 }
 
-.preco{
+.preco {
     background: #8f2cd1;
     color: white;
 
@@ -370,11 +374,11 @@ body {
     margin-left: auto;
 }
 
-.preco span{
+.preco span {
     font-size: 18px;
 }
 
-.ver-mais{
+.ver-mais {
     text-align: center;
 
     margin-top: 25px;
@@ -393,7 +397,7 @@ body {
    ÁREA DE ATENDIMENTO
 ==================================== */
 
-.atendimento-area{
+.atendimento-area {
     width: 100%;
 
     text-align: center;
@@ -408,14 +412,14 @@ body {
     border-bottom: 2px solid #b8b8b8;
 }
 
-.atendimento-area .container{
+.atendimento-area .container {
     max-width: 1200px;
 }
 
 
 /* CARDS */
 
-.cards-atendimento{
+.cards-atendimento {
     display: flex;
 
     justify-content: center;
@@ -428,7 +432,7 @@ body {
     flex-wrap: wrap;
 }
 
-.atendimento-card{
+.atendimento-card {
     width: 380px;
     min-height: 75px;
 
@@ -448,7 +452,7 @@ body {
     transition: .3s;
 }
 
-.atendimento-card:hover{
+.atendimento-card:hover {
     transform: translateY(-3px);
 
     background: #fafafa;
@@ -457,7 +461,7 @@ body {
 
 /* ÍCONES */
 
-.icone-atendimento{
+.icone-atendimento {
     width: 42px;
     height: 42px;
 
@@ -469,11 +473,11 @@ body {
 
 /* TEXTO DOS CARDS */
 
-.info-atendimento{
+.info-atendimento {
     text-align: left;
 }
 
-.info-atendimento h5{
+.info-atendimento h5 {
     margin: 0 0 4px;
 
     font-size: 18px;
@@ -482,7 +486,7 @@ body {
     color: #222;
 }
 
-.info-atendimento p{
+.info-atendimento p {
     margin: 0;
 
     font-size: 14px;
@@ -493,7 +497,7 @@ body {
 
 /* TEXTO INFORMATIVO */
 
-.texto-informativo{
+.texto-informativo {
     max-width: 850px;
 
     margin: 0 auto;
@@ -511,7 +515,7 @@ body {
    DIVISOR ENTRE SEÇÕES
 ==================================== */
 
-.divisor-secao{
+.divisor-secao {
     width: 100%;
     max-width: 1200px;
 
@@ -528,7 +532,7 @@ body {
    RODAPÉ
 ==================================== */
 
-.footer-poupemais{
+.footer-poupemais {
     background: #7f83d6;
     color: white;
 
@@ -537,28 +541,24 @@ body {
     padding: 60px 0 25px;
 }
 
-.footer-poupemais .container{
+.footer-poupemais .container {
     max-width: 1200px;
 }
 
 /* PARTE SUPERIOR */
 
-.footer-top{
+.footer-top {
     display: grid;
 
     grid-template-columns:
-        2fr
-        1fr
-        1fr
-        1fr
-        240px;
+        2fr 1fr 1fr 1fr 240px;
 
     gap: 50px;
 
     align-items: center;
 }
 
-.footer-col h3{
+.footer-col h3 {
     font-size: 42px;
     font-weight: 700;
 
@@ -566,44 +566,44 @@ body {
 }
 
 .footer-col h5,
-.footer-col h6{
+.footer-col h6 {
     font-size: 20px;
     font-weight: 600;
 
     margin-bottom: 18px;
 }
 
-.footer-col p{
+.footer-col p {
     font-size: 16px;
     line-height: 1.8;
 
     margin-bottom: 8px;
 
-    color: rgba(255,255,255,.95);
+    color: rgba(255, 255, 255, .95);
 }
 
 /* REDES */
 
-.redes{
+.redes {
     display: flex;
     gap: 14px;
 
     margin-top: 10px;
 }
 
-.redes img{
+.redes img {
     width: 24px;
     height: 24px;
 }
 
 /* FOTO */
 
-.footer-imagem{
+.footer-imagem {
     display: flex;
     justify-content: center;
 }
 
-.footer-imagem img{
+.footer-imagem img {
     width: 220px;
     height: 220px;
 
@@ -614,41 +614,41 @@ body {
 
 /* LINHA */
 
-.footer-poupemais hr{
+.footer-poupemais hr {
     margin: 35px 0;
 
     border: none;
 
-    border-top: 1px solid rgba(255,255,255,.35);
+    border-top: 1px solid rgba(255, 255, 255, .35);
 }
 
 /* PARTE INFERIOR */
 
-.footer-bottom{
+.footer-bottom {
     display: flex;
 
     justify-content: space-between;
     align-items: center;
 }
 
-.footer-bottom h4{
+.footer-bottom h4 {
     font-size: 22px;
     font-weight: 700;
 
     margin-bottom: 5px;
 }
 
-.footer-bottom p{
+.footer-bottom p {
     font-size: 15px;
 
     margin-bottom: 10px;
 }
 
-.pagamentos{
+.pagamentos {
     font-size: 16px;
 }
 
-.logo-final{
+.logo-final {
     font-size: 22px;
     font-weight: 700;
 }
@@ -663,7 +663,7 @@ body {
    NAVBAR
 ==================================== */
 
-.navbar-poupemais{
+.navbar-poupemais {
     background: #ffffff;
 
     min-height: 90px;
@@ -677,18 +677,18 @@ body {
     margin: 0;
 }
 
-.logo-nav{
-     width: 90px;
+.logo-nav {
+    width: 90px;
     height: auto;
 }
 
-.nome-site{
+.nome-site {
     font-size: 28px;
     font-weight: 700;
     color: #1f2235;
 }
 
-.btn-cadastro{
+.btn-cadastro {
     background: #4f46e5 !important;
 
     border: none !important;
@@ -701,11 +701,11 @@ body {
     font-weight: 500;
 }
 
-.btn-cadastro:hover{
+.btn-cadastro:hover {
     background: #4338ca !important;
 }
 
-.icone-nav-img{
+.icone-nav-img {
     width: 24px;
     height: 24px;
 
@@ -716,97 +716,83 @@ body {
     transition: .3s;
 }
 
-.icone-nav-img:hover{
+.icone-nav-img:hover {
     transform: scale(1.08);
 }
 
-<<<<<<< HEAD
 
-=======
-/* modal css */
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
+.modal {
 
-.modal{
+    position: fixed;
 
-    position:fixed;
+    top: 0;
+    left: 0;
 
-    top:0;
-    left:0;
+    width: 100%;
+    height: 100%;
 
-    width:100%;
-    height:100%;
+    background: rgba(0, 0, 0, .45);
 
-    background:rgba(0,0,0,.45);
+    display: flex;
 
-    display:flex;
+    justify-content: center;
+    align-items: center;
 
-    justify-content:center;
-    align-items:center;
-
-    z-index:9999;
+    z-index: 9999;
 
 }
 
-.modal-box{
+.modal-box {
 
-    width:900px;
+    width: 900px;
 
-    background:#FFF;
+    background: #FFF;
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    padding:60px;
+    padding: 60px;
 
-    text-align:center;
-
-}
-
-.modal-box i{
-
-    font-size:80px;
-
-    margin-bottom:30px;
+    text-align: center;
 
 }
 
-.modal-box h2{
+.modal-box i {
 
-    font-size:45px;
+    font-size: 80px;
 
-    font-weight:500;
-
-}
-
-.botoes{
-
-    display:flex;
-
-    justify-content:space-around;
-
-    margin-top:60px;
+    margin-bottom: 30px;
 
 }
 
-.botoes button{
+.modal-box h2 {
 
-    width:250px;
+    font-size: 45px;
 
-    height:65px;
+    font-weight: 500;
 
-    font-size:30px;
-
-<<<<<<< HEAD
 }
 
+.botoes {
 
+    display: flex;
 
+    justify-content: space-around;
 
+    margin-top: 60px;
 
+}
 
+.botoes button {
 
+    width: 250px;
 
+    height: 65px;
 
-.footer-col a{
+    font-size: 30px;
+
+}
+
+.footer-col a {
     display: block;
     color: #fff;
     text-decoration: none;
@@ -815,8 +801,6 @@ body {
     transition: .2s;
 }
 
-.footer-col a:hover{
+.footer-col a:hover {
     color: #ececff;
-=======
->>>>>>> c40ebea930f566e1819bd4a7838077ae70f4da08
 }
