@@ -1,0 +1,567 @@
+/* ===========================
+   CONFIGURAÇÕES GERAIS
+=========================== */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6fb;
+    color: #111;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===========================
+   SOBRE NÓS
+=========================== */
+
+.sobre-nos{
+    padding: 30px 0 20px;
+    text-align:center;
+}
+
+.sobre-nos h1{
+    font-size:56px;
+    font-weight:700;
+    margin:0;
+}
+
+.sobre-nos .linha{
+    width:460px;
+    height:1px;
+    background:#cfcfcf;
+    margin:18px auto 18px;
+}
+
+.sobre-nos h2{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:38px;
+}
+
+.sobre-nos p{
+    width:100%;
+    max-width:930px;
+    margin:0 auto 34px;
+    font-size:24px;
+    line-height:2;
+    font-weight:500;
+    color:#222;
+}
+
+/* ===========================
+   IMAGENS DO PROJETO
+=========================== */
+
+.imagens-projeto{
+    margin:20px 0 70px;
+}
+
+.imagens-projeto .container-fluid{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:100%;
+
+    max-width:1450px;   /* antes era 1200px */
+
+    margin:0 auto;
+
+    gap:0;
+}
+
+.imagem-projeto{
+
+    overflow:hidden;
+
+    display:flex;
+}
+
+.imagem-projeto:first-child{
+
+    flex:0 0 42%;
+
+    height:250px;
+}
+
+.imagem-projeto:last-child{
+
+    flex:0 0 58%;
+
+    height:250px;
+}
+
+.imagem-projeto img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+/* ===========================
+   NOSSA EQUIPE
+=========================== */
+
+.nossa-equipe {
+    padding: 70px 0 80px;
+    text-align: center;
+    background: #f5f6fb;
+}
+
+.nossa-equipe .linha{
+    width:160px;
+    margin:0 auto 18px;
+}
+
+.nossa-equipe h2{
+    font-size:54px;
+    line-height:1;
+    margin-bottom:55px;
+}
+
+.cards-equipe {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 35px;
+    flex-wrap: nowrap;
+}
+
+.membro {
+    width: 175px;
+    text-align: center;
+}
+
+.membro img {
+    width: 175px;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 18px;
+    border-radius: 6px;
+    background: #e8e8e8;
+}
+
+.membro h5 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+}
+
+.membro span {
+    font-size: 15px;
+    color: #666;
+    font-weight: 400;
+}
+
+
+
+/* ===========================
+   ÁREA DE ATENDIMENTO
+   NÃO ALTERAR
+=========================== */
+
+.atendimento-area {
+    position: relative;
+    width: 100%;
+
+    margin-top: 0;
+
+    z-index: 10;
+
+    padding: 45px 0 35px;
+
+    background: #f1efff;
+
+    text-align: center;
+
+    border-top: 2px solid #b8b8b8;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.atendimento-area .container {
+    max-width: 1200px;
+}
+
+
+/* CARDS */
+
+.cards-atendimento {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-bottom: 35px;
+
+    flex-wrap: wrap;
+}
+
+.atendimento-card {
+    width: 380px;
+    min-height: 75px;
+
+    background: #ffffff;
+
+    padding: 12px 22px;
+
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.atendimento-card:hover {
+    transform: translateY(-3px);
+
+    background: #fafafa;
+}
+
+
+/* ÍCONES */
+
+.icone-atendimento {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+
+/* TEXTO DOS CARDS */
+
+.info-atendimento {
+    text-align: left;
+}
+
+.info-atendimento h5 {
+    margin: 0 0 4px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.info-atendimento p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* TEXTO INFORMATIVO */
+
+.texto-informativo {
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    font-size: 18px;
+    line-height: 1.6;
+
+    color: #444;
+
+    text-align: center;
+
+    font-weight: 700;
+}
+
+
+/* ===========================
+   DIVISOR
+=========================== */
+
+.divisor-secao {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    border: none;
+
+    border-top: 1px solid #cfcfcf;
+}
+
+
+/* ===========================
+   RODAPÉ
+=========================== */
+
+.footer-poupemais {
+    background: #7f83d6;
+
+    color: white;
+
+    margin-top: 0;
+
+    padding: 60px 0 25px;
+}
+
+.footer-poupemais .container {
+    max-width: 1200px;
+}
+
+
+/* PARTE SUPERIOR */
+
+.footer-top {
+    display: grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1fr
+        1fr
+        240px;
+
+    gap: 50px;
+
+    align-items: center;
+}
+
+.footer-col h3 {
+    font-size: 42px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+}
+
+.footer-col h5,
+.footer-col h6 {
+    font-size: 20px;
+    font-weight: 600;
+
+    margin-bottom: 18px;
+}
+
+.footer-col p {
+    font-size: 16px;
+    line-height: 1.8;
+
+    margin-bottom: 8px;
+
+    color: rgba(255, 255, 255, .95);
+}
+
+
+/* REDES */
+
+.redes {
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 10px;
+}
+
+.redes img {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* LINKS */
+
+.footer-col a {
+    display: block;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    margin-bottom: 10px;
+
+    font-size: 14px;
+
+    transition: .2s;
+}
+
+.footer-col a:hover {
+    color: #ececff;
+}
+
+
+/* FOTO */
+
+.footer-imagem {
+    display: flex;
+
+    justify-content: center;
+}
+
+.footer-imagem img {
+    width: 220px;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+
+/* LINHA */
+
+.footer-poupemais hr {
+    margin: 35px 0;
+
+    border: none;
+
+    border-top: 1px solid rgba(255, 255, 255, .35);
+}
+
+
+/* PARTE INFERIOR */
+
+.footer-bottom {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom h4 {
+    font-size: 22px;
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.footer-bottom p {
+    font-size: 15px;
+
+    margin-bottom: 10px;
+}
+
+.pagamentos {
+    font-size: 16px;
+}
+
+.logo-final {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media (max-width: 768px) {
+
+    .sobre-nos {
+        padding: 30px 0 40px;
+    }
+
+    .sobre-nos h1 {
+        font-size: 32px;
+    }
+
+    .sobre-nos h2 {
+        font-size: 20px;
+    }
+
+    .sobre-nos p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+
+    .nossa-equipe h2 {
+        font-size: 30px;
+    }
+
+
+    .cards-equipe {
+        gap: 20px;
+    }
+
+    .membro {
+        width: 130px;
+    }
+
+    .membro img {
+        width: 130px;
+        height: 170px;
+    }
+
+
+    /* IMAGENS */
+
+  .imagens-projeto .container-fluid{
+    flex-direction:column;
+}
+
+.imagens-projeto{
+    margin:40px 0;
+}
+
+.imagem-projeto{
+    width:100%;
+    height:260px;
+}
+
+    /* ATENDIMENTO */
+
+    .cards-atendimento {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .atendimento-card {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    .texto-informativo {
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* RODAPÉ */
+
+    .footer-top {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+    }
+
+    .footer-imagem {
+        justify-content: flex-start;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 25px;
+    }
+}

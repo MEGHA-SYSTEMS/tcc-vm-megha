@@ -1,14 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Plataforma de PoupeMais</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Plataforma de PoupeMais</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
+<body>
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
 
 <nav class="navbar navbar-expand-lg navbar-poupemais">
 
@@ -16,15 +28,15 @@
 
         <a class="navbar-brand d-flex align-items-center" href="#">
 
-           <img src="{{url_for('static',filename='logo.png')}}"
-     alt="logo"
-     class="logo-nav">
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="Logo PoupeMais"
+                 class="logo-nav">
 
             <span class="ms-2 nome-site">
                 PoupeMais
             </span>
 
-            <img src="{{url_for('static',filename='img/Pesquisar.jpeg')}}"
+            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
                  class="icone-nav-img ms-3"
                  alt="Buscar">
 
@@ -36,7 +48,7 @@
                 data-bs-target="#navbarNav"
                 aria-controls="navbarNav"
                 aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Abrir menu">
 
             <span class="navbar-toggler-icon"></span>
 
@@ -47,14 +59,12 @@
 
             <div class="d-flex align-items-center gap-4">
 
-                <a href="login"
+                <a href="{{ url_for('login') }}"
                    class="btn btn-primary btn-cadastro">
 
                     É farmácia? Cadastre-se aqui
 
                 </a>
-
-               
 
             </div>
 
@@ -63,100 +73,151 @@
     </div>
 
 </nav>
-  <main>
 
-    <section class="container py-5">
-      <div class="row align-items-center">
 
- <div class="col-md-6">
+<main>
 
-    <span class="hero-topo">
-        SEU ALIADO NA BUSCA POR<br>
-        MEDICAMENTOS MAIS ACESSÍVEIS
-    </span>
+<!-- ==========================================
+     HERO
+========================================== -->
 
-    <h1>
-        Compare os preços de medicamentos e economize no cuidado com quem mais importa.
-    </h1>
+<section class="container py-5 hero-section">
 
-    <p>
-        “Economizar em remédios é cuidar da saúde com inteligência.”
-    </p>
+    <div class="row align-items-center">
 
-    <a href="#" class="btn btn-primary">
-        Saiba mais
-    </a>
+        <div class="col-md-6">
 
-</div>
+            <span class="hero-topo">
+                SEU ALIADO NA BUSCA POR<br>
+                MEDICAMENTOS MAIS ACESSÍVEIS
+            </span>
+
+            <h1>
+                Compare os preços de medicamentos e economize no cuidado com quem mais importa.
+            </h1>
+
+            <p>
+                “Economizar em remédios é cuidar da saúde com inteligência.”
+            </p>
+
+            <a href="{{ url_for('team') }}" class="btn-saiba-mais">
+                Saiba mais
+            </a>
+
+        </div>
+
         <div class="col-md-6 text-center">
 
-          <img src="{{url_for('static',filename='img/idosa.jpg')}}"
-               class="img-fluid imagem-hero"
-               alt="idosa">
-      
-      </div>
+            <img src="{{ url_for('static', filename='img/idosa.jpg') }}"
+                 class="img-fluid imagem-hero"
+                 alt="Idosa">
 
-      </div>
-      <!-- HERO SECTION -->
-   
-
-      </section>
-<section class="container py-4">
-
-    <div class="scroll-produtos">
-
-        <img src="{{url_for('static',filename='img/Produto1.jpg')}}" draggable="false">
-        <img src="{{url_for('static',filename='img/Produto2.jpg')}}" draggable="false">
-        <img src="{{url_for('static',filename='img/Produto3.jpg')}}" draggable="false">
-        <img src="{{url_for('static',filename='img/Produto4.jpeg')}}" draggable="false">
+        </div>
 
     </div>
 
 </section>
-    
 
-      <!-- BENEFÍCIOS -->
-      <div class="beneficios-box">
+
+<!-- ==========================================
+     BANNERS DESLIZANTES
+========================================== -->
+
+<section class="container py-4">
+
+    <div class="scroll-produtos">
+
+        <img src="{{ url_for('static', filename='img/Produto1.jpg') }}"
+             draggable="false"
+             alt="Produto">
+
+        <img src="{{ url_for('static', filename='img/Produto2.jpg') }}"
+             draggable="false"
+             alt="Produto">
+
+        <img src="{{ url_for('static', filename='img/Produto3.jpg') }}"
+             draggable="false"
+             alt="Produto">
+
+        <img src="{{ url_for('static', filename='img/Produto4.jpeg') }}"
+             draggable="false"
+             alt="Produto">
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     BENEFÍCIOS
+========================================== -->
+
+<div class="beneficios-box">
 
     <div class="row g-0">
 
         <div class="col-md-4">
+
             <a href="#" class="item-beneficio">
 
-                <img src="{{url_for('static',filename='img/icone1.jpg')}}" class="icone-card">
+                <img src="{{ url_for('static', filename='img/icone1.jpg') }}"
+                     class="icone-card"
+                     alt="Encontrar menor preço">
 
-                <p>Descubra o mais barato para você.</p>
+                <p>
+                    Descubra o mais barato para você.
+                </p>
 
             </a>
+
         </div>
 
         <div class="col-md-4">
+
             <a href="#" class="item-beneficio">
 
-                <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
+                <img src="{{ url_for('static', filename='img/icone2.jpg') }}"
+                     class="icone-card"
+                     alt="Encontrar farmácia">
 
-                <p>Encontre a farmácia mais perto de você.</p>
+                <p>
+                    Encontre a farmácia mais perto de você.
+                </p>
 
             </a>
+
         </div>
 
         <div class="col-md-4">
+
             <a href="#" class="item-beneficio">
 
-                <img src="{{url_for('static',filename='img/icone3.jpg')}}" class="icone-card">
+                <img src="{{ url_for('static', filename='img/icone3.jpg') }}"
+                     class="icone-card"
+                     alt="Catálogo">
 
-                <p>Confira nosso catálogo de produtos.</p>
+                <p>
+                    Confira nosso catálogo de produtos.
+                </p>
 
             </a>
+
         </div>
 
     </div>
 
 </div>
-      <section class="container py-5">
+
+
+<!-- ==========================================
+     PRODUTOS EM DESTAQUE
+========================================== -->
+
+<section class="container py-5">
 
     <div class="produtos-destaque">
-         <h2 class="titulo-destaque">
+
+        <h2 class="titulo-destaque">
             Cuide do seu bem estar
         </h2>
 
@@ -164,29 +225,33 @@
 
             <div class="col-auto">
                 <a href="#">
-                    <img src="{{url_for('static',filename='img/produtoA.jpg')}}"
-                         class="produto-card">
+                    <img src="{{ url_for('static', filename='img/produtoA.jpg') }}"
+                         class="produto-card"
+                         alt="Produto">
                 </a>
             </div>
 
             <div class="col-auto">
                 <a href="#">
-                    <img src="{{url_for('static',filename='img/produtoB.jpg')}}"
-                         class="produto-card">
+                    <img src="{{ url_for('static', filename='img/produtoB.jpg') }}"
+                         class="produto-card"
+                         alt="Produto">
                 </a>
             </div>
 
             <div class="col-auto">
                 <a href="#">
-                    <img src="{{url_for('static',filename='img/produtoC.jpg')}}"
-                         class="produto-card">
+                    <img src="{{ url_for('static', filename='img/produtoC.jpg') }}"
+                         class="produto-card"
+                         alt="Produto">
                 </a>
             </div>
 
             <div class="col-auto">
                 <a href="#">
-                    <img src="{{url_for('static',filename='img/produtoD.jpg')}}"
-                         class="produto-card">
+                    <img src="{{ url_for('static', filename='img/produtoD.jpg') }}"
+                         class="produto-card"
+                         alt="Produto">
                 </a>
             </div>
 
@@ -197,31 +262,44 @@
 </section>
 
 
-      <section class="container py-5 secao-idoso">
+<!-- ==========================================
+     SEÇÃO PARA IDOSOS
+========================================== -->
 
-        <div class="row align-items-center g-0">
+<section class="container py-5 secao-idoso">
 
-          <div class="col-md-6">
+    <div class="row align-items-center g-0">
+
+        <div class="col-md-6">
 
             <div class="texto-idoso">
-              Este espaço foi criado com muito carinho e dedicação,
-              pensando em facilitar o seu dia a dia.
-              Nosso objetivo é cuidar de seu bolso para que você
-              possa focar no que realmente importa:
-              sua saúde e bem-estar.
+
+                Este espaço foi criado com muito carinho e dedicação,
+                pensando em facilitar o seu dia a dia.
+                Nosso objetivo é cuidar de seu bolso para que você
+                possa focar no que realmente importa:
+                sua saúde e bem-estar.
+
             </div>
-
-          </div>
-
-          <div class="col-md-6 text-center">
-
-            <img src="{{url_for('static',filename='img/idoso.jpg')}}" class="img-idoso" alt="Idoso">
-
-          </div>
 
         </div>
 
+        <div class="col-md-6 text-center">
 
+            <img src="{{ url_for('static', filename='img/idoso.jpg') }}"
+                 class="img-idoso"
+                 alt="Idoso">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     CATÁLOGO DE PRODUTOS
+========================================== -->
 
 <section class="catalogo-produtos">
 
@@ -232,247 +310,414 @@
     <div class="grid-produtos">
 
         <div class="produto-card">
+
             <h5>Produto 1</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto5.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 10,40</div>
+
+                <img src="{{ url_for('static', filename='img/produto5.jpg') }}"
+                     alt="Produto 1">
+
+                <div class="preco">
+                    <span>R$</span> 10,40
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 2</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto6.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 14,50</div>
+
+                <img src="{{ url_for('static', filename='img/produto6.jpg') }}"
+                     alt="Produto 2">
+
+                <div class="preco">
+                    <span>R$</span> 14,50
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 3</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto7.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 8,10</div>
+
+                <img src="{{ url_for('static', filename='img/produto7.jpg') }}"
+                     alt="Produto 3">
+
+                <div class="preco">
+                    <span>R$</span> 8,10
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 4</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto8.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 9,60</div>
+
+                <img src="{{ url_for('static', filename='img/produto8.jpg') }}"
+                     alt="Produto 4">
+
+                <div class="preco">
+                    <span>R$</span> 9,60
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 5</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto9.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 13,40</div>
+
+                <img src="{{ url_for('static', filename='img/produto9.jpg') }}"
+                     alt="Produto 5">
+
+                <div class="preco">
+                    <span>R$</span> 13,40
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 6</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto10.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 19,10</div>
+
+                <img src="{{ url_for('static', filename='img/produto10.jpg') }}"
+                     alt="Produto 6">
+
+                <div class="preco">
+                    <span>R$</span> 19,10
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 7</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto11.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 9,99</div>
+
+                <img src="{{ url_for('static', filename='img/produto11.jpg') }}"
+                     alt="Produto 7">
+
+                <div class="preco">
+                    <span>R$</span> 9,99
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 8</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto13.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 10,90</div>
+
+                <img src="{{ url_for('static', filename='img/produto13.jpg') }}"
+                     alt="Produto 8">
+
+                <div class="preco">
+                    <span>R$</span> 10,90
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 9</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto14.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 4,60</div>
+
+                <img src="{{ url_for('static', filename='img/produto14.jpg') }}"
+                     alt="Produto 9">
+
+                <div class="preco">
+                    <span>R$</span> 4,60
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="produto-card">
+
             <h5>Produto 10</h5>
+
             <div class="produto-conteudo">
-                <img src="{{url_for('static',filename='img/produto15.jpg')}}" alt="">
-                <div class="preco"><span>R$</span> 7,99</div>
+
+                <img src="{{ url_for('static', filename='img/produto15.jpg') }}"
+                     alt="Produto 10">
+
+                <div class="preco">
+                    <span>R$</span> 7,99
+                </div>
+
             </div>
+
         </div>
 
     </div>
-<p class="ver-mais">Ver mais</p>
 
-</section> 
+    <p class="ver-mais">
+        Ver mais
+    </p>
+
+</section>
 
 
 <hr class="divisor-secao">
 
-<section class="container py-5 atendimento-area">
 
-    <div class="cards-atendimento">
+<!-- ==========================================
+     ÁREA DE ATENDIMENTO
+========================================== -->
+<section class="atendimento-area">
 
-        <a href="#" class="atendimento-card">
+    <div class="container">
 
-            <img src="{{url_for('static',filename='img/atendimento1.jpg')}}"
-                 class="icone-atendimento"
-                 alt="Atendimento">
+        <div class="cards-atendimento">
 
-            <div class="info-atendimento">
+            <a href="#" class="atendimento-card">
 
-                <h5>Central de Atendimento</h5>
+                <img src="{{url_for('static',filename='img/atendimento1.jpg')}}"
+                     class="icone-atendimento"
+                     alt="Atendimento">
 
-                <p>Fale conosco</p>
+                <div class="info-atendimento">
 
-            </div>
+                    <h5>Central de Atendimento</h5>
 
-        </a>
+                    <p>Fale conosco</p>
 
-        <a href="#" class="atendimento-card">
+                </div>
 
-            <img src="{{url_for('static',filename='img/atendimento2.jpg')}}"
-                 class="icone-atendimento"
-                 alt="Suporte">
+            </a>
 
-            <div class="info-atendimento">
+            <a href="{{ url_for('contato') }}" class="atendimento-card">
 
-                <h5>Precisa de ajuda?</h5>
+    <img src="{{url_for('static',filename='img/atendimento2.jpg')}}"
+         class="icone-atendimento"
+         alt="Suporte">
 
-                <p>Suporte</p>
+    <div class="info-atendimento">
 
-            </div>
+        <h5>Precisa de ajuda?</h5>
 
-        </a>
+        <p>Suporte</p>
 
     </div>
 
-    <div class="texto-informativo">
+</a>
+        </div>
 
-        O envelhecimento populacional no Brasil impõe desafios
-        significativos à saúde pública, especialmente no que
-        tange ao acesso farmacoterapêutico de uma população
-        cuja renda é, muitas vezes, limitada por benefícios
-        previdenciários fixos.
+        <div class="texto-informativo">
+
+            O envelhecimento populacional no Brasil impõe desafios
+            significativos à saúde pública, especialmente no que
+            tange ao acesso farmacoterapêutico de uma população
+            cuja renda é, muitas vezes, limitada por benefícios
+            previdenciários fixos.
+
+        </div>
 
     </div>
 
 </section>
 
+
 <hr class="divisor-secao">
+
+
+<!-- ==========================================
+     RODAPÉ
+========================================== -->
+
 <section class="footer-poupemais">
 
-  <div class="container">
+    <div class="container">
 
-      <div class="footer-top">
+        <div class="footer-top">
 
-          <div class="footer-col">
-              <h3>Poupemais</h3>
+            <div class="footer-col">
 
-              <p>
-                  Preços justos para um cuidado contínuo
-              </p>
+                <h3>
+                    Poupemais
+                </h3>
 
-              <h5>Nossas redes:</h5>
+                <p>
+                    Preços justos para um cuidado contínuo
+                </p>
 
-             <div class="redes">
+                <h5>
+                    Nossas redes:
+                </h5>
 
-    <img src="{{url_for('static',filename='img/twitter.png')}}" alt="">
-    <img src="{{url_for('static',filename='img/facebook.png')}}" alt="">
-    <img src="{{url_for('static',filename='img/instagram.png')}}" alt="">
-    <img src="{{url_for('static',filename='img/linkedin.png')}}" alt="">
+                <div class="redes">
 
-</div>
-          </div>
+                    <img src="{{ url_for('static', filename='img/twitter.png') }}"
+                         alt="Twitter">
 
-          <div class="footer-col">
-              <h6>Companhia</h6>
+                    <img src="{{ url_for('static', filename='img/facebook.png') }}"
+                         alt="Facebook">
 
-              <p>Contate nos</p>
-              <p>Sobre nós</p>
-              <p>Privacidade e política</p>
-          </div>
+                    <img src="{{ url_for('static', filename='img/instagram.png') }}"
+                         alt="Instagram">
 
-          <div class="footer-col">
-              <h6>Perfil</h6>
+                    <img src="{{ url_for('static', filename='img/linkedin.png') }}"
+                         alt="LinkedIn">
 
-              <p>Editar endereço</p>
-          </div>
+                </div>
 
-          <div class="footer-col">
-              <h6>Atendimento</h6>
+            </div>
 
-              <p>Tire suas dúvidas</p>
-              <p>por Whatsapp</p>
-              <p>Central de atendimento</p>
-          </div>
 
-          <div class="footer-imagem">
+            <div class="footer-col">
 
-              <img src="{{url_for('static',filename='img/idosos.jpg')}}"
-                   alt="Idosa">
+                <h6>
+                    Companhia
+                </h6>
 
-          </div>
+                <a href="#">
+                    Contate-nos
+                </a>
 
-      </div>
+                <a href="{{ url_for('team') }}">
+                    Sobre nós
+                </a>
 
-      <hr>
+                <a href="{{ url_for('termos') }}">
+                    Privacidade e política
+                </a>
 
-      <div class="footer-bottom">
+            </div>
 
-          <div>
 
-              <h4>Formas de pagamento</h4>
+            <div class="footer-col">
 
-              <p>Parcele em até 3x sem juros!</p>
+                <h6>
+                    Perfil
+                </h6>
 
-              <div class="pagamentos">
-                  PIX • VISA • MASTERCARD
-              </div>
+                <a href="#">
+                    Editar endereço
+                </a>
 
-          </div>
+            </div>
 
-          <div class="logo-final">
-              POUPE MAIS
-          </div>
 
-      </div>
+            <div class="footer-col">
 
-  </div>
+                <h6>
+                    Atendimento
+                </h6>
+
+                <a href="#">
+                    Tire suas dúvidas
+                </a>
+
+                <a href="https://wa.me/55SEUNUMERO" target="_blank">
+                    por Whatsapp
+                </a>
+
+                <a href="#">
+                    Central de atendimento
+                </a>
+
+            </div>
+
+
+            <div class="footer-imagem">
+
+                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
+                     alt="Idosa">
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="footer-bottom">
+
+            <div>
+
+                <h4>
+                    Formas de pagamento
+                </h4>
+
+                <p>
+                    Parcele em até 3x sem juros!
+                </p>
+
+                <div class="pagamentos">
+                    PIX • VISA • MASTERCARD
+                </div>
+
+            </div>
+
+
+            <div class="logo-final">
+                POUPE MAIS
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
+</main>
 
 
+<!-- ==========================================
+     BOOTSTRAP
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYJwR5XK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 
 
+<!-- ==========================================
+     SLIDER DOS PRODUTOS
+========================================== -->
 
-  </main>
+<script>
 
-  </main>
-  <footer>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-      integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-      crossorigin="anonymous"></script>
-    <script src=""></script>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-  <script>
     const slider = document.querySelector('.scroll-produtos');
 
     let isDown = false;
@@ -480,27 +725,64 @@
     let scrollLeft;
 
     slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX;
-      scrollLeft = slider.scrollLeft;
+
+        isDown = true;
+
+        startX = e.pageX;
+
+        scrollLeft = slider.scrollLeft;
+
     });
+
 
     document.addEventListener('mouseup', () => {
-      isDown = false;
+
+        isDown = false;
+
     });
+
 
     slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
 
-      e.preventDefault();
+        if (!isDown) return;
 
-      const walk = e.pageX - startX;
+        e.preventDefault();
 
-      slider.scrollLeft = scrollLeft - walk;
+        const walk = e.pageX - startX;
+
+        slider.scrollLeft = scrollLeft - walk;
+
     });
-  </script>
 
-</body>
+</script>
+
+[20:07, 01/08/2026] Alan: tá criado
+[20:08, 01/08/2026] Henri: <div id="modal-localizacao" class="modal">
+
+    <div class="modal-box">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <h2>
+            Permitir que o PoupeMais utilize da sua localização?
+        </h2>
+
+        <div class="botoes">
+
+            <button id="negar">
+                Negar
+            </button>
+
+            <button id="permitir">
+                Permitir
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 
 </html>

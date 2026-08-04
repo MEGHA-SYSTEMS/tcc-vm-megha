@@ -11,170 +11,6 @@ body {
     background: #f5f5f5;
 }
 
-/* HEADER */
-
-/* HEADER */
-
-.topo {
-    width: 100%;
-    height: 90px;
-
-    background: white;
-
-    border-bottom: 1px solid #d9d9d9;
-
-    display: flex;
-    align-items: center;
-
-    position: relative;
-
-    padding: 0 40px;
-}
-
-/* MENU + LUPA */
-
-.menu-area {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.menu {
-    font-size: 42px;
-    cursor: pointer;
-    color: #1f2235;
-}
-
-.pesquisa {
-    font-size: 30px;
-    cursor: pointer;
-    color: #1f2235;
-}
-
-/* LOGO */
-
-.logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.logo img {
-    width: 60px;
-}
-
-/* CONTEÚDO */
-
-.login-container {
-    min-height: calc(100vh - 90px);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding-top: 60px;
-}
-
-/* TÍTULO */
-
-.login-container h1 {
-    font-size: 56px;
-    font-weight: 500;
-    color: #1f2235;
-
-    margin-bottom: 8px;
-}
-
-.subtitulo {
-    font-size: 18px;
-    color: #666;
-
-    margin-bottom: 35px;
-}
-
-/* CARD */
-
-.card-login {
-    width: 420px;
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-/* LABELS */
-
-.form-label {
-    font-size: 14px;
-    color: #222;
-}
-
-/* INPUTS */
-
-.form-control {
-    height: 45px;
-    border-radius: 8px;
-}
-
-.form-control::placeholder {
-    color: #b5b5b5;
-    font-size: 14px;
-}
-
-/* CHECKBOX */
-
-.form-check-label {
-    font-size: 12px;
-    color: #555;
-}
-
-/* BOTÃO */
-
-.btn-login {
-    width: 100%;
-    height: 48px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: #4f46e5;
-
-    color: white;
-
-    font-size: 16px;
-    font-weight: 500;
-
-    margin-top: 10px;
-
-    transition: 0.3s;
-}
-
-.btn-login:hover {
-    background: #4338ca;
-}
-
-/* TEXTO FINAL */
-
-.texto-login {
-    margin-top: 25px;
-    font-size: 14px;
-}
-
-.texto-login a {
-    color: #4f46e5;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-
-
-
-
-
 /* ====================================
    HERO SECTION (TOPO DA PÁGINA)
 ==================================== */
@@ -553,27 +389,38 @@ body {
 
 
 
-
 /* ====================================
    ÁREA DE ATENDIMENTO
 ==================================== */
+
 .atendimento-area{
+    width: 100%;
+
     text-align: center;
 
     background: #f1efff;
 
     margin-top: 35px;
 
-    padding: 45px 20px;
-
-    border-radius: 0;
+    padding: 38px 0;
 
     border-top: 2px solid #b8b8b8;
     border-bottom: 2px solid #b8b8b8;
 }
+
+.atendimento-area .container{
+    max-width: 1200px;
+}
+
+
+/* CARDS */
+
 .cards-atendimento{
     display: flex;
+
     justify-content: center;
+    align-items: center;
+
     gap: 25px;
 
     margin-bottom: 35px;
@@ -583,12 +430,11 @@ body {
 
 .atendimento-card{
     width: 380px;
+    min-height: 75px;
 
-     background: #ffffff;
+    background: #ffffff;
 
     padding: 12px 22px;
-
-    min-height: 75px;
 
     border-radius: 16px;
 
@@ -608,6 +454,9 @@ body {
     background: #fafafa;
 }
 
+
+/* ÍCONES */
+
 .icone-atendimento{
     width: 42px;
     height: 42px;
@@ -616,6 +465,9 @@ body {
 
     flex-shrink: 0;
 }
+
+
+/* TEXTO DOS CARDS */
 
 .info-atendimento{
     text-align: left;
@@ -638,15 +490,21 @@ body {
     color: #666;
 }
 
+
+/* TEXTO INFORMATIVO */
+
 .texto-informativo{
     max-width: 850px;
 
     margin: 0 auto;
 
     font-size: 18px;
+    font-weight: 600;
     line-height: 1.6;
 
     color: #444;
+
+    text-align: center;
 }
 
 /* ====================================
@@ -860,4 +718,98 @@ body {
 
 .icone-nav-img:hover{
     transform: scale(1.08);
+}
+
+
+
+.modal{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.modal-box{
+
+    width:900px;
+
+    background:#FFF;
+
+    border-radius:8px;
+
+    padding:60px;
+
+    text-align:center;
+
+}
+
+.modal-box i{
+
+    font-size:80px;
+
+    margin-bottom:30px;
+
+}
+
+.modal-box h2{
+
+    font-size:45px;
+
+    font-weight:500;
+
+}
+
+.botoes{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:60px;
+
+}
+
+.botoes button{
+
+    width:250px;
+
+    height:65px;
+
+    font-size:30px;
+
+}
+
+
+
+
+
+
+
+
+
+.footer-col a{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.footer-col a:hover{
+    color: #ececff;
 }

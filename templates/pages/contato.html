@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contate-nos | PoupeMais</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- CSS Geral -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- CSS da página -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/contato.css') }}">
+
+</head>
+
+<body>
+
+  <section class="contato">
+
+    <div class="container">
+
+        <h1>Contate nos</h1>
+
+        <div class="contato-conteudo">
+
+            <div class="formulario">
+
+                <form>
+
+                    <label>Nome e sobrenome</label>
+                    <input type="text" placeholder="Ex: João da Silva">
+
+                    <label>Email</label>
+                    <input type="email" placeholder="email@gmail.com">
+
+                    <label>Assunto</label>
+                    <input type="text" placeholder="Preciso de ajuda">
+
+                    <label>Mensagem</label>
+                    <textarea placeholder="Digite sua mensagem"></textarea>
+
+                    <button type="submit">
+                        Enviar
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="informacoes">
+
+                <div class="info">
+
+                    <h4>Nosso email</h4>
+
+                    <p>poupemais@gmail.com</p>
+                    <p>megha@gmail.com</p>
+
+                </div>
+
+                <div class="info">
+
+                    <h4>Nos visite</h4>
+
+                    <p>
+                        R. Cesário Motta, 644<br>
+                        Centro, Matão - SP<br>
+                        15990-050
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =====================================
+        IMAGENS
+===================================== -->
+
+<section class="imagens-contato">
+
+    <div class="container-fluid p-0">
+
+        <div class="imagem-contato">
+
+            <img src="{{ url_for('static', filename='img/idoso1.jpg') }}"
+                 alt="Idoso">
+
+        </div>
+
+        <div class="imagem-contato">
+
+            <img src="{{ url_for('static', filename='img/casalidoso.jpg') }}"
+                 alt="Casal de idosos">
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================================
+     ÁREA DE ATENDIMENTO
+========================================== -->
+<section class="atendimento-area">
+
+    <div class="container">
+
+        <div class="cards-atendimento">
+
+            <a href="#" class="atendimento-card">
+
+                <img src="{{ url_for('static', filename='img/atendimento1.jpg') }}"
+                     class="icone-atendimento"
+                     alt="Atendimento">
+
+                <div class="info-atendimento">
+
+                    <h5>Central de Atendimento</h5>
+
+                    <p>Fale conosco</p>
+
+                </div>
+
+            </a>
+
+            <a href="{{ url_for('contato') }}" class="atendimento-card">
+
+                <img src="{{ url_for('static', filename='img/atendimento2.jpg') }}"
+                     class="icone-atendimento"
+                     alt="Suporte">
+
+                <div class="info-atendimento">
+
+                    <h5>Precisa de ajuda?</h5>
+
+                    <p>Suporte</p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="texto-informativo">
+
+            O envelhecimento populacional no Brasil impõe desafios
+            significativos à saúde pública, especialmente no que
+            tange ao acesso farmacoterapêutico de uma população
+            cuja renda é, muitas vezes, limitada por benefícios
+            previdenciários fixos.
+
+        </div>
+
+    </div>
+
+</section>
+
+<hr class="divisor-secao">
+
+<!-- ==========================================
+     RODAPÉ
+========================================== -->
+
+<section class="footer-poupemais">
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div class="footer-col">
+
+                <h3>PoupeMais</h3>
+
+                <p>
+                    Preços justos para um cuidado contínuo
+                </p>
+
+                <h5>Nossas redes:</h5>
+
+                <div class="redes">
+
+                    <a href="#">
+                        <img src="{{ url_for('static', filename='img/twitter.png') }}" alt="Twitter">
+                    </a>
+
+                    <a href="#">
+                        <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
+                    </a>
+
+                    <a href="#">
+                        <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
+                    </a>
+
+                    <a href="#">
+                        <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn">
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="footer-col">
+
+                <h6>Companhia</h6>
+
+                <a href="{{ url_for('contato') }}">
+                    Contate-nos
+                </a>
+
+                <a href="{{ url_for('team') }}">
+                    Sobre nós
+                </a>
+
+                <a href="{{ url_for('termos') }}">
+                    Privacidade e política
+                </a>
+
+            </div>
+
+            <div class="footer-col">
+
+                <h6>Perfil</h6>
+
+                <a href="#">
+                    Editar endereço
+                </a>
+
+            </div>
+
+            <div class="footer-col">
+
+                <h6>Atendimento</h6>
+
+                <a href="#">
+                    Tire suas dúvidas
+                </a>
+
+                <a href="#">
+                    por Whatsapp
+                </a>
+
+                <a href="#">
+                    Central de atendimento
+                </a>
+
+            </div>
+
+            <div class="footer-imagem">
+
+                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
+                     alt="Idosos">
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="footer-bottom">
+
+            <div>
+
+                <h4>Formas de pagamento</h4>
+
+                <p>
+                    Parcele em até 3x sem juros!
+                </p>
+
+                <div class="pagamentos">
+
+                    PIX • VISA • MASTERCARD
+
+                </div>
+
+            </div>
+
+            <div class="logo-final">
+
+                POUPE MAIS
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

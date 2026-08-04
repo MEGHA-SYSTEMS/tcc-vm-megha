@@ -1,0 +1,412 @@
+body{
+    background:#f5f6fb;
+}
+
+/*====================================
+            CONTATE NOS
+====================================*/
+
+.contato{
+    padding:70px 0 50px;
+    background:#f5f6fb;
+}
+
+.contato h1{
+    text-align:center;
+    font-size:58px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:70px;
+}
+
+.contato-conteudo{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:80px;
+}
+
+/*====================================
+            FORMULÁRIO
+====================================*/
+
+.formulario{
+       width:450px;
+    background:#fff;
+    padding:35px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.formulario label{
+    display:block;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:#333;
+}
+
+.formulario input,
+.formulario textarea{
+    width:100%;
+    border:1px solid #d9d9d9;
+    border-radius:8px;
+    padding:12px 15px;
+    font-size:15px;
+    margin-bottom:18px;
+    outline:none;
+    transition:.3s;
+}
+
+.formulario input:focus,
+.formulario textarea:focus{
+    border-color:#4f46e5;
+}
+
+.formulario textarea{
+    height:70px;
+    resize:none;
+}
+
+.formulario button{
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:8px;
+    background:#4f46e5;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.formulario button:hover{
+    background:#4338ca;
+}
+
+
+/*====================================
+            INFORMAÇÕES
+====================================*/
+
+.informacoes{
+     width:260px;
+    margin-top:35px;
+}
+
+.info{
+    margin-bottom:45px;
+}
+
+.info h4{
+       font-size:26px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:10px;
+}
+
+.info p{
+    font-size:18px;
+    line-height:1.7;
+    color:#555;
+    margin-bottom:6px;
+}
+
+
+/*====================================
+            IMAGENS
+====================================*/
+
+.imagens-contato{
+    margin:70px auto 0;
+}
+
+.imagens-contato .container-fluid{
+    display:flex;
+    max-width:1250px;
+    margin:0 auto;
+    padding:0;
+}
+
+.imagem-contato:first-child{
+    width:45%;
+    height:320px;
+}
+
+.imagem-contato:last-child{
+    width:55%;
+    height:320px;
+}
+
+.imagem-contato img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* ====================================
+   ÁREA DE ATENDIMENTO
+==================================== */
+
+.atendimento-area{
+    width: 100%;
+
+    text-align: center;
+
+    background: #f1efff;
+
+    margin-top: 35px;
+
+    padding: 38px 0;
+
+    border-top: 2px solid #b8b8b8;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.atendimento-area .container{
+    max-width: 1200px;
+}
+
+
+/* CARDS */
+
+.cards-atendimento{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-bottom: 35px;
+
+    flex-wrap: wrap;
+}
+
+.atendimento-card{
+    width: 380px;
+    min-height: 75px;
+
+    background: #ffffff;
+
+    padding: 12px 22px;
+
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.atendimento-card:hover{
+    transform: translateY(-3px);
+
+    background: #fafafa;
+}
+
+
+/* ÍCONES */
+
+.icone-atendimento{
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+
+/* TEXTO DOS CARDS */
+
+.info-atendimento{
+    text-align: left;
+}
+
+.info-atendimento h5{
+    margin: 0 0 4px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.info-atendimento p{
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* TEXTO INFORMATIVO */
+
+.texto-informativo{
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+
+    color: #444;
+
+    text-align: center;
+}
+
+/* ====================================
+   DIVISOR ENTRE SEÇÕES
+==================================== */
+
+.divisor-secao{
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    border: none;
+
+    border-top: 1px solid #cfcfcf;
+}
+
+
+/* ====================================
+   RODAPÉ
+==================================== */
+
+.footer-poupemais{
+    background: #7f83d6;
+    color: white;
+
+    margin-top: 0;
+
+    padding: 60px 0 25px;
+}
+
+.footer-poupemais .container{
+    max-width: 1200px;
+}
+
+/* PARTE SUPERIOR */
+
+.footer-top{
+    display: grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1fr
+        1fr
+        240px;
+
+    gap: 50px;
+
+    align-items: center;
+}
+
+.footer-col h3{
+    font-size: 42px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+}
+
+.footer-col h5,
+.footer-col h6{
+    font-size: 20px;
+    font-weight: 600;
+
+    margin-bottom: 18px;
+}
+
+.footer-col p{
+    font-size: 16px;
+    line-height: 1.8;
+
+    margin-bottom: 8px;
+
+    color: rgba(255,255,255,.95);
+}
+
+/* REDES */
+
+.redes{
+    display: flex;
+    gap: 14px;
+
+    margin-top: 10px;
+}
+
+.redes img{
+    width: 24px;
+    height: 24px;
+}
+
+/* FOTO */
+
+.footer-imagem{
+    display: flex;
+    justify-content: center;
+}
+
+.footer-imagem img{
+    width: 220px;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+/* LINHA */
+
+.footer-poupemais hr{
+    margin: 35px 0;
+
+    border: none;
+
+    border-top: 1px solid rgba(255,255,255,.35);
+}
+
+/* PARTE INFERIOR */
+
+.footer-bottom{
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom h4{
+    font-size: 22px;
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.footer-bottom p{
+    font-size: 15px;
+
+    margin-bottom: 10px;
+}
+
+.pagamentos{
+    font-size: 16px;
+}
+
+.logo-final{
+    font-size: 22px;
+    font-weight: 700;
+}
