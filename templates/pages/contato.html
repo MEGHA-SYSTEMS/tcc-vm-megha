@@ -23,6 +23,65 @@
 </head>
 
 <body>
+    
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<nav class="navbar navbar-expand-lg navbar-poupemais">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand d-flex align-items-center" href="#">
+
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="Logo PoupeMais"
+                 class="logo-nav">
+
+            <span class="ms-2 nome-site">
+                PoupeMais
+            </span>
+
+            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
+                 class="icone-nav-img ms-3"
+                 alt="Buscar">
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Abrir menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end"
+             id="navbarNav">
+
+            <div class="d-flex align-items-center gap-4">
+
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-primary btn-cadastro">
+
+                    É farmácia? Cadastre-se aqui
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
 
   <section class="contato">
 
