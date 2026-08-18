@@ -1,7 +1,3 @@
-# Dev environment
-pip
-autopep8
-
-# App
 flask
 firebase-admin
+gunicorn
