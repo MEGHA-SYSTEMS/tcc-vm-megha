@@ -49,6 +49,10 @@ def contato():
 def localizacao():
     return render_template("pages/localizacao.html")
 
+@app.route("/catalogo")
+def catalogo():
+    return render_template("pages/catalogo.html")       
+
 
 def main():
     app.run(
