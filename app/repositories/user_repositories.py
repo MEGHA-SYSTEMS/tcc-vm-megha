@@ -26,8 +26,9 @@ def create_farmacia_auth(self, email: str, password:str, display_name:str) -> st
                 data = doc.to_dist()
                 return User(
                     uid=uid,
-                    nome=data['nome'],
-                    email=data['email'],
-                    create_at=data['created_at'],
-                    updated_at=data['updated_at']
+                    nome=data.get['nome'],
+                    email=data.get['email'],
+                    create_at=data.get['created_at'],
+                    updated_at=data.get['updated_at']
                 )
+            return None
