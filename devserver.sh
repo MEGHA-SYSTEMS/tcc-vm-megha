@@ -7,6 +7,7 @@ pip install matplotlib seaborn
 pip install scipy statsmodels
 pip install scikit-learn
 pip install dask matplotlib
+pip install firebase_admin 
 pip install flask
 pip install flask-cors
 pip install google-generativeai
