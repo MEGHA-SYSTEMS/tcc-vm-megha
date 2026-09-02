@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, render_template
+from produto import get_todos_produtos, get_produto_por_id
 
 app = Flask(__name__)
 
@@ -51,7 +52,22 @@ def localizacao():
 
 @app.route("/catalogo")
 def catalogo():
-    return render_template("pages/catalogo.html")       
+    nome = "poupemais.com"
+    produtos = get_todos_produtos()
+    return render_template("pages/catalogo.html", site=nome, produtos=produtos)
+
+
+@app.route("/produto/<int:produto_id>")
+def produto(produto_id):
+    nome = "poupemais.com"
+    produto = get_produto_por_id(produto_id)
+ 
+    if produto is None:
+        from flask import redirect, url_for
+        return redirect(url_for("catalogo"))
+ 
+    return render_template("pages/produto.html", site=nome, produto=produto)
+ 
 
 
 def main():

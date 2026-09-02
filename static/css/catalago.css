@@ -1,0 +1,54 @@
+/* catalogo.css
+   Ajustes pensados para legibilidade do público idoso:
+   fontes maiores, bom contraste e áreas clicáveis grandes. */
+
+   body {
+    font-size: 1.1rem;
+}
+
+.produto-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.produto-card {
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    border: 2px solid transparent;
+}
+
+.produto-card:hover,
+.produto-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+    border-color: #0d6efd;
+}
+
+.produto-imagem {
+    height: 220px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+
+.produto-imagem-detalhe {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+}
+
+.preco-destaque {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #198754;
+}
+
+/* Foco visível no teclado, importante para acessibilidade */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid #0d6efd;
+    outline-offset: 2px;
+}
