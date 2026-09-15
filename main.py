@@ -15,13 +15,13 @@ def index():
 # Cadastro da Farmácia
 @app.route("/login")
 def login():
-    return render_template("login/login.html")
+    return render_template("login/register.html")
 
 
 # Login do sistema (temporário)
 @app.route("/register")
 def register():
-    return render_template("login/register.html")
+    return render_template("login/login.html")
 
 
 # Recuperação de senha

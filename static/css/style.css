@@ -54,6 +54,23 @@ body {
     border-radius: 8px;
 }
 
+.btn-saiba-mais {
+    display: inline-block;
+    background: #6c63ff;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-saiba-mais:hover {
+    background: #574fd6;
+}
+
 .imagem-hero {
     width: 100%;
     max-width: 350px;
@@ -124,7 +141,8 @@ body {
 ==================================== */
 
 .beneficios-box {
-    background: #E6E3FF;
+    background: #ffffff;
+    border: 1px solid #d8d3ff;
 
     max-width: 1200px;
 
@@ -162,7 +180,7 @@ body {
 }
 
 .item-beneficio:hover {
-    background: rgba(255, 255, 255, .35);
+    background: rgba(108, 99, 255, .06);
 }
 
 .col-md-4:not(:last-child) {
@@ -360,9 +378,9 @@ body {
     background: #8f2cd1;
     color: white;
 
-    padding: 14px 18px;
+    padding: 14px 18px 14px 26px;
 
-    border-radius: 12px;
+    border-radius: 4px 12px 12px 4px;
 
     font-size: 28px;
     font-weight: 700;
@@ -372,6 +390,10 @@ body {
     text-align: center;
 
     margin-left: auto;
+
+    position: relative;
+
+    clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
 }
 
 .preco span {
@@ -436,7 +458,7 @@ body {
     width: 380px;
     min-height: 75px;
 
-    background: #ffffff;
+    background: #eceaff;
 
     padding: 12px 22px;
 
@@ -444,6 +466,7 @@ body {
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     gap: 16px;
 
@@ -455,7 +478,14 @@ body {
 .atendimento-card:hover {
     transform: translateY(-3px);
 
-    background: #fafafa;
+    background: #e2deff;
+}
+
+.atendimento-card::after {
+    content: "›";
+    font-size: 22px;
+    font-weight: 700;
+    color: #6c63ff;
 }
 
 
@@ -475,6 +505,7 @@ body {
 
 .info-atendimento {
     text-align: left;
+    flex: 1;
 }
 
 .info-atendimento h5 {
@@ -821,11 +852,6 @@ body {
 
 .btn-login:hover {
     background: #4338ca !important;
-}
-
-.btn-login:hover {
-    background: #4f46e5 !important;
-    color: #fff !important;
 }
 
 /* busca */
