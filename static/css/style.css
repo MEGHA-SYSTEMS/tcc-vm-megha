@@ -346,6 +346,13 @@ body {
     transition: .3s;
 }
 
+/* Card do catálogo agora é um link (<a>): remove sublinhado e cor de link */
+.grid-produtos a.produto-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
 .produto-card h5 {
     text-align: center;
 
@@ -682,11 +689,9 @@ body {
 .logo-final {
     font-size: 22px;
     font-weight: 700;
+
+    margin-left: auto;
 }
-
-
-
-
 
 
 

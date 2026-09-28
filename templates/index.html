@@ -328,7 +328,7 @@
 
     <div class="grid-produtos">
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=1) }}" class="produto-card">
 
             <h5>Produto 1</h5>
 
@@ -343,10 +343,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=2) }}" class="produto-card">
 
             <h5>Produto 2</h5>
 
@@ -361,10 +361,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=3) }}" class="produto-card">
 
             <h5>Produto 3</h5>
 
@@ -379,10 +379,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=4) }}" class="produto-card">
 
             <h5>Produto 4</h5>
 
@@ -397,10 +397,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=5) }}" class="produto-card">
 
             <h5>Produto 5</h5>
 
@@ -415,10 +415,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=6) }}" class="produto-card">
 
             <h5>Produto 6</h5>
 
@@ -433,10 +433,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=7) }}" class="produto-card">
 
             <h5>Produto 7</h5>
 
@@ -451,10 +451,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=8) }}" class="produto-card">
 
             <h5>Produto 8</h5>
 
@@ -469,10 +469,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=9) }}" class="produto-card">
 
             <h5>Produto 9</h5>
 
@@ -487,10 +487,10 @@
 
             </div>
 
-        </div>
+        </a>
 
 
-        <div class="produto-card">
+        <a href="{{ url_for('produto', produto_id=10) }}" class="produto-card">
 
             <h5>Produto 10</h5>
 
@@ -505,15 +505,14 @@
 
             </div>
 
-        </div>
+        </a>
 
     </div>
 
-    <p class="ver-mais">
-        Ver mais
-    </p>
-
 </section>
+
+
+<hr class="divisor-secao">
 
 
 <hr class="divisor-secao">
@@ -578,7 +577,6 @@
 
 <hr class="divisor-secao">
 
-
 <!-- ==========================================
      RODAPÉ
 ========================================== -->
@@ -599,26 +597,6 @@
                     Preços justos para um cuidado contínuo
                 </p>
 
-                <h5>
-                    Nossas redes:
-                </h5>
-
-                <div class="redes">
-
-                    <img src="{{ url_for('static', filename='img/twitter.png') }}"
-                         alt="Twitter">
-
-                    <img src="{{ url_for('static', filename='img/facebook.png') }}"
-                         alt="Facebook">
-
-                    <img src="{{ url_for('static', filename='img/instagram.png') }}"
-                         alt="Instagram">
-
-                    <img src="{{ url_for('static', filename='img/linkedin.png') }}"
-                         alt="LinkedIn">
-
-                </div>
-
             </div>
 
 
@@ -628,12 +606,24 @@
                     Companhia
                 </h6>
 
-                <a href="#">
-                    Contate-nos
+                <a href="{{ url_for('index') }}">
+                    Início
+                </a>
+
+                <a href="{{ url_for('catalogo') }}">
+                    Catálogo
+                </a>
+
+                <a href="{{ url_for('localizacao') }}">
+                    Localização
                 </a>
 
                 <a href="{{ url_for('team') }}">
                     Sobre nós
+                </a>
+
+                <a href="{{ url_for('contato') }}">
+                    Contate-nos
                 </a>
 
                 <a href="{{ url_for('termos') }}">
@@ -651,6 +641,18 @@
 
                 <a href="#">
                     Editar endereço
+                </a>
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}">
+                    Cadastre-se
+                </a>
+
+                <a href="{{ url_for('recovery') }}">
+                    Recuperar senha
                 </a>
 
             </div>
@@ -691,23 +693,6 @@
 
 
         <div class="footer-bottom">
-
-            <div>
-
-                <h4>
-                    Formas de pagamento
-                </h4>
-
-                <p>
-                    Parcele em até 3x sem juros!
-                </p>
-
-                <div class="pagamentos">
-                    PIX • VISA • MASTERCARD
-                </div>
-
-            </div>
-
 
             <div class="logo-final">
                 POUPE MAIS

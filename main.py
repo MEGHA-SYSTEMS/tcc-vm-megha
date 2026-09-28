@@ -56,6 +56,26 @@ def catalogo():
     produtos = get_todos_produtos()
     return render_template("pages/catalogo.html", site=nome, produtos=produtos)
 
+    # Adicione este bloco no main.py, perto das outras rotas de login/recovery.
+# Ajuste o caminho do template ("login/nova_senha.html") se a sua pasta
+# de templates de login tiver outro nome.
+
+# Nova senha (depois da recuperação)
+@app.route("/nova-senha", methods=["GET", "POST"])
+def nova_senha():
+    if request.method == "POST":
+        nova_senha = request.form.get("novasenha")
+        confirmar_senha = request.form.get("confirmar_senha")
+
+        # TODO: aqui entra a lógica de verdade —
+        # validar se o usuário passou pela etapa de confirmação
+        # do código, e então salvar a nova senha (com hash!)
+        # no seu banco/Firestore, associada ao número confirmado.
+
+        return redirect(url_for("login"))
+
+    return render_template("login/nova_senha.html")
+
 
 @app.route("/produto/<int:produto_id>")
 def produto(produto_id):

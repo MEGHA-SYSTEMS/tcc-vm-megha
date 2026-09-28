@@ -271,6 +271,40 @@ body {
 
 
 /* ====================================
+   RECUPERAÇÃO DE SENHA (recovery.html)
+==================================== */
+
+.card-recovery {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.card-recovery:last-of-type {
+    margin-bottom: 0;
+}
+
+/* esconde o segundo card até o código ser enviado */
+.oculto {
+    display: none;
+}
+
+.mensagem-status {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4f46e5;
+    min-height: 20px;
+    margin-top: 15px;
+}
+
+/* o reCAPTCHA invisível do Firebase não deve ocupar espaço visual */
+#recaptcha-container {
+    margin-top: 10px;
+}
+
+
+
+/* ====================================
    RODAPÉ
 ==================================== */
 

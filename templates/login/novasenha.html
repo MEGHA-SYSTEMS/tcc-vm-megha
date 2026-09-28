@@ -367,10 +367,8 @@
         }
 
         if (codigoDigitado === codigoGerado) {
-            mensagem.textContent = 'Número confirmado! (modo teste, sem redirecionar ainda)';
-            // TODO: quando tiver a tela de nova senha pronta,
-            // troque a linha acima por:
-            // window.location.href = '/nova-senha';
+            mensagem.textContent = 'Número confirmado! Redirecionando...';
+            window.location.href = '/nova-senha';
         } else {
             mensagem.textContent = 'Código incorreto. Tente novamente.';
         }
