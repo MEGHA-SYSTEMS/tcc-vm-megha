@@ -1,9 +1,17 @@
 import os
+from functools import wraps
 
-from flask import Flask, render_template
+from flask import (Flask, flash, redirect, render_template, request,
+                   session, url_for)
 from produto import get_todos_produtos, get_produto_por_id
+from farmacia_service import cadastrar_farmacia
+from login_service import entrar
+from produtos_service import (CATEGORIAS, adicionar_produto, excluir_produto,
+                               listar_produtos)
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "chave-so-para-testes-locais")
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
 
 @app.route("/")
@@ -12,16 +20,90 @@ def index():
     return render_template("index.html", site=nome)
 
 
-# Cadastro da Farmácia
-@app.route("/login")
+def login_obrigatorio(rota):
+    """Protege uma página: só deixa entrar quem fez login."""
+    @wraps(rota)
+    def protegida(*args, **kwargs):
+        if "farmacia_id" not in session:
+            return redirect(url_for("login"))
+        return rota(*args, **kwargs)
+    return protegida
+
+
+# Formulário de ENTRAR (mostra login/register.html, veja o aviso abaixo)
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        email = request.form.get("email", "")
+        ok, mensagem, farmacia = entrar(email, request.form.get("senha", ""))
+        if ok:
+            session.clear()
+            session["farmacia_id"] = farmacia["uid"]
+            session["farmacia_nome"] = farmacia["nome"]
+            return redirect(url_for("painel"))
+        return render_template("login/register.html",
+                               mensagem=mensagem, email=email)
     return render_template("login/register.html")
 
 
-# Login do sistema (temporário)
-@app.route("/register")
+@app.route("/painel")
+@login_obrigatorio
+def painel():
+    return render_template(
+        "dashboard/painel.html",
+        nome=session["farmacia_nome"],
+        produtos=listar_produtos(session["farmacia_id"]),
+        categorias=CATEGORIAS,
+        dados={},
+    )
+
+
+@app.route("/painel/produtos", methods=["POST"])
+@login_obrigatorio
+def painel_adicionar_produto():
+    ok, mensagem = adicionar_produto(session["farmacia_id"], request.form)
+    if ok:
+        flash(mensagem, "success")
+        return redirect(url_for("painel"))
+    # Erro: mostra o painel de novo mantendo o que a farmácia já digitou
+    return render_template(
+        "dashboard/painel.html",
+        nome=session["farmacia_nome"],
+        produtos=listar_produtos(session["farmacia_id"]),
+        categorias=CATEGORIAS,
+        dados=request.form.to_dict(),
+        erro=mensagem,
+    )
+
+
+@app.route("/painel/produtos/<produto_id>/excluir", methods=["POST"])
+@login_obrigatorio
+def painel_excluir_produto(produto_id):
+    ok, mensagem = excluir_produto(session["farmacia_id"], produto_id)
+    flash(mensagem, "success" if ok else "danger")
+    return redirect(url_for("painel"))
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
+
+
+# ATENÇÃO: os nomes das rotas estão "trocados" de propósito, porque o site
+# inteiro já usa assim: "/register" mostra o formulário de CADASTRO da farmácia
+# (login.html) e "/login" mostra o formulário de ENTRAR (register.html).
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("login/login.html")
+    if request.method == "POST":
+        ok, mensagem = cadastrar_farmacia(request.form)
+        return render_template(
+            "login/login.html",
+            mensagem=mensagem,
+            sucesso=ok,
+            dados={} if ok else request.form.to_dict(),
+        )
+    return render_template("login/login.html", dados={})
 
 
 # Recuperação de senha
@@ -56,9 +138,6 @@ def catalogo():
     produtos = get_todos_produtos()
     return render_template("pages/catalogo.html", site=nome, produtos=produtos)
 
-    # Adicione este bloco no main.py, perto das outras rotas de login/recovery.
-# Ajuste o caminho do template ("login/nova_senha.html") se a sua pasta
-# de templates de login tiver outro nome.
 
 # Nova senha (depois da recuperação)
 @app.route("/nova-senha", methods=["GET", "POST"])
@@ -74,7 +153,7 @@ def nova_senha():
 
         return redirect(url_for("login"))
 
-    return render_template("login/nova_senha.html")
+    return render_template("login/novasenha.html")
 
 
 @app.route("/produto/<int:produto_id>")
@@ -83,7 +162,6 @@ def produto(produto_id):
     produto = get_produto_por_id(produto_id)
  
     if produto is None:
-        from flask import redirect, url_for
         return redirect(url_for("catalogo"))
  
     return render_template("pages/produto.html", site=nome, produto=produto)

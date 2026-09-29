@@ -46,52 +46,80 @@
 
     <div class="card-login">
 
-      <form>
+      {% if mensagem %}
+      <div class="alert {{ 'alert-success' if sucesso else 'alert-danger' }}" role="alert">
+        {{ mensagem }}
+        {% if sucesso %}
+          <a href="{{ url_for('login') }}" class="alert-link">Entrar</a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('register') }}">
 
         <div class="mb-3">
-          <label class="form-label">
-            Bairro
-          </label>
-
-          <input type="text" class="form-control" placeholder="ex: Centro">
+          <label class="form-label" for="nome">Nome da farmácia</label>
+          <input type="text" class="form-control" id="nome" name="nome"
+                 value="{{ dados.get('nome', '') }}" placeholder="ex: Farmácia Popular" required>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">
-           Rua
-          </label>
-
-          <input type="bairro" class="form-control" placeholder="ex:Novo Mundo">
+          <label class="form-label" for="cnpj">CNPJ</label>
+          <input type="text" class="form-control" id="cnpj" name="cnpj"
+                 value="{{ dados.get('cnpj', '') }}" placeholder="ex: 00.000.000/0001-00" required>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">
-            CEP
-          </label>
-
-          <input type="rua" class="form-control" placeholder="ex:15990-736">
+          <label class="form-label" for="email">E-mail</label>
+          <input type="email" class="form-control" id="email" name="email"
+                 value="{{ dados.get('email', '') }}" placeholder="ex: contato@farmacia.com" required>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">
-           número
-          </label>
-
-          <input type="password" class="form-control" placeholder="ex:12">
+          <label class="form-label" for="senha">Senha</label>
+          <input type="password" class="form-control" id="senha" name="senha"
+                 minlength="6" placeholder="mínimo de 6 caracteres" required>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">
-          Cidade
-          </label>
+          <label class="form-label" for="confirmar_senha">Confirmar senha</label>
+          <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha"
+                 minlength="6" placeholder="repita a senha" required>
+        </div>
 
-          <input type="password" class="form-control" placeholder="ex:Matão">
+        <div class="mb-3">
+          <label class="form-label" for="bairro">Bairro</label>
+          <input type="text" class="form-control" id="bairro" name="bairro"
+                 value="{{ dados.get('bairro', '') }}" placeholder="ex: Centro" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="rua">Rua</label>
+          <input type="text" class="form-control" id="rua" name="rua"
+                 value="{{ dados.get('rua', '') }}" placeholder="ex: Novo Mundo" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="cep">CEP</label>
+          <input type="text" class="form-control" id="cep" name="cep"
+                 value="{{ dados.get('cep', '') }}" placeholder="ex: 15990-736" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="numero">Número</label>
+          <input type="text" class="form-control" id="numero" name="numero"
+                 value="{{ dados.get('numero', '') }}" placeholder="ex: 12" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="cidade">Cidade</label>
+          <input type="text" class="form-control" id="cidade" name="cidade"
+                 value="{{ dados.get('cidade', '') }}" placeholder="ex: Matão" required>
         </div>
 
         <div class="form-check mb-4">
-          <input class="form-check-input" type="checkbox" id="check">
-
-          <label class="form-check-label" for="check">
+          <input class="form-check-input" type="checkbox" id="termos" name="termos" value="1">
+          <label class="form-check-label" for="termos">
             Concordo com os termos e condições
           </label>
         </div>
@@ -106,7 +134,7 @@
 
     <p class="texto-login">
       Já tem uma conta?
-      <a href="{{ url_for('register') }}">
+      <a href="{{ url_for('login') }}">
         Entre agora
     </a>
     </p>

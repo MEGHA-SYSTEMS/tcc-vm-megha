@@ -93,7 +93,13 @@
 
     <div class="card-login">
 
-        <form>
+        {% if mensagem %}
+        <div class="alert alert-danger" role="alert">
+            {{ mensagem }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('login') }}">
 
 
             <div class="campo">
@@ -106,6 +112,7 @@
                     id="email"
                     name="email"
                     type="email"
+                    value="{{ email or '' }}"
                     placeholder="Digite seu e-mail"
                     required>
 
@@ -167,7 +174,7 @@
 
         Ainda não possui conta?
 
-        <a href="{{ url_for('login') }}">
+        <a href="{{ url_for('register') }}">
             Cadastre-se
         </a>
 
