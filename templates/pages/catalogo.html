@@ -42,10 +42,10 @@
                    id="input-busca"
                    placeholder="Buscar produtos..."
                    autocomplete="off">
+
+            <div id="resultados-busca" class="resultados-busca"></div>
         
         </div>
-
-        </a>
 
         <button class="navbar-toggler"
                 type="button"
@@ -85,6 +85,97 @@
     </div>
 
 </nav>
+
+<script>
+(function () {
+    var input = document.getElementById("input-busca");
+    var caixa = document.getElementById("resultados-busca");
+    var botao = document.getElementById("btn-busca");
+    var urlBusca = "{{ url_for('busca') }}";
+    var timer = null;
+    var ultimosResultados = [];
+
+    function fechar() {
+        caixa.style.display = "none";
+        caixa.innerHTML = "";
+    }
+
+    function mostrar(resultados) {
+        ultimosResultados = resultados;
+        caixa.innerHTML = "";
+
+        if (resultados.length === 0) {
+            var vazio = document.createElement("div");
+            vazio.className = "resultado-vazio";
+            vazio.textContent = "Nenhum produto encontrado";
+            caixa.appendChild(vazio);
+        } else {
+            resultados.forEach(function (r) {
+                var link = document.createElement("a");
+                link.href = r.url;
+                link.className = "resultado-item";
+
+                var nome = document.createElement("span");
+                nome.className = "resultado-nome";
+                nome.textContent = r.nome;
+
+                var cat = document.createElement("span");
+                cat.className = "resultado-categoria";
+                cat.textContent = r.categoria;
+
+                link.appendChild(nome);
+                link.appendChild(cat);
+                caixa.appendChild(link);
+            });
+        }
+        caixa.style.display = "block";
+    }
+
+    function buscar() {
+        var termo = input.value.trim();
+        if (termo.length < 2) {
+            fechar();
+            return;
+        }
+        fetch(urlBusca + "?q=" + encodeURIComponent(termo))
+            .then(function (resp) { return resp.json(); })
+            .then(mostrar)
+            .catch(function () { fechar(); });
+    }
+
+    // Busca enquanto digita (espera 250ms de pausa para não sobrecarregar)
+    input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(buscar, 250);
+    });
+
+    // Enter ou clique na lupa: abre o primeiro resultado
+    function irParaPrimeiro() {
+        if (ultimosResultados.length > 0) {
+            window.location.href = ultimosResultados[0].url;
+        } else {
+            buscar();
+        }
+    }
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            irParaPrimeiro();
+        }
+        if (e.key === "Escape") {
+            fechar();
+        }
+    });
+    botao.addEventListener("click", irParaPrimeiro);
+
+    // Clicar fora fecha a lista
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".search-wrapper")) {
+            fechar();
+        }
+    });
+})();
+</script>
 
     <!-- TODO: troque este cabeçalho pelo seu navbar/header padrão, se já tiver um -->
     <header class="site-header py-3 mb-4 border-bottom">

@@ -889,3 +889,60 @@ body {
     padding: 8px 14px;
     margin-left: 10px;
 }
+
+
+/* ==========================================
+   BUSCA: DROPDOWN DE SUGESTÕES
+========================================== */
+
+.search-wrapper {
+    position: relative;
+}
+
+.resultados-busca {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    min-width: 280px;
+    margin-top: 6px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    z-index: 2000;
+}
+
+.resultado-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    text-decoration: none;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.resultado-item:last-child {
+    border-bottom: none;
+}
+
+.resultado-item:hover {
+    background: #f1f6ff;
+}
+
+.resultado-nome {
+    color: #222222;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.resultado-categoria {
+    color: #777777;
+    font-size: 0.85rem;
+}
+
+.resultado-vazio {
+    padding: 12px 14px;
+    color: #777777;
+    font-size: 0.95rem;
+}
