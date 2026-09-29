@@ -189,7 +189,7 @@ def nova_senha():
     return render_template("login/novasenha.html")
 
 
-@app.route("/produto/<int:produto_id>")
+@app.route("/produto/<produto_id>")
 def produto(produto_id):
     nome = "poupemais.com"
     produto = get_produto_por_id(produto_id)
