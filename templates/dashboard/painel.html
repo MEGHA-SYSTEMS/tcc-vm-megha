@@ -1,118 +1,1045 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Painel | PoupeMais</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-  <nav class="navbar bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand" href="{{ url_for('index') }}">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="PoupeMais" width="40">
-      </a>
-      <span class="ms-auto me-3 text-muted d-none d-md-inline">{{ nome }}</span>
-      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('logout') }}">Sair</a>
-    </div>
-  </nav>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu painel | PoupeMais</title>
 
-  <main class="container py-4">
-    <h1 class="h3 mb-4">Olá, {{ nome }}!</h1>
+
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+</head>
+
+
+
+
+<body class="painel">
+
+
+
+
+  {% include 'dashboard/_navbar.html' %}
+
+
+
+
+  <main class="container py-4 pb-5">
+
+
+
 
     {% with mensagens = get_flashed_messages(with_categories=true) %}
       {% for tipo, texto in mensagens %}
-        <div class="alert alert-{{ tipo }}" role="alert">{{ texto }}</div>
+        <div class="alert alert-{{ tipo }}" role="alert">
+          {{ texto }}
+        </div>
       {% endfor %}
     {% endwith %}
+
+
+
+
     {% if erro %}
-      <div class="alert alert-danger" role="alert">{{ erro }}</div>
+      <div class="alert alert-danger" role="alert">
+        {{ erro }}
+      </div>
     {% endif %}
 
-    <div class="row g-4">
 
-      <!-- Formulário -->
-      <div class="col-lg-5">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="h5 mb-3">Cadastrar produto</h2>
-            <form method="POST" action="{{ url_for('painel_adicionar_produto') }}">
 
-              <div class="mb-3">
-                <label class="form-label" for="nome">Nome do produto</label>
-                <input type="text" class="form-control" id="nome" name="nome" maxlength="120"
-                       value="{{ dados.get('nome', '') }}" placeholder="ex: Dipirona Monoidratada 500mg" required>
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label" for="categoria">Categoria</label>
-                <select class="form-select" id="categoria" name="categoria" required>
-                  <option value="" disabled {{ 'selected' if not dados.get('categoria') }}>Escolha...</option>
-                  {% for c in categorias %}
-                    <option value="{{ c }}" {{ 'selected' if dados.get('categoria') == c }}>{{ c }}</option>
-                  {% endfor %}
-                </select>
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label" for="principio_ativo">Princípio ativo <span class="text-muted">(opcional)</span></label>
-                <input type="text" class="form-control" id="principio_ativo" name="principio_ativo" maxlength="120"
-                       value="{{ dados.get('principio_ativo', '') }}" placeholder="ex: Dipirona Monoidratada">
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label" for="descricao">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="3" maxlength="1000"
-                          placeholder="Para que serve, quantidade na caixa..." required>{{ dados.get('descricao', '') }}</textarea>
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label" for="preco">Preço (R$)</label>
-                <input type="text" class="form-control" id="preco" name="preco" inputmode="decimal"
-                       value="{{ dados.get('preco', '') }}" placeholder="ex: 8,90" required>
-              </div>
 
-              <div class="mb-3">
-                <label class="form-label" for="imagem">Link da imagem <span class="text-muted">(opcional)</span></label>
-                <input type="url" class="form-control" id="imagem" name="imagem"
-                       value="{{ dados.get('imagem', '') }}" placeholder="https://...">
-              </div>
+    <!-- ================= PERFIL ================= -->
 
-              <button type="submit" class="btn btn-primary w-100">Cadastrar produto</button>
-            </form>
-          </div>
-        </div>
-      </div>
 
-      <!-- Lista -->
-      <div class="col-lg-7">
-        <h2 class="h5 mb-3">Seus produtos ({{ produtos|length }})</h2>
 
-        {% if produtos %}
-          <div class="list-group">
-            {% for p in produtos %}
-              <div class="list-group-item d-flex gap-3 align-items-center">
-                {% if p.imagem %}
-                  <img src="{{ p.imagem }}" alt="" width="56" height="56" style="object-fit: cover;" class="rounded">
-                {% endif %}
-                <div class="flex-grow-1">
-                  <div class="fw-semibold">{{ p.nome }}</div>
-                  <div class="small text-muted">{{ p.categoria }}</div>
-                </div>
-                <div class="fw-semibold">R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}</div>
-                <form method="POST" action="{{ url_for('painel_excluir_produto', produto_id=p.id) }}"
-                      onsubmit="return confirm('Excluir este produto?');">
-                  <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
-                </form>
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p class="text-muted">Você ainda não cadastrou nenhum produto.</p>
+
+    <section class="perfil-card mb-4">
+
+
+
+
+      <div class="perfil-capa">
+        {% if perfil.capa %}
+          <img
+            src="{{ perfil.capa }}"
+            alt="Foto de capa da farmácia"
+            onerror="this.style.display='none'"
+          >
         {% endif %}
       </div>
 
+
+
+
+      <div class="perfil-corpo">
+
+
+
+
+        <div class="perfil-topo">
+
+
+
+
+          <div class="perfil-logo">
+
+
+
+
+            {% if perfil.logo %}
+              <img
+                src="{{ perfil.logo }}"
+                alt="Logo da farmácia"
+                onerror="this.style.display='none'"
+              >
+            {% endif %}
+
+
+
+
+            <span class="perfil-logo-inicial">
+              {{ perfil.nome[:1]|upper }}
+            </span>
+
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+          <div class="flex-grow-1">
+
+
+
+
+            <h1 class="perfil-nome">
+              {{ perfil.nome }}
+            </h1>
+
+
+
+
+            <p class="perfil-sub mb-0">
+              CNPJ {{ perfil.cnpj }}
+            </p>
+
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+          <!-- BOTÕES DO PERFIL -->
+
+
+
+
+          <div class="d-flex gap-2 flex-wrap">
+
+
+
+
+            <a
+              href="{{ url_for('perfil_farmacia', farmacia_id=session['farmacia_id']) }}"
+              class="btn btn-outline-primary"
+            >
+              Ver minha página
+            </a>
+
+
+
+
+            <a
+              href="{{ url_for('painel_perfil') }}"
+              class="btn btn-primary btn-cadastro"
+            >
+              Editar perfil
+            </a>
+
+
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <ul class="perfil-info">
+
+
+
+
+          {% if perfil.endereco_texto %}
+            <li>
+              <strong>Endereço:</strong>
+              {{ perfil.endereco_texto }}
+
+
+
+
+              {% if perfil.endereco.cep %}
+                (CEP {{ perfil.endereco.cep }})
+              {% endif %}
+            </li>
+          {% endif %}
+
+
+
+
+
+
+
+
+          {% if perfil.telefone %}
+            <li>
+              <strong>Telefone:</strong>
+              {{ perfil.telefone }}
+            </li>
+          {% endif %}
+
+
+
+
+
+
+
+
+          {% if perfil.horario %}
+            <li>
+              <strong>Horário:</strong>
+              {{ perfil.horario }}
+            </li>
+          {% endif %}
+
+
+
+
+
+
+
+
+          <li>
+            <strong>E-mail:</strong>
+            {{ perfil.email }}
+          </li>
+
+
+
+
+        </ul>
+
+
+
+
+
+
+
+
+        {% if perfil.descricao %}
+          <p class="perfil-descricao">
+            {{ perfil.descricao }}
+          </p>
+        {% endif %}
+
+
+
+
+
+
+
+
+        {% if perfil.fotos %}
+
+
+
+
+          <div class="galeria">
+
+
+
+
+            {% for foto in perfil.fotos %}
+
+
+
+
+              <img
+                src="{{ foto }}"
+                alt="Foto {{ loop.index }} da farmácia"
+                onerror="this.style.display='none'"
+              >
+
+
+
+
+            {% endfor %}
+
+
+
+
+          </div>
+
+
+
+
+        {% endif %}
+
+
+
+
+
+
+
+
+        {% if perfil.incompleto %}
+
+
+
+
+          <div class="aviso-perfil">
+
+
+
+
+            Seu perfil ainda está incompleto.
+            Adicione uma descrição e uma foto
+            para que os clientes conheçam a sua farmácia.
+
+
+
+
+            <a href="{{ url_for('painel_perfil') }}">
+              Completar agora
+            </a>
+
+
+
+
+          </div>
+
+
+
+
+        {% endif %}
+
+
+
+
+      </div>
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ================= PRODUTOS ================= -->
+
+
+
+
+    <div class="row g-4">
+
+
+
+
+
+
+
+
+      <!-- CADASTRAR PRODUTO -->
+
+
+
+
+      <div class="col-lg-5">
+
+
+
+
+        <div class="painel-card">
+
+
+
+
+          <h2 class="painel-titulo">
+            Cadastrar produto
+          </h2>
+
+
+
+
+
+
+
+
+          <form
+            method="POST"
+            action="{{ url_for('painel_adicionar_produto') }}"
+          >
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+
+
+              <label
+                class="form-label"
+                for="nome"
+              >
+                Nome do produto
+              </label>
+
+
+
+
+              <input
+                type="text"
+                class="form-control"
+                id="nome"
+                name="nome"
+                maxlength="120"
+                value="{{ dados.get('nome', '') }}"
+                placeholder="ex: Dipirona Monoidratada 500mg"
+                required
+              >
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+
+
+              <label
+                class="form-label"
+                for="categoria"
+              >
+                Categoria
+              </label>
+
+
+
+
+              <select
+                class="form-select"
+                id="categoria"
+                name="categoria"
+                required
+              >
+
+
+
+
+                <option
+                  value=""
+                  disabled
+                  {{ 'selected' if not dados.get('categoria') }}
+                >
+                  Escolha...
+                </option>
+
+
+
+
+
+
+
+
+                {% for c in categorias %}
+
+
+
+
+                  <option
+                    value="{{ c }}"
+                    {{ 'selected' if dados.get('categoria') == c }}
+                  >
+                    {{ c }}
+                  </option>
+
+
+
+
+                {% endfor %}
+
+
+
+
+              </select>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+
+
+              <label
+                class="form-label"
+                for="principio_ativo"
+              >
+                Princípio ativo
+                <span class="opcional">
+                  (opcional)
+                </span>
+              </label>
+
+
+
+
+              <input
+                type="text"
+                class="form-control"
+                id="principio_ativo"
+                name="principio_ativo"
+                maxlength="120"
+                value="{{ dados.get('principio_ativo', '') }}"
+                placeholder="ex: Dipirona Monoidratada"
+              >
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+
+
+              <label
+                class="form-label"
+                for="descricao"
+              >
+                Descrição
+              </label>
+
+
+
+
+              <textarea
+                class="form-control"
+                id="descricao"
+                name="descricao"
+                rows="3"
+                maxlength="1000"
+                placeholder="Para que serve, quantidade na caixa..."
+                required
+              >{{ dados.get('descricao', '') }}</textarea>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="row">
+
+
+
+
+              <div class="col-5 mb-3">
+
+
+
+
+                <label
+                  class="form-label"
+                  for="preco"
+                >
+                  Preço (R$)
+                </label>
+
+
+
+
+                <input
+                  type="text"
+                  class="form-control"
+                  id="preco"
+                  name="preco"
+                  inputmode="decimal"
+                  value="{{ dados.get('preco', '') }}"
+                  placeholder="8,90"
+                  required
+                >
+
+
+
+
+              </div>
+
+
+
+
+
+
+
+
+              <div class="col-7 mb-3">
+
+
+
+
+                <label
+                  class="form-label"
+                  for="imagem"
+                >
+                  Link da imagem
+                  <span class="opcional">
+                    (opcional)
+                  </span>
+                </label>
+
+
+
+
+                <input
+                  type="url"
+                  class="form-control"
+                  id="imagem"
+                  name="imagem"
+                  value="{{ dados.get('imagem', '') }}"
+                  placeholder="https://..."
+                >
+
+
+
+
+              </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-cadastro w-100"
+            >
+              Cadastrar produto
+            </button>
+
+
+
+
+          </form>
+
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- PRODUTOS CADASTRADOS -->
+
+
+
+
+      <div class="col-lg-7">
+
+
+
+
+        <div class="painel-card">
+
+
+
+
+          <h2 class="painel-titulo">
+
+
+
+
+            Seus produtos
+
+
+
+
+            <span class="contador">
+              {{ produtos|length }}
+            </span>
+
+
+
+
+          </h2>
+
+
+
+
+
+
+
+
+          {% if produtos %}
+
+
+
+
+            <div class="lista-produtos">
+
+
+
+
+              {% for p in produtos %}
+
+
+
+
+                <div class="item-produto">
+
+
+
+
+
+
+
+
+                  <div class="item-foto">
+
+
+
+
+                    {% if p.imagem %}
+
+
+
+
+                      <img
+                        src="{{ p.imagem }}"
+                        alt=""
+                        onerror="this.style.display='none'"
+                      >
+
+
+
+
+                    {% endif %}
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="flex-grow-1">
+
+
+
+
+                    <div class="item-nome">
+                      {{ p.nome }}
+                    </div>
+
+
+
+
+                    <span class="badge bg-secondary-subtle text-secondary-emphasis">
+                      {{ p.categoria }}
+                    </span>
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="item-preco">
+
+
+
+
+                    R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <form
+                    method="POST"
+                    action="{{ url_for('painel_excluir_produto', produto_id=p.id) }}"
+                    onsubmit="return confirm('Excluir este produto?');"
+                  >
+
+
+
+
+                    <button
+                      type="submit"
+                      class="btn btn-outline-danger btn-sm"
+                    >
+                      Excluir
+                    </button>
+
+
+
+
+                  </form>
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+              {% endfor %}
+
+
+
+
+            </div>
+
+
+
+
+          {% else %}
+
+
+
+
+            <p class="vazio">
+
+
+
+
+              Você ainda não cadastrou nenhum produto.
+              Use o formulário ao lado para começar.
+
+
+
+
+            </p>
+
+
+
+
+          {% endif %}
+
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+
+
+
     </div>
+
+
+        <!-- ================= EXCLUIR CONTA ================= -->
+
+
+        <div class="mt-5 pt-4 border-top">
+          <div class="painel-card">
+            <h2 class="painel-titulo text-danger">
+              Excluir conta
+            </h2>
+   
+            <p class="text-muted mb-3">
+              A exclusão da conta removerá a farmácia, seus produtos e o acesso ao sistema.
+              Essa ação não pode ser desfeita.
+            </p>
+   
+            <form
+              action="{{ url_for('painel_excluir_conta') }}"
+              method="POST"
+              onsubmit="return confirm(
+                'Tem certeza que deseja excluir sua conta?\n\n' +
+                'Sua farmácia, seus produtos e seu acesso ao sistema serão excluídos permanentemente.'
+              );"
+            >
+              <button type="submit" class="btn btn-danger">
+                Excluir minha conta
+              </button>
+            </form>
+          </div>
+        </div>
+
+
   </main>
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
 </body>
 </html>

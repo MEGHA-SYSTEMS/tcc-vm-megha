@@ -2,18 +2,41 @@ import os
 import unicodedata
 from functools import wraps
 
-from flask import (Flask, flash, jsonify, redirect, render_template, request,
-                   session, url_for)
+from flask import (
+    Flask,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
+
 from produto import get_todos_produtos, get_produto_por_id
-from farmacia_service import cadastrar_farmacia
+from farmacia_service import (
+    cadastrar_farmacia,
+    obter_farmacia,
+    buscar_farmacias,
+    excluir_farmacia,
+)
 from login_service import entrar
-from produtos_service import (CATEGORIAS, adicionar_produto, excluir_produto,
-                               listar_produtos)
+from perfil_service import dados_para_formulario, obter_perfil, salvar_perfil
+from produtos_service import (
+    CATEGORIAS,
+    adicionar_produto,
+    excluir_produto,
+    listar_produtos,
+)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "chave-so-para-testes-locais")
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
+
+# ============================================================
+# BUSCA
+# ============================================================
 
 def normalizar(texto):
     """Minúsculas e sem acentos, para 'pressao' achar 'Pressão'."""
@@ -22,11 +45,19 @@ def normalizar(texto):
     return texto.lower()
 
 
+# ============================================================
+# PÁGINA INICIAL
+# ============================================================
+
 @app.route("/")
 def index():
     nome = "poupemais.com"
     return render_template("index.html", site=nome)
 
+
+# ============================================================
+# LOGIN
+# ============================================================
 
 def login_obrigatorio(rota):
     """Protege uma página: só deixa entrar quem fez login."""
@@ -49,22 +80,75 @@ def login():
             session["farmacia_id"] = farmacia["uid"]
             session["farmacia_nome"] = farmacia["nome"]
             return redirect(url_for("painel"))
-        return render_template("login/register.html",
-                               mensagem=mensagem, email=email)
+        return render_template(
+            "login/register.html",
+            mensagem=mensagem,
+            email=email,
+        )
     return render_template("login/register.html")
 
+
+# ============================================================
+# CONTEXTO DO PAINEL
+# ============================================================
+
+def _contexto_painel(**extra):
+    """Dados que a página do painel precisa."""
+    farmacia_id = session["farmacia_id"]
+    contexto = {
+        "nome": session["farmacia_nome"],
+        "perfil": obter_perfil(farmacia_id),
+        "produtos": listar_produtos(farmacia_id),
+        "categorias": CATEGORIAS,
+        "dados": {},
+    }
+    contexto.update(extra)
+    return contexto
+
+
+# ============================================================
+# PAINEL
+# ============================================================
 
 @app.route("/painel")
 @login_obrigatorio
 def painel():
+    return render_template("dashboard/painel.html", **_contexto_painel())
+
+
+# ============================================================
+# EDITAR PERFIL DA FARMÁCIA
+# ============================================================
+
+@app.route("/painel/perfil", methods=["GET", "POST"])
+@login_obrigatorio
+def painel_perfil():
+    farmacia_id = session["farmacia_id"]
+
+    if request.method == "POST":
+        ok, mensagem = salvar_perfil(farmacia_id, request.form)
+        if ok:
+            session["farmacia_nome"] = request.form.get("nome", "").strip()
+            flash(mensagem, "success")
+            return redirect(url_for("painel"))
+        return render_template(
+            "dashboard/perfil_editar.html",
+            perfil=obter_perfil(farmacia_id),
+            dados=request.form.to_dict(),
+            erro=mensagem,
+        )
+
+    perfil = obter_perfil(farmacia_id)
     return render_template(
-        "dashboard/painel.html",
-        nome=session["farmacia_nome"],
-        produtos=listar_produtos(session["farmacia_id"]),
-        categorias=CATEGORIAS,
-        dados={},
+        "dashboard/perfil_editar.html",
+        perfil=perfil,
+        dados=dados_para_formulario(perfil),
     )
 
+
+# ============================================================
+# CADASTRAR PRODUTO
+# ============================================================
 
 @app.route("/painel/produtos", methods=["POST"])
 @login_obrigatorio
@@ -76,13 +160,13 @@ def painel_adicionar_produto():
     # Erro: mostra o painel de novo mantendo o que a farmácia já digitou
     return render_template(
         "dashboard/painel.html",
-        nome=session["farmacia_nome"],
-        produtos=listar_produtos(session["farmacia_id"]),
-        categorias=CATEGORIAS,
-        dados=request.form.to_dict(),
-        erro=mensagem,
+        **_contexto_painel(dados=request.form.to_dict(), erro=mensagem)
     )
 
+
+# ============================================================
+# EXCLUIR PRODUTO
+# ============================================================
 
 @app.route("/painel/produtos/<produto_id>/excluir", methods=["POST"])
 @login_obrigatorio
@@ -92,11 +176,35 @@ def painel_excluir_produto(produto_id):
     return redirect(url_for("painel"))
 
 
+# ============================================================
+# EXCLUIR CONTA
+# ============================================================
+
+@app.route("/painel/excluir-conta", methods=["POST"])
+@login_obrigatorio
+def painel_excluir_conta():
+    ok, mensagem = excluir_farmacia(session["farmacia_id"])
+    if ok:
+        session.clear()
+        flash(mensagem, "success")
+        return redirect(url_for("index"))
+    flash(mensagem, "danger")
+    return redirect(url_for("painel"))
+
+
+# ============================================================
+# LOGOUT
+# ============================================================
+
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
+
+# ============================================================
+# CADASTRO DA FARMÁCIA
+# ============================================================
 
 # ATENÇÃO: os nomes das rotas estão "trocados" de propósito, porque o site
 # inteiro já usa assim: "/register" mostra o formulário de CADASTRO da farmácia
@@ -114,11 +222,18 @@ def register():
     return render_template("login/login.html", dados={})
 
 
-# Recuperação de senha
+# ============================================================
+# RECUPERAÇÃO DE SENHA
+# ============================================================
+
 @app.route("/recovery")
 def recovery():
     return render_template("login/recovery.html")
 
+
+# ============================================================
+# OUTRAS PÁGINAS
+# ============================================================
 
 @app.route("/team")
 def team():
@@ -140,6 +255,11 @@ def contato():
 def localizacao():
     return render_template("pages/localizacao.html")
 
+
+# ============================================================
+# CATÁLOGO
+# ============================================================
+
 @app.route("/catalogo")
 def catalogo():
     nome = "poupemais.com"
@@ -147,7 +267,30 @@ def catalogo():
     return render_template("pages/catalogo.html", site=nome, produtos=produtos)
 
 
-# Busca com sugestões (devolve JSON para o dropdown da navbar)
+# ============================================================
+# PÁGINA PÚBLICA DA FARMÁCIA
+# ============================================================
+
+@app.route("/farmacia/<farmacia_id>")
+def perfil_farmacia(farmacia_id):
+    farmacia = obter_farmacia(farmacia_id)
+    if farmacia is None:
+        return redirect(url_for("catalogo"))
+
+    produtos = listar_produtos(farmacia_id)
+    return render_template(
+        "pages/farmacia.html",
+        farmacia=farmacia,
+        produtos=produtos,
+        site="poupemais.com",
+    )
+
+
+# ============================================================
+# BUSCA COM SUGESTÕES
+# ============================================================
+
+# Devolve JSON para o dropdown da navbar (produtos + farmácias)
 @app.route("/busca")
 def busca():
     termo = normalizar(request.args.get("q", "").strip())
@@ -155,6 +298,8 @@ def busca():
         return jsonify([])
 
     resultados = []
+
+    # Produtos
     for p in get_todos_produtos():
         campos = [
             p.get("nome", ""),
@@ -163,16 +308,30 @@ def busca():
         ]
         if any(termo in normalizar(campo) for campo in campos):
             resultados.append({
+                "tipo": "produto",
                 "id": p["id"],
                 "nome": p["nome"],
                 "categoria": p.get("categoria", ""),
                 "url": url_for("produto", produto_id=p["id"]),
             })
 
+    # Farmácias
+    for farmacia in buscar_farmacias(termo):
+        resultados.append({
+            "tipo": "farmacia",
+            "id": farmacia["uid"],
+            "nome": farmacia.get("nome", ""),
+            "categoria": "Farmácia",
+            "url": url_for("perfil_farmacia", farmacia_id=farmacia["uid"]),
+        })
+
     return jsonify(resultados[:8])
 
 
-# Nova senha (depois da recuperação)
+# ============================================================
+# NOVA SENHA (depois da recuperação)
+# ============================================================
+
 @app.route("/nova-senha", methods=["GET", "POST"])
 def nova_senha():
     if request.method == "POST":
@@ -189,23 +348,30 @@ def nova_senha():
     return render_template("login/novasenha.html")
 
 
+# ============================================================
+# PÁGINA DO PRODUTO
+# ============================================================
+
 @app.route("/produto/<produto_id>")
 def produto(produto_id):
     nome = "poupemais.com"
     produto = get_produto_por_id(produto_id)
- 
+
     if produto is None:
         return redirect(url_for("catalogo"))
- 
-    return render_template("pages/produto.html", site=nome, produto=produto)
- 
 
+    return render_template("pages/produto.html", site=nome, produto=produto)
+
+
+# ============================================================
+# EXECUTAR SERVIDOR
+# ============================================================
 
 def main():
     app.run(
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 10000)),
-        debug=True
+        debug=True,
     )
 
 

@@ -1,0 +1,414 @@
+/* ==========================================================
+   PoupeMais — painel da farmácia
+   Usa a paleta (--pm-*) e a navbar do catalogo.css
+   ========================================================== */
+
+
+
+
+   body.painel {
+    background-color: #F6F7FD;
+}
+
+
+
+
+/* navbar mais compacta que a do catálogo */
+body.painel .logo-nav {
+    height: 56px;
+}
+
+
+
+
+.btn-pm-outline {
+    border-radius: 999px;
+    padding: 0.55rem 1.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--pm-primary);
+    border: 1px solid var(--pm-primary);
+    background: transparent;
+    white-space: nowrap;
+}
+
+
+
+
+.btn-pm-outline:hover {
+    background-color: var(--pm-primary);
+    color: var(--pm-text-light);
+}
+
+
+
+
+/* ---------- Perfil ---------- */
+
+
+
+
+.perfil-card {
+    background: #fff;
+    border-radius: var(--pm-radius);
+    box-shadow: var(--pm-shadow);
+    overflow: hidden;
+}
+
+
+
+
+.perfil-capa {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, var(--pm-bg-card), var(--pm-footer));
+}
+
+
+
+
+.perfil-capa img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+
+.perfil-corpo {
+    padding: 0 1.75rem 1.75rem;
+}
+
+
+
+
+.perfil-topo {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    margin-top: -48px;
+    margin-bottom: 1rem;
+}
+
+
+
+
+.perfil-logo {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    flex: none;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background: var(--pm-bg-card);
+    overflow: hidden;
+    box-shadow: var(--pm-shadow);
+}
+
+
+
+
+.perfil-logo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #fff;
+}
+
+
+
+
+.perfil-logo-inicial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--pm-primary);
+}
+
+
+
+
+.perfil-nome {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--pm-navy);
+    margin: 0;
+}
+
+
+
+
+.perfil-sub {
+    color: var(--pm-muted);
+    font-size: 0.95rem;
+}
+
+
+
+
+.perfil-info {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    color: var(--pm-text);
+}
+
+
+
+
+.perfil-info li {
+    padding: 0.2rem 0;
+}
+
+
+
+
+.perfil-info strong {
+    color: var(--pm-navy);
+}
+
+
+
+
+.perfil-descricao {
+    white-space: pre-line;
+    color: var(--pm-text);
+    margin-bottom: 1.25rem;
+}
+
+
+
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+
+
+
+.galeria img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--pm-bg-card);
+}
+
+
+
+
+.aviso-perfil {
+    background: var(--pm-bg-light);
+    border: 1px solid #d9def6;
+    color: var(--pm-navy);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+}
+
+
+
+
+.aviso-perfil a {
+    color: var(--pm-primary);
+    font-weight: 600;
+}
+
+
+
+
+/* ---------- Cards e formulários ---------- */
+
+
+
+
+.painel-card {
+    background: #fff;
+    border-radius: var(--pm-radius);
+    box-shadow: var(--pm-shadow);
+    padding: 1.5rem;
+}
+
+
+
+
+.painel-titulo {
+    color: var(--pm-navy);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1.1rem;
+}
+
+
+
+
+.painel-subtitulo {
+    color: var(--pm-navy);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+
+
+
+.painel .form-label {
+    font-weight: 600;
+    color: var(--pm-navy);
+    font-size: 0.92rem;
+}
+
+
+
+
+.painel .form-control,
+.painel .form-select {
+    border-radius: 10px;
+    border-color: #d6dbee;
+}
+
+
+
+
+.painel .form-control:focus,
+.painel .form-select:focus {
+    border-color: var(--pm-primary);
+    box-shadow: 0 0 0 0.2rem rgba(91, 79, 229, 0.18);
+}
+
+
+
+
+.opcional {
+    font-weight: 400;
+    color: var(--pm-muted);
+}
+
+
+
+
+.contador {
+    display: inline-block;
+    min-width: 1.8rem;
+    padding: 0.05rem 0.55rem;
+    margin-left: 0.4rem;
+    border-radius: 999px;
+    background: var(--pm-bg-card);
+    color: var(--pm-navy);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+
+
+
+.voltar {
+    color: var(--pm-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+
+
+
+.dados-fixos {
+    background: var(--pm-bg-light);
+    box-shadow: none;
+    border: 1px solid #d9def6;
+}
+
+
+
+
+/* ---------- Lista de produtos ---------- */
+
+
+
+
+.lista-produtos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+
+
+
+.item-produto {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem;
+    border: 1px solid #e6e9f6;
+    border-radius: 12px;
+}
+
+
+
+
+.item-foto {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--pm-bg-card);
+    overflow: hidden;
+}
+
+
+
+
+.item-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+
+.item-nome {
+    font-weight: 600;
+    color: var(--pm-navy);
+}
+
+
+
+
+.item-preco {
+    font-weight: 700;
+    color: var(--pm-navy);
+    white-space: nowrap;
+}
+
+
+
+
+.vazio {
+    color: var(--pm-muted);
+    margin: 0;
+}
+
+
+
+
+@media (max-width: 576px) {
+    .perfil-corpo { padding: 0 1rem 1.25rem; }
+    .perfil-capa { height: 140px; }
+    .item-produto { flex-wrap: wrap; }
+}
+
+

@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-poupemais">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('painel') }}">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo PoupeMais" class="logo-nav">
+        <span class="ms-2 nome-site">PoupeMais</span>
+      </a>
+ 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarPainel" aria-controls="navbarPainel"
+              aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+ 
+      <div class="collapse navbar-collapse justify-content-end" id="navbarPainel">
+        <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+          <a href="{{ url_for('catalogo') }}" class="btn btn-outline-primary btn-pm-outline">Ver catálogo</a>
+          <a href="{{ url_for('logout') }}" class="btn btn-primary btn-cadastro">Sair</a>
+        </div>
+      </div>
+    </div>
+  </nav>
