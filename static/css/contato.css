@@ -1,5 +1,5 @@
 body{
-    background:#f5f6fb;
+    background:#f3f6f9;
 }
 
 
@@ -49,6 +49,23 @@ body{
     background: #4338ca !important;
 }
 
+.btn-login {
+    background: #4f46e5 !important;
+
+    border: none !important;
+
+    padding: 10px 22px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-login:hover {
+    background: #4338ca !important;
+}
+
 .icone-nav-img {
     width: 24px;
     height: 24px;
@@ -61,6 +78,36 @@ body{
 }
 
 .icone-nav-img:hover {
+    transform: scale(1.08);
+}
+
+/* Links centrais: Início | Suporte | Contato */
+
+.nav-centro .nav-link {
+    color: #1f2235;
+    font-size: 17px;
+    padding: 0 16px;
+}
+
+.nav-centro .nav-link:hover {
+    color: #4f46e5;
+}
+
+.nav-centro .nav-item + .nav-item .nav-link {
+    border-left: 1px solid #1f2235;
+}
+
+/* Ícone de localização */
+
+.icone-localizacao {
+    display: flex;
+    align-items: center;
+    color: #000;
+    transition: .3s;
+}
+
+.icone-localizacao:hover {
+    color: #4f46e5;
     transform: scale(1.08);
 }
 
@@ -150,26 +197,20 @@ body{
 }
 
 
-
-
-
-
-
-
 /*====================================
             CONTATE NOS
 ====================================*/
 
 .contato{
-    padding:70px 0 50px;
-    background:#f5f6fb;
+    padding:60px 0 50px;
+    background:#f3f6f9;
 }
 
 .contato h1{
     text-align:center;
-    font-size:58px;
-    font-weight:700;
-    color:#111;
+    font-size:52px;
+    font-weight:400;
+    color:#1f2235;
     margin-bottom:70px;
 }
 
@@ -179,7 +220,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:flex-start;
-    gap:80px;
+    gap:90px;
 }
 
 /*====================================
@@ -187,31 +228,37 @@ body{
 ====================================*/
 
 .formulario{
-       width:450px;
+    width:420px;
     background:#fff;
-    padding:35px;
+    padding:30px;
     border-radius:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    box-shadow:0 8px 24px rgba(0,0,0,.10);
 }
 
 .formulario label{
     display:block;
-    font-size:15px;
-    font-weight:600;
-    margin-bottom:8px;
-    color:#333;
+    font-size:13px;
+    font-weight:500;
+    margin-bottom:6px;
+    color:#1f2235;
 }
 
 .formulario input,
 .formulario textarea{
     width:100%;
-    border:1px solid #d9d9d9;
+    border:1px solid #eef0f3;
+    background:#fafbfc;
     border-radius:8px;
-    padding:12px 15px;
-    font-size:15px;
-    margin-bottom:18px;
+    padding:11px 14px;
+    font-size:13px;
+    margin-bottom:14px;
     outline:none;
     transition:.3s;
+}
+
+.formulario input::placeholder,
+.formulario textarea::placeholder{
+    color:#b5b9c2;
 }
 
 .formulario input:focus,
@@ -220,19 +267,20 @@ body{
 }
 
 .formulario textarea{
-    height:70px;
+    height:90px;
     resize:none;
+    margin-bottom:30px;
 }
 
 .formulario button{
     width:100%;
-    height:48px;
+    height:42px;
     border:none;
     border-radius:8px;
     background:#4f46e5;
     color:#fff;
-    font-size:16px;
-    font-weight:600;
+    font-size:14px;
+    font-weight:500;
     cursor:pointer;
     transition:.3s;
 }
@@ -247,26 +295,26 @@ body{
 ====================================*/
 
 .informacoes{
-     width:260px;
-    margin-top:35px;
+    width:260px;
+    margin-top:150px;
 }
 
 .info{
-    margin-bottom:45px;
+    margin-bottom:40px;
 }
 
 .info h4{
-       font-size:26px;
-    font-weight:700;
-    color:#111;
-    margin-bottom:10px;
+    font-size:20px;
+    font-weight:400;
+    color:#1f2235;
+    margin-bottom:12px;
 }
 
 .info p{
-    font-size:18px;
-    line-height:1.7;
+    font-size:15px;
+    line-height:1.6;
     color:#555;
-    margin-bottom:6px;
+    margin-bottom:4px;
 }
 
 
@@ -275,30 +323,27 @@ body{
 ====================================*/
 
 .imagens-contato{
-    margin:70px auto 0;
+    margin:60px 0 0;
 }
 
 .imagens-contato .container-fluid{
     display:flex;
-    max-width:1250px;
-    margin:0 auto;
+    gap:6px;
+    max-width:100%;
+    margin:0;
     padding:0;
 }
 
-.imagem-contato:first-child{
-    width:45%;
-    height:320px;
-}
-
-.imagem-contato:last-child{
-    width:55%;
-    height:320px;
+.imagem-contato{
+    flex:1;
+    height:340px;
 }
 
 .imagem-contato img{
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:center 25%;
     display:block;
 }
 
@@ -311,14 +356,13 @@ body{
 
     text-align: center;
 
-    background: #f1efff;
+    background: #eef1fb;
 
-    margin-top: 35px;
+    margin-top: 0;
 
-    padding: 38px 0;
+    padding: 30px 0 38px;
 
-    border-top: 2px solid #b8b8b8;
-    border-bottom: 2px solid #b8b8b8;
+    border-top: 1px solid #555;
 }
 
 .atendimento-area .container{
@@ -334,27 +378,27 @@ body{
     justify-content: center;
     align-items: center;
 
-    gap: 25px;
+    gap: 22px;
 
-    margin-bottom: 35px;
+    margin-bottom: 28px;
 
     flex-wrap: wrap;
 }
 
 .atendimento-card{
-    width: 380px;
-    min-height: 75px;
+    width: 340px;
+    min-height: 72px;
 
-    background: #ffffff;
+    background: #dff1ff;
 
-    padding: 12px 22px;
+    padding: 12px 18px;
 
-    border-radius: 16px;
+    border-radius: 8px;
 
     display: flex;
     align-items: center;
 
-    gap: 16px;
+    gap: 14px;
 
     text-decoration: none;
 
@@ -364,7 +408,7 @@ body{
 .atendimento-card:hover{
     transform: translateY(-3px);
 
-    background: #fafafa;
+    background: #d2eaff;
 }
 
 
@@ -383,56 +427,62 @@ body{
 /* TEXTO DOS CARDS */
 
 .info-atendimento{
-    text-align: left;
+    flex: 1;
+    text-align: center;
 }
 
 .info-atendimento h5{
     margin: 0 0 4px;
 
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
 
-    color: #222;
+    color: #111;
 }
 
 .info-atendimento p{
     margin: 0;
 
-    font-size: 14px;
+    font-size: 12px;
 
-    color: #666;
+    color: #444;
+}
+
+/* SETA EM CÍRCULO */
+
+.seta-card{
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid #111;
+    border-radius: 50%;
+
+    color: #111;
+    font-size: 16px;
+    line-height: 1;
 }
 
 
 /* TEXTO INFORMATIVO */
 
 .texto-informativo{
-    max-width: 850px;
+    max-width: 650px;
 
     margin: 0 auto;
 
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.6;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.45;
 
-    color: #444;
+    color: #111;
 
     text-align: center;
-}
-
-/* ====================================
-   DIVISOR ENTRE SEÇÕES
-==================================== */
-
-.divisor-secao{
-    width: 100%;
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    border: none;
-
-    border-top: 1px solid #cfcfcf;
 }
 
 
@@ -446,7 +496,7 @@ body{
 
     margin-top: 0;
 
-    padding: 60px 0 25px;
+    padding: 50px 0 25px;
 }
 
 .footer-poupemais .container{
@@ -459,39 +509,59 @@ body{
     display: grid;
 
     grid-template-columns:
-        2fr
+        1.3fr
         1fr
-        1fr
-        1fr
-        240px;
+        1.6fr
+        220px;
 
-    gap: 50px;
+    gap: 40px;
 
     align-items: center;
 }
 
 .footer-col h3{
-    font-size: 42px;
+    font-size: 28px;
     font-weight: 700;
 
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
-.footer-col h5,
-.footer-col h6{
-    font-size: 20px;
-    font-weight: 600;
+.footer-col h5{
+    font-size: 15px;
+    font-weight: 700;
 
-    margin-bottom: 18px;
+    margin: 16px 0 12px;
+}
+
+.footer-col h6{
+    font-size: 15px;
+    font-weight: 400;
+
+    margin-bottom: 14px;
+
+    color: rgba(255,255,255,.85);
 }
 
 .footer-col p{
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.7;
 
     margin-bottom: 8px;
 
     color: rgba(255,255,255,.95);
+}
+
+/* FRASE DO MEIO */
+
+.footer-frase p{
+    max-width: 400px;
+
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.6;
+
+    color: #fff;
 }
 
 /* REDES */
@@ -504,8 +574,8 @@ body{
 }
 
 .redes img{
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 /* FOTO */
@@ -516,8 +586,8 @@ body{
 }
 
 .footer-imagem img{
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
 
     object-fit: cover;
 
@@ -527,7 +597,7 @@ body{
 /* LINHA */
 
 .footer-poupemais hr{
-    margin: 35px 0;
+    margin: 30px 0;
 
     border: none;
 
@@ -541,26 +611,54 @@ body{
 
     justify-content: space-between;
     align-items: center;
+
+    gap: 30px;
 }
 
-.footer-bottom h4{
-    font-size: 22px;
-    font-weight: 700;
+.footer-frase-final{
+    max-width: 650px;
 
-    margin-bottom: 5px;
-}
+    margin: 0;
 
-.footer-bottom p{
-    font-size: 15px;
-
-    margin-bottom: 10px;
-}
-
-.pagamentos{
     font-size: 16px;
+    line-height: 1.6;
+
+    color: #fff;
 }
 
 .logo-final{
-    font-size: 22px;
-    font-weight: 700;
+    width: 80px;
+    height: auto;
+}
+
+@media (max-width: 992px){
+
+    .contato-conteudo{
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .informacoes{
+        margin-top: 0;
+    }
+
+    .footer-top{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-bottom{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .redes{
+        justify-content: center;
+    }
+
+    .imagens-contato .container-fluid{
+        flex-direction: column;
+    }
+
 }

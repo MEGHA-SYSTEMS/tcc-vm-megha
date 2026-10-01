@@ -5,18 +5,17 @@
 
     <meta charset="utf-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Recuperar senha | PoupeMais</title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS da página (mesmo do login) -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recovery.css') }}">
 
 </head>
 
@@ -24,7 +23,7 @@
 <body>
 
 
-<!-- ==========================================
+    <!-- ==========================================
      NAVBAR
 ========================================== -->
 
@@ -32,43 +31,43 @@
 
     <div class="container-fluid">
 
-        <a class="navbar-brand d-flex align-items-center"
-           href="{{ url_for('index') }}">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
 
             <img src="{{ url_for('static', filename='logo.png') }}"
                  alt="Logo PoupeMais"
                  class="logo-nav">
 
-            <span class="nome-site">
+            <span class="ms-2 nome-site">
                 PoupeMais
             </span>
 
-            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
-                 class="icone-nav-img"
-                 alt="Buscar">
-
         </a>
-
 
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Abrir menu">
 
             <span class="navbar-toggler-icon"></span>
 
         </button>
 
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 
-        <div class="collapse navbar-collapse justify-content-end"
-             id="navbarNav">
+            <div class="d-flex align-items-center gap-3">
 
-            <a href="{{ url_for('login') }}"
-               class="btn-cadastro">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
+                    É farmácia? Cadastre-se aqui
+                </a>
 
-                É farmácia? Cadastre-se aqui
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+                    Login
+                </a>
 
-            </a>
+            </div>
 
         </div>
 
@@ -76,418 +75,255 @@
 
 </nav>
 
-
-
-<!-- ==========================================
+    <!-- ==========================================
      RECUPERAÇÃO DE SENHA
 ========================================== -->
 
-<main class="login-container">
+    <main class="login-container">
 
-    <h1>Esqueceu sua senha?</h1>
+        <h1>Esqueceu sua senha?</h1>
 
-    <p class="subtitulo">
-        Utilize o número da sua conta, iremos enviar um SMS com
-        o código para redefinição da sua senha
-    </p>
+        <p class="subtitulo">
+            Digite o e-mail da sua conta, enviaremos um link para
+            você redefinir sua senha
+        </p>
 
 
-    <!-- Passo 1: pedir o número e enviar o código -->
-    <div class="card-login card-recovery" id="card-numero">
+        <div class="card-login card-recovery" id="card-email">
 
-        <div class="campo">
+            <div class="campo">
 
-            <label for="numero">
-                Número
-            </label>
+                <label for="email">
+                    E-mail
+                </label>
 
-            <input
-                id="numero"
-                name="numero"
-                type="tel"
-                placeholder="Digite o número da sua conta"
-                required>
+                <input id="email" name="email" type="email" placeholder="Digite o e-mail da sua conta" required>
+
+            </div>
+
+
+            <button
+            type="button"
+            id="btn-enviar-link"
+            class="btn-enviar">
+
+                Enviar link de redefinição
+
+            </button>
 
         </div>
 
-        <button
-            type="button"
-            id="btn-enviar-codigo"
-            class="btn-login">
 
-            Enviar código
+        <p id="mensagem-status" class="mensagem-status"></p>
 
-        </button>
-
-        <!-- o reCAPTCHA invisível do Firebase é renderizado aqui -->
-        <div id="recaptcha-container"></div>
-
-    </div>
-
-
-    <!-- Passo 2: confirmar o código recebido por SMS -->
-    <div class="card-login card-recovery oculto" id="card-codigo">
-
-        <div class="campo">
-
-            <label for="codigo">
-                Código
-            </label>
-
-            <input
-                id="codigo"
-                name="codigo"
-                type="text"
-                inputmode="numeric"
-                placeholder="Digite o código recebido"
-                required>
-
-        </div>
-
-        <button
-            type="button"
-            id="btn-confirmar-codigo"
-            class="btn-login">
-
-            Confirmar código
-
-        </button>
-
-    </div>
-
-
-    <p id="mensagem-status" class="mensagem-status"></p>
-
-</main>
+    </main>
 
 
 
-<!-- ==========================================
+    <!-- ==========================================
      RODAPÉ
 ========================================== -->
 
-<footer class="footer-poupemais">
+    <footer class="footer-poupemais">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="footer-top">
+            <div class="footer-top">
 
 
-            <div class="footer-col">
+                <div class="footer-col">
 
-                <h3>
-                    Poupemais
-                </h3>
+                    <h3>
+                        Poupemais
+                    </h3>
 
-                <p>
-                    Preços justos para um cuidado contínuo
-                </p>
+                    <p>
+                        Preços justos para um cuidado contínuo
+                    </p>
 
-                <h5>
-                    Nossas redes:
-                </h5>
+                    <h5>
+                        Nossas redes:
+                    </h5>
 
-                <div class="redes">
+                    <div class="redes">
 
-                    <img src="{{ url_for('static', filename='img/twitter.png') }}"
-                         alt="Twitter">
+                        <img src="{{ url_for('static', filename='img/twitter.png') }}" alt="Twitter">
 
-                    <img src="{{ url_for('static', filename='img/facebook.png') }}"
-                         alt="Facebook">
+                        <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
 
-                    <img src="{{ url_for('static', filename='img/instagram.png') }}"
-                         alt="Instagram">
+                        <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
 
-                    <img src="{{ url_for('static', filename='img/linkedin.png') }}"
-                         alt="LinkedIn">
+                        <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn">
 
+                    </div>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h6>
+                        Companhia
+                    </h6>
+
+                    <a href="{{ url_for('contato') }}">
+                        Contate-nos
+                    </a>
+
+                    <a href="{{ url_for('team') }}">
+                        Sobre nós
+                    </a>
+
+                    <a href="{{ url_for('termos') }}">
+                        Privacidade e política
+                    </a>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h6>
+                        Perfil
+                    </h6>
+
+                    <a href="#">
+                        Editar endereço
+                    </a>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h6>
+                        Atendimento
+                    </h6>
+
+                    <a href="#">
+                        Tire suas dúvidas
+                    </a>
+
+                    <a href="#">
+                        por Whatsapp
+                    </a>
+
+                    <a href="#">
+                        Central de atendimento
+                    </a>
+
+                </div>
+
+
+                <div class="footer-imagem">
+
+                    <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosa">
+
+                </div>
+
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="footer-bottom">
+
+                <div>
+
+                    <h4>
+                        Formas de pagamento
+                    </h4>
+
+                    <p>
+                        Parcele em até 3x sem juros!
+                    </p>
+
+                    <div class="pagamentos">
+                        PIX • VISA • MASTERCARD
+                    </div>
+
+                </div>
+
+
+                <div class="logo-final">
+                    POUPE MAIS
                 </div>
 
             </div>
 
-
-            <div class="footer-col">
-
-                <h6>
-                    Companhia
-                </h6>
-
-                <a href="{{ url_for('contato') }}">
-                    Contate-nos
-                </a>
-
-                <a href="{{ url_for('team') }}">
-                    Sobre nós
-                </a>
-
-                <a href="{{ url_for('termos') }}">
-                    Privacidade e política
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Perfil
-                </h6>
-
-                <a href="#">
-                    Editar endereço
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Atendimento
-                </h6>
-
-                <a href="#">
-                    Tire suas dúvidas
-                </a>
-
-                <a href="#">
-                    por Whatsapp
-                </a>
-
-                <a href="#">
-                    Central de atendimento
-                </a>
-
-            </div>
-
-
-            <div class="footer-imagem">
-
-                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
-                     alt="Idosa">
-
-            </div>
-
-
         </div>
 
-
-        <hr>
-
-
-        <div class="footer-bottom">
-
-            <div>
-
-                <h4>
-                    Formas de pagamento
-                </h4>
-
-                <p>
-                    Parcele em até 3x sem juros!
-                </p>
-
-                <div class="pagamentos">
-                    PIX • VISA • MASTERCARD
-                </div>
-
-            </div>
+    </footer>
 
 
-            <div class="logo-final">
-                POUPE MAIS
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-
-<!-- ==========================================
-     ENVIO DO CÓDIGO — MODO SIMULADO
-
-     Por enquanto isso NÃO manda SMS de verdade,
-     só simula o fluxo pra você testar a tela.
-
-     Quando o Firebase estiver configurado por quem
-     for cuidar disso, troque este bloco inteiro
-     pelo código real (comentado logo abaixo) —
-     os ids de input/botão/card são os mesmos, então
-     o resto do HTML não precisa mudar.
+    <!-- ==========================================
+     ENVIO DO LINK DE REDEFINIÇÃO — FIREBASE
 ========================================== -->
 
-<script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
 
-    let codigoGerado = null;
+    <script>
 
-    const mensagem = document.getElementById('mensagem-status');
-    const cardCodigo = document.getElementById('card-codigo');
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkBfcuxY4TB1bkjvMWiOSQMULwJpPlBWo",
+            authDomain: "poupemais-33ce0.firebaseapp.com",
+            projectId: "poupemais-33ce0",
+            storageBucket: "poupemais-33ce0.firebasestorage.app",
+            messagingSenderId: "115348084542",
+            appId: "1:115348084542:web:35e0ce503d289406af3e6f"
+        };
 
+        firebase.initializeApp(firebaseConfig);
 
-    document.getElementById('btn-enviar-codigo').addEventListener('click', () => {
+        const mensagem = document.getElementById('mensagem-status');
 
-        const numeroDigitado = document.getElementById('numero').value.trim();
+        document.getElementById('btn-enviar-link').addEventListener('click', () => {
 
-        if (!numeroDigitado) {
-            mensagem.textContent = 'Digite um número válido.';
-            return;
-        }
+            const emailDigitado = document.getElementById('email').value.trim();
 
-        // Gera um código de 6 dígitos só pra simular o SMS
-        codigoGerado = String(Math.floor(100000 + Math.random() * 900000));
+            if (!emailDigitado) {
+                mensagem.textContent = 'Digite um e-mail válido.';
+                return;
+            }
 
-        // Como não tem SMS de verdade ainda, mostra o código
-        // no console e num alerta, só pra dar pra testar.
-        console.log('Código simulado:', codigoGerado);
-        mensagem.textContent = `(Modo teste) Código gerado: ${codigoGerado} — confira o console também.`;
+            mensagem.textContent = 'Enviando...';
 
-        cardCodigo.classList.remove('oculto');
-
-    });
-
-
-    document.getElementById('btn-confirmar-codigo').addEventListener('click', () => {
-
-        const codigoDigitado = document.getElementById('codigo').value.trim();
-
-        if (!codigoGerado) {
-            mensagem.textContent = 'Clique em "Enviar código" primeiro.';
-            return;
-        }
-
-        if (!codigoDigitado) {
-            mensagem.textContent = 'Digite o código recebido.';
-            return;
-        }
-
-        if (codigoDigitado === codigoGerado) {
-            mensagem.textContent = 'Número confirmado! (modo teste, sem redirecionar ainda)';
-            // TODO: quando tiver a tela de nova senha pronta,
-            // troque a linha acima por:
-            // window.location.href = '/nova-senha';
-        } else {
-            mensagem.textContent = 'Código incorreto. Tente novamente.';
-        }
-
-    });
-
-</script>
-
-
-<!--
-================================================================
-CÓDIGO REAL COM FIREBASE (deixar comentado até estar configurado)
-================================================================
-
-Quando o Firebase Phone Auth estiver pronto:
-1. Apague o <script> de "MODO SIMULADO" acima.
-2. Descomente este bloco inteiro.
-3. Troque os valores de firebaseConfig pelos do projeto real
-   (Console do Firebase > Configurações do projeto > Seus apps).
-
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
-
-<script>
-
-    const firebaseConfig = {
-        apiKey: "SUA_API_KEY",
-        authDomain: "SEU_PROJETO.firebaseapp.com",
-        projectId: "SEU_PROJETO",
-        storageBucket: "SEU_PROJETO.appspot.com",
-        messagingSenderId: "SEU_SENDER_ID",
-        appId: "SEU_APP_ID"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    let confirmationResult = null;
-
-    const mensagem = document.getElementById('mensagem-status');
-    const cardCodigo = document.getElementById('card-codigo');
-
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible'
-    });
-
-    document.getElementById('btn-enviar-codigo').addEventListener('click', () => {
-
-        const numeroDigitado = document.getElementById('numero').value.trim();
-
-        if (!numeroDigitado) {
-            mensagem.textContent = 'Digite um número válido.';
-            return;
-        }
-
-        const numeroFormatado = numeroDigitado.startsWith('+')
-            ? numeroDigitado
-            : `+55${numeroDigitado.replace(/\D/g, '')}`;
-
-        mensagem.textContent = 'Enviando código...';
-
-        firebase.auth().signInWithPhoneNumber(numeroFormatado, window.recaptchaVerifier)
-            .then((result) => {
-                confirmationResult = result;
-                mensagem.textContent = 'Código enviado! Confira o SMS no seu celular.';
-                cardCodigo.classList.remove('oculto');
-            })
-            .catch((error) => {
-                console.error(error);
-                mensagem.textContent = 'Não foi possível enviar o código. Verifique o número e tente novamente.';
-            });
-
-    });
-
-    document.getElementById('btn-confirmar-codigo').addEventListener('click', () => {
-
-        const codigoDigitado = document.getElementById('codigo').value.trim();
-
-        if (!confirmationResult) {
-            mensagem.textContent = 'Clique em "Enviar código" primeiro.';
-            return;
-        }
-
-        if (!codigoDigitado) {
-            mensagem.textContent = 'Digite o código recebido.';
-            return;
-        }
-
-        confirmationResult.confirm(codigoDigitado)
-            .then((result) => {
-
-                mensagem.textContent = 'Número confirmado! Redirecionando...';
-
-                fetch('/confirmar-recuperacao', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ telefone: result.user.phoneNumber })
-                })
+            firebase.auth().sendPasswordResetEmail(emailDigitado)
                 .then(() => {
-                    window.location.href = '/nova-senha';
+                    mensagem.textContent = 'Enviamos um link de redefinição para o seu e-mail. Verifique sua caixa de entrada (e o spam).';
                 })
                 .catch((error) => {
                     console.error(error);
-                    mensagem.textContent = 'Confirmado, mas houve um erro ao continuar. Tente novamente.';
+                    // Por segurança, o Firebase não diz se o e-mail existe ou não —
+                    // então mostramos sempre a mesma mensagem de sucesso, exceto
+                    // em erros claros de formato.
+                    if (error.code === 'auth/invalid-email') {
+                        mensagem.textContent = 'Digite um e-mail válido.';
+                    } else {
+                        mensagem.textContent = 'Se esse e-mail existir, enviamos um link de redefinição.';
+                    }
                 });
 
-            })
-            .catch((error) => {
-                console.error(error);
-                mensagem.textContent = 'Código incorreto. Tente novamente.';
-            });
+        });
 
-    });
+    // Por padrão, o link do e-mail abre uma página que o próprio Firebase
+    // hospeda, onde a pessoa já digita a senha nova — não precisa de mais
+    // nada da sua parte. Se quiser que o link abra o SEU nova_senha.html
+    // em vez da página do Firebase, é preciso configurar a "Action URL"
+    // em Authentication > Templates > Redefinição de senha, no Console,
+    // e tratar o "oobCode" da URL na sua página com
+    // firebase.auth().verifyPasswordResetCode(...) e
+    // firebase.auth().confirmPasswordReset(...). Me avisa se quiser isso
+    // que eu te ajudo a montar.
 
-</script>
-
-================================================================
--->
+    </script>
 
 
 </body>

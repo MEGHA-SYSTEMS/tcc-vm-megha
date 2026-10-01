@@ -13,6 +13,7 @@ from flask import (
     url_for,
 )
 
+# Serviços do sistema
 from produto import get_todos_produtos, get_produto_por_id
 from farmacia_service import (
     cadastrar_farmacia,
@@ -21,7 +22,11 @@ from farmacia_service import (
     excluir_farmacia,
 )
 from login_service import entrar
-from perfil_service import dados_para_formulario, obter_perfil, salvar_perfil
+from perfil_service import (
+    dados_para_formulario,
+    obter_perfil,
+    salvar_perfil,
+)
 from produtos_service import (
     CATEGORIAS,
     adicionar_produto,
@@ -29,8 +34,14 @@ from produtos_service import (
     listar_produtos,
 )
 
+
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "chave-so-para-testes-locais")
+
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "chave-so-para-testes-locais"
+)
+
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
 
@@ -41,7 +52,10 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 def normalizar(texto):
     """Minúsculas e sem acentos, para 'pressao' achar 'Pressão'."""
     texto = unicodedata.normalize("NFD", texto or "")
-    texto = "".join(c for c in texto if unicodedata.category(c) != "Mn")
+    texto = "".join(
+        c for c in texto
+        if unicodedata.category(c) != "Mn"
+    )
     return texto.lower()
 
 
@@ -56,7 +70,7 @@ def index():
 
 
 # ============================================================
-# LOGIN
+# LOGIN / PROTEÇÃO DE ROTAS
 # ============================================================
 
 def login_obrigatorio(rota):
@@ -66,25 +80,31 @@ def login_obrigatorio(rota):
         if "farmacia_id" not in session:
             return redirect(url_for("login"))
         return rota(*args, **kwargs)
+
     return protegida
 
 
-# Formulário de ENTRAR (mostra login/register.html, veja o aviso abaixo)
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email", "")
-        ok, mensagem, farmacia = entrar(email, request.form.get("senha", ""))
+        senha = request.form.get("senha", "")
+
+        ok, mensagem, farmacia = entrar(email, senha)
+
         if ok:
             session.clear()
             session["farmacia_id"] = farmacia["uid"]
             session["farmacia_nome"] = farmacia["nome"]
+
             return redirect(url_for("painel"))
+
         return render_template(
             "login/register.html",
             mensagem=mensagem,
             email=email,
         )
+
     return render_template("login/register.html")
 
 
@@ -93,8 +113,9 @@ def login():
 # ============================================================
 
 def _contexto_painel(**extra):
-    """Dados que a página do painel precisa."""
+    """Monta os dados necessários para o painel."""
     farmacia_id = session["farmacia_id"]
+
     contexto = {
         "nome": session["farmacia_nome"],
         "perfil": obter_perfil(farmacia_id),
@@ -102,7 +123,9 @@ def _contexto_painel(**extra):
         "categorias": CATEGORIAS,
         "dados": {},
     }
+
     contexto.update(extra)
+
     return contexto
 
 
@@ -113,7 +136,10 @@ def _contexto_painel(**extra):
 @app.route("/painel")
 @login_obrigatorio
 def painel():
-    return render_template("dashboard/painel.html", **_contexto_painel())
+    return render_template(
+        "dashboard/painel.html",
+        **_contexto_painel()
+    )
 
 
 # ============================================================
@@ -126,11 +152,21 @@ def painel_perfil():
     farmacia_id = session["farmacia_id"]
 
     if request.method == "POST":
-        ok, mensagem = salvar_perfil(farmacia_id, request.form)
+        ok, mensagem = salvar_perfil(
+            farmacia_id,
+            request.form
+        )
+
         if ok:
-            session["farmacia_nome"] = request.form.get("nome", "").strip()
+            session["farmacia_nome"] = request.form.get(
+                "nome",
+                ""
+            ).strip()
+
             flash(mensagem, "success")
+
             return redirect(url_for("painel"))
+
         return render_template(
             "dashboard/perfil_editar.html",
             perfil=obter_perfil(farmacia_id),
@@ -139,6 +175,7 @@ def painel_perfil():
         )
 
     perfil = obter_perfil(farmacia_id)
+
     return render_template(
         "dashboard/perfil_editar.html",
         perfil=perfil,
@@ -153,14 +190,21 @@ def painel_perfil():
 @app.route("/painel/produtos", methods=["POST"])
 @login_obrigatorio
 def painel_adicionar_produto():
-    ok, mensagem = adicionar_produto(session["farmacia_id"], request.form)
+    ok, mensagem = adicionar_produto(
+        session["farmacia_id"],
+        request.form
+    )
+
     if ok:
         flash(mensagem, "success")
         return redirect(url_for("painel"))
-    # Erro: mostra o painel de novo mantendo o que a farmácia já digitou
+
     return render_template(
         "dashboard/painel.html",
-        **_contexto_painel(dados=request.form.to_dict(), erro=mensagem)
+        **_contexto_painel(
+            dados=request.form.to_dict(),
+            erro=mensagem,
+        )
     )
 
 
@@ -168,11 +212,22 @@ def painel_adicionar_produto():
 # EXCLUIR PRODUTO
 # ============================================================
 
-@app.route("/painel/produtos/<produto_id>/excluir", methods=["POST"])
+@app.route(
+    "/painel/produtos/<produto_id>/excluir",
+    methods=["POST"]
+)
 @login_obrigatorio
 def painel_excluir_produto(produto_id):
-    ok, mensagem = excluir_produto(session["farmacia_id"], produto_id)
-    flash(mensagem, "success" if ok else "danger")
+    ok, mensagem = excluir_produto(
+        session["farmacia_id"],
+        produto_id
+    )
+
+    flash(
+        mensagem,
+        "success" if ok else "danger"
+    )
+
     return redirect(url_for("painel"))
 
 
@@ -180,14 +235,21 @@ def painel_excluir_produto(produto_id):
 # EXCLUIR CONTA
 # ============================================================
 
-@app.route("/painel/excluir-conta", methods=["POST"])
+@app.route(
+    "/painel/excluir-conta",
+    methods=["POST"]
+)
 @login_obrigatorio
 def painel_excluir_conta():
-    ok, mensagem = excluir_farmacia(session["farmacia_id"])
+    ok, mensagem = excluir_farmacia(
+        session["farmacia_id"]
+    )
+
     if ok:
         session.clear()
         flash(mensagem, "success")
         return redirect(url_for("index"))
+
     flash(mensagem, "danger")
     return redirect(url_for("painel"))
 
@@ -206,20 +268,31 @@ def logout():
 # CADASTRO DA FARMÁCIA
 # ============================================================
 
-# ATENÇÃO: os nomes das rotas estão "trocados" de propósito, porque o site
-# inteiro já usa assim: "/register" mostra o formulário de CADASTRO da farmácia
-# (login.html) e "/login" mostra o formulário de ENTRAR (register.html).
+# ATENÇÃO:
+# "/register" mostra o cadastro da farmácia.
+# "/login" mostra o formulário de entrada.
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        ok, mensagem = cadastrar_farmacia(request.form)
+        ok, mensagem = cadastrar_farmacia(
+            request.form
+        )
+
         return render_template(
             "login/login.html",
             mensagem=mensagem,
             sucesso=ok,
-            dados={} if ok else request.form.to_dict(),
+            dados=(
+                {}
+                if ok
+                else request.form.to_dict()
+            ),
         )
-    return render_template("login/login.html", dados={})
+
+    return render_template(
+        "login/login.html",
+        dados={}
+    )
 
 
 # ============================================================
@@ -228,7 +301,41 @@ def register():
 
 @app.route("/recovery")
 def recovery():
-    return render_template("login/recovery.html")
+    return render_template(
+        "login/recovery.html"
+    )
+
+
+@app.route(
+    "/nova-senha",
+    methods=["GET", "POST"]
+)
+def nova_senha():
+    if request.method == "POST":
+        nova_senha = request.form.get(
+            "novasenha"
+        )
+        confirmar_senha = request.form.get(
+            "confirmar_senha"
+        )
+
+        # TODO:
+        # Implementar a lógica real de recuperação:
+        # 1. validar se o usuário confirmou o código;
+        # 2. validar as duas senhas;
+        # 3. salvar a nova senha com hash;
+        # 4. associar a alteração à conta correta.
+        #
+        # As variáveis abaixo são mantidas para preservar
+        # a estrutura original.
+        _ = nova_senha
+        _ = confirmar_senha
+
+        return redirect(url_for("login"))
+
+    return render_template(
+        "login/novasenha.html"
+    )
 
 
 # ============================================================
@@ -238,22 +345,31 @@ def recovery():
 @app.route("/team")
 def team():
     nome = "poupemais.com"
-    return render_template("pages/team.html", site=nome)
+    return render_template(
+        "pages/team.html",
+        site=nome
+    )
 
 
 @app.route("/termos")
 def termos():
-    return render_template("pages/termos.html")
+    return render_template(
+        "pages/termos.html"
+    )
 
 
 @app.route("/contato")
 def contato():
-    return render_template("pages/contato.html")
+    return render_template(
+        "pages/contato.html"
+    )
 
 
 @app.route("/localizacao")
 def localizacao():
-    return render_template("pages/localizacao.html")
+    return render_template(
+        "pages/localizacao.html"
+    )
 
 
 # ============================================================
@@ -264,7 +380,12 @@ def localizacao():
 def catalogo():
     nome = "poupemais.com"
     produtos = get_todos_produtos()
-    return render_template("pages/catalogo.html", site=nome, produtos=produtos)
+
+    return render_template(
+        "pages/catalogo.html",
+        site=nome,
+        produtos=produtos,
+    )
 
 
 # ============================================================
@@ -274,10 +395,16 @@ def catalogo():
 @app.route("/farmacia/<farmacia_id>")
 def perfil_farmacia(farmacia_id):
     farmacia = obter_farmacia(farmacia_id)
-    if farmacia is None:
-        return redirect(url_for("catalogo"))
 
-    produtos = listar_produtos(farmacia_id)
+    if farmacia is None:
+        return redirect(
+            url_for("catalogo")
+        )
+
+    produtos = listar_produtos(
+        farmacia_id
+    )
+
     return render_template(
         "pages/farmacia.html",
         farmacia=farmacia,
@@ -290,62 +417,66 @@ def perfil_farmacia(farmacia_id):
 # BUSCA COM SUGESTÕES
 # ============================================================
 
-# Devolve JSON para o dropdown da navbar (produtos + farmácias)
 @app.route("/busca")
 def busca():
-    termo = normalizar(request.args.get("q", "").strip())
+    termo = normalizar(
+        request.args.get("q", "").strip()
+    )
+
     if len(termo) < 2:
         return jsonify([])
 
     resultados = []
 
+    # -----------------------------
     # Produtos
+    # -----------------------------
     for p in get_todos_produtos():
         campos = [
             p.get("nome", ""),
             p.get("categoria", ""),
             p.get("principio_ativo", ""),
         ]
-        if any(termo in normalizar(campo) for campo in campos):
+
+        if any(
+            termo in normalizar(campo)
+            for campo in campos
+        ):
             resultados.append({
                 "tipo": "produto",
                 "id": p["id"],
                 "nome": p["nome"],
-                "categoria": p.get("categoria", ""),
-                "url": url_for("produto", produto_id=p["id"]),
+                "categoria": p.get(
+                    "categoria",
+                    ""
+                ),
+                "url": url_for(
+                    "produto",
+                    produto_id=p["id"]
+                ),
             })
 
+    # -----------------------------
     # Farmácias
+    # -----------------------------
     for farmacia in buscar_farmacias(termo):
         resultados.append({
             "tipo": "farmacia",
             "id": farmacia["uid"],
-            "nome": farmacia.get("nome", ""),
+            "nome": farmacia.get(
+                "nome",
+                ""
+            ),
             "categoria": "Farmácia",
-            "url": url_for("perfil_farmacia", farmacia_id=farmacia["uid"]),
+            "url": url_for(
+                "perfil_farmacia",
+                farmacia_id=farmacia["uid"]
+            ),
         })
 
-    return jsonify(resultados[:8])
-
-
-# ============================================================
-# NOVA SENHA (depois da recuperação)
-# ============================================================
-
-@app.route("/nova-senha", methods=["GET", "POST"])
-def nova_senha():
-    if request.method == "POST":
-        nova_senha = request.form.get("novasenha")
-        confirmar_senha = request.form.get("confirmar_senha")
-
-        # TODO: aqui entra a lógica de verdade —
-        # validar se o usuário passou pela etapa de confirmação
-        # do código, e então salvar a nova senha (com hash!)
-        # no seu banco/Firestore, associada ao número confirmado.
-
-        return redirect(url_for("login"))
-
-    return render_template("login/novasenha.html")
+    return jsonify(
+        resultados[:8]
+    )
 
 
 # ============================================================
@@ -355,12 +486,21 @@ def nova_senha():
 @app.route("/produto/<produto_id>")
 def produto(produto_id):
     nome = "poupemais.com"
-    produto = get_produto_por_id(produto_id)
+
+    produto = get_produto_por_id(
+        produto_id
+    )
 
     if produto is None:
-        return redirect(url_for("catalogo"))
+        return redirect(
+            url_for("catalogo")
+        )
 
-    return render_template("pages/produto.html", site=nome, produto=produto)
+    return render_template(
+        "pages/produto.html",
+        site=nome,
+        produto=produto,
+    )
 
 
 # ============================================================
@@ -370,7 +510,12 @@ def produto(produto_id):
 def main():
     app.run(
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 10000)),
+        port=int(
+            os.environ.get(
+                "PORT",
+                10000
+            )
+        ),
         debug=True,
     )
 

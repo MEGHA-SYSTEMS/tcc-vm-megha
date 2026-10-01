@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    
+
 <!-- ==========================================
      NAVBAR
 ========================================== -->
@@ -42,11 +42,24 @@
                 PoupeMais
             </span>
 
-            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
-                 class="icone-nav-img ms-3"
-                 alt="Buscar">
-
         </a>
+
+        <div class="search-wrapper d-flex align-items-center ms-3">
+
+            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
+                 class="icone-nav-img"
+                 alt="Buscar"
+                 id="btn-busca">
+
+            <input type="text"
+                   class="input-busca"
+                   id="input-busca"
+                   placeholder="Buscar produtos..."
+                   autocomplete="off">
+
+            <div id="resultados-busca" class="resultados-busca"></div>
+
+        </div>
 
         <button class="navbar-toggler"
                 type="button"
@@ -60,15 +73,48 @@
 
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end"
+        <div class="collapse navbar-collapse"
              id="navbarNav">
 
-            <div class="d-flex align-items-center gap-4">
+            <ul class="navbar-nav mx-auto nav-centro">
 
-                <a href="{{ url_for('login') }}"
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">Início</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contato') }}">Suporte</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contato') }}">Contato</a>
+                </li>
+
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+
+                <a href="{{ url_for('register') }}"
                    class="btn btn-primary btn-cadastro">
 
                     É farmácia? Cadastre-se aqui
+
+                </a>
+
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-primary btn-login">
+
+                    Login
+
+                </a>
+
+                <a href="{{ url_for('localizacao') }}"
+                   class="icone-localizacao"
+                   aria-label="Localização">
+
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+                    </svg>
 
                 </a>
 
@@ -80,10 +126,104 @@
 
 </nav>
 
+<script>
+(function () {
+    var input = document.getElementById("input-busca");
+    var caixa = document.getElementById("resultados-busca");
+    var botao = document.getElementById("btn-busca");
+    var urlBusca = "{{ url_for('busca') }}";
+    var timer = null;
+    var ultimosResultados = [];
+
+    function fechar() {
+        caixa.style.display = "none";
+        caixa.innerHTML = "";
+    }
+
+    function mostrar(resultados) {
+        ultimosResultados = resultados;
+        caixa.innerHTML = "";
+
+        if (resultados.length === 0) {
+            var vazio = document.createElement("div");
+            vazio.className = "resultado-vazio";
+            vazio.textContent = "Nenhum produto encontrado";
+            caixa.appendChild(vazio);
+        } else {
+            resultados.forEach(function (r) {
+                var link = document.createElement("a");
+                link.href = r.url;
+                link.className = "resultado-item";
+
+                var nome = document.createElement("span");
+                nome.className = "resultado-nome";
+                nome.textContent = r.nome;
+
+                var cat = document.createElement("span");
+                cat.className = "resultado-categoria";
+                cat.textContent = r.categoria;
+
+                link.appendChild(nome);
+                link.appendChild(cat);
+                caixa.appendChild(link);
+            });
+        }
+        caixa.style.display = "block";
+    }
+
+    function buscar() {
+        var termo = input.value.trim();
+        if (termo.length < 2) {
+            fechar();
+            return;
+        }
+        fetch(urlBusca + "?q=" + encodeURIComponent(termo))
+            .then(function (resp) { return resp.json(); })
+            .then(mostrar)
+            .catch(function () { fechar(); });
+    }
+
+    input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(buscar, 250);
+    });
+
+    // Enter ou clique na lupa: abre o primeiro resultado
+    // (com a barra vazia, leva ao catálogo completo)
+    function irParaPrimeiro() {
+        if (input.value.trim().length < 2) {
+            window.location.href = "{{ url_for('catalogo') }}";
+            return;
+        }
+        if (ultimosResultados.length > 0) {
+            window.location.href = ultimosResultados[0].url;
+        } else {
+            buscar();
+        }
+    }
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            irParaPrimeiro();
+        }
+        if (e.key === "Escape") {
+            fechar();
+        }
+    });
+    botao.addEventListener("click", irParaPrimeiro);
+
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".search-wrapper")) {
+            fechar();
+        }
+    });
+})();
+</script>
+
 
 <main>
 
-  <section class="contato">
+<section class="contato">
 
     <div class="container">
 
@@ -145,6 +285,7 @@
     </div>
 
 </section>
+
 <!-- =====================================
         IMAGENS
 ===================================== -->
@@ -170,9 +311,11 @@
     </div>
 
 </section>
+
 <!-- ==========================================
      ÁREA DE ATENDIMENTO
 ========================================== -->
+
 <section class="atendimento-area">
 
     <div class="container">
@@ -193,6 +336,8 @@
 
                 </div>
 
+                <span class="seta-card">›</span>
+
             </a>
 
             <a href="{{ url_for('contato') }}" class="atendimento-card">
@@ -208,6 +353,8 @@
                     <p>Suporte</p>
 
                 </div>
+
+                <span class="seta-card">›</span>
 
             </a>
 
@@ -227,7 +374,7 @@
 
 </section>
 
-<hr class="divisor-secao">
+</main>
 
 <!-- ==========================================
      RODAPÉ
@@ -241,7 +388,7 @@
 
             <div class="footer-col">
 
-                <h3>PoupeMais</h3>
+                <h3>Poupemais</h3>
 
                 <p>
                     Preços justos para um cuidado contínuo
@@ -287,33 +434,20 @@
                     Privacidade e política
                 </a>
 
-            </div>
-
-            <div class="footer-col">
-
-                <h6>Perfil</h6>
-
                 <a href="#">
                     Editar endereço
                 </a>
 
             </div>
 
-            <div class="footer-col">
+            <div class="footer-frase">
 
-                <h6>Atendimento</h6>
-
-                <a href="#">
-                    Tire suas dúvidas
-                </a>
-
-                <a href="#">
-                    por Whatsapp
-                </a>
-
-                <a href="#">
-                    Central de atendimento
-                </a>
+                <p>
+                    “Cuidar da saúde é cuidar da qualidade de vida.
+                    Nosso objetivo é ajudar os idosos a encontrarem
+                    seus medicamentos com mais facilidade, economia
+                    e segurança.”
+                </p>
 
             </div>
 
@@ -330,38 +464,21 @@
 
         <div class="footer-bottom">
 
-            <div>
+            <p class="footer-frase-final">
+                “A saúde não tem idade. Comparar preços de medicamentos
+                é uma forma de garantir mais tranquilidade, autonomia
+                e qualidade de vida para os idosos.”
+            </p>
 
-                <h4>Formas de pagamento</h4>
-
-                <p>
-                    Parcele em até 3x sem juros!
-                </p>
-
-                <div class="pagamentos">
-
-                    PIX • VISA • MASTERCARD
-
-                </div>
-
-            </div>
-
-            <div class="logo-final">
-
-                POUPE MAIS
-
-            </div>
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="Logo PoupeMais"
+                 class="logo-final">
 
         </div>
 
     </div>
 
 </section>
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 

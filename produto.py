@@ -1,91 +1,95 @@
+"""Catálogo: junta os produtos cadastrados pelas farmácias (Firestore)
+e agrupa o mesmo remédio para comparar preços."""
 from firebase_config import db
+from produtos_service import COLECAO, gerar_chave
 
-def _get_farmacias():
-    """Busca as farmácias e retorna um dicionário mapeado por farmacia_id."""
-    if db is None:
-        return {}
-    farmacias = {}
-    for doc in db.collection("farmacias").stream():
-        dados = doc.to_dict()
-        endereco = dados.get("endereco", {})
-        
-        rua = endereco.get("rua", "")
-        numero = endereco.get("numero", "")
-        bairro = endereco.get("bairro", "")
-        cidade = endereco.get("cidade", "")
-        
-        partes_end = [p for p in [rua, numero, bairro, cidade] if p]
-        end_str = ", ".join(partes_end)
-        
-        farmacias[doc.id] = {
-            "nome": dados.get("nome", "Farmácia Desconhecida"),
-            "endereco": end_str
-        }
-    return farmacias
+COLECAO_FARMACIAS = "farmacias"  # ajuste se sua coleção tiver outro nome
 
-def _agrupar_produtos():
-    """Agrupa os produtos do Firestore pela chave (nome normalizado)."""
-    if db is None:
-        return []
-        
-    farmacias = _get_farmacias()
-    produtos_agrupados = {}
-    
-    for doc in db.collection("produtos").stream():
-        p = doc.to_dict()
-        chave = p.get("chave")
+
+def _formatar_endereco(end):
+    """Transforma o endereço salvo no Firebase em um texto legível."""
+    if isinstance(end, str):
+        return end
+    if not isinstance(end, dict):
+        return ""
+
+    rua = ", ".join(x for x in (end.get("rua", ""), end.get("numero", "")) if x)
+    local = ", ".join(x for x in (end.get("bairro", ""), end.get("cidade", "")) if x)
+    partes = [p for p in (rua, local) if p]
+    texto = " - ".join(partes)
+
+    if end.get("cep"):
+        texto += f" - CEP {end['cep']}"
+    return texto
+
+def _dados_farmacia(farmacia_id, cache):
+    """Nome e endereço da farmácia (busca uma vez só por farmácia)."""
+    if farmacia_id not in cache:
+        nome, endereco = "Farmácia", ""
+        try:
+            doc = db.collection(COLECAO_FARMACIAS).document(farmacia_id).get()
+            if doc.exists:
+                dados = doc.to_dict()
+                nome = dados.get("nome", nome)
+                endereco = _formatar_endereco(dados.get("endereco", ""))
+        except Exception:
+            pass
+        cache[farmacia_id] = (nome, endereco)
+    return cache[farmacia_id]
+
+
+def _agrupar(docs):
+    cache = {}
+    grupos = {}
+    for doc in docs:
+        d = doc.to_dict()
+        chave = d.get("chave") or gerar_chave(d.get("nome", ""))
         if not chave:
             continue
-            
-        farmacia_id = p.get("farmacia_id")
-        farmacia_info = farmacias.get(farmacia_id, {"nome": "Farmácia Desconhecida", "endereco": "Endereço não informado"})
-        
-        preco_info = {
-            "farmacia": farmacia_info["nome"],
-            "endereco": farmacia_info["endereco"],
-            "preco": p.get("preco", 0.0)
+
+        nome_farmacia, endereco = _dados_farmacia(d.get("farmacia_id", ""), cache)
+        oferta = {
+            "farmacia": nome_farmacia,
+            "preco": d.get("preco", 0),
+            "endereco": endereco,
         }
-        
-        if chave not in produtos_agrupados:
-            produtos_agrupados[chave] = {
-                "id": chave,
-                "nome": p.get("nome", "Produto Sem Nome"),
-                "categoria": p.get("categoria", "Outros"),
-                "imagem": p.get("imagem", "https://via.placeholder.com/300x300.png?text=Sem+Imagem"),
-                "descricao": p.get("descricao", "Sem descrição."),
-                "principio_ativo": p.get("principio_ativo", "Não informado"),
-                "precos": []
+
+        grupo = grupos.get(chave)
+        if grupo is None:
+            grupo = grupos[chave] = {
+                "id": chave.replace(" ", "-"),  # vai na URL: /produto/<id>
+                "nome": d.get("nome", ""),
+                "categoria": d.get("categoria", ""),
+                "imagem": d.get("imagem", ""),
+                "descricao": d.get("descricao", ""),
+                "principio_ativo": d.get("principio_ativo", ""),
+                "precos": [],
             }
-            
-        produtos_agrupados[chave]["precos"].append(preco_info)
-        
-    return list(produtos_agrupados.values())
+        grupo["precos"].append(oferta)
+        if not grupo["imagem"] and d.get("imagem"):
+            grupo["imagem"] = d["imagem"]
+
+    produtos = []
+    for grupo in grupos.values():
+        grupo["precos"].sort(key=lambda p: p["preco"])
+        grupo["precos_ordenados"] = grupo["precos"]
+        grupo["menor_preco"] = grupo["precos"][0]
+        produtos.append(grupo)
+    produtos.sort(key=lambda p: p["nome"].lower())
+    return produtos
+
 
 def get_todos_produtos():
-    """Retorna a lista completa de produtos agrupados, já com o menor preço calculado."""
-    produtos_agrupados = _agrupar_produtos()
-    produtos_com_menor_preco = []
-    
-    for produto in produtos_agrupados:
-        if not produto["precos"]:
-            continue
-        menor = min(produto["precos"], key=lambda p: p["preco"])
-        produto_copia = dict(produto)
-        produto_copia["menor_preco"] = menor
-        produtos_com_menor_preco.append(produto_copia)
-        
-    return produtos_com_menor_preco
+    """Todos os produtos das farmácias, com o menor preço calculado."""
+    if db is None:
+        return []
+    return _agrupar(db.collection(COLECAO).stream())
+
 
 def get_produto_por_id(produto_id):
-    """Busca um produto agrupado pelo id (que corresponde à chave). Retorna None se não encontrar."""
-    produtos_agrupados = _agrupar_produtos()
-    
-    for produto in produtos_agrupados:
-        if str(produto["id"]) == str(produto_id):
-            produto_copia = dict(produto)
-            produto_copia["precos_ordenados"] = sorted(
-                produto["precos"], key=lambda p: p["preco"]
-            )
-            return produto_copia
-            
-    return None
+    """Um produto (com o preço de cada farmácia). None se não existir."""
+    if db is None or not produto_id:
+        return None
+    chave = produto_id.replace("-", " ")
+    produtos = _agrupar(db.collection(COLECAO).where("chave", "==", chave).stream())
+    return produtos[0] if produtos else None

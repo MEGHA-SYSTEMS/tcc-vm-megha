@@ -1,0 +1,171 @@
+/* recovery.css
+   Página "Esqueceu sua senha?".
+   A navbar e o rodapé vêm do catalogo.css; aqui fica só o que é da página.
+   Fonte grande e botões altos, pensando no público idoso. */
+
+:root {
+    --rec-primary: var(--pm-primary, #4a3ff0);
+    --rec-primary-dark: #3b31c9;
+    --rec-bg: #f3f6fb;
+    --rec-text: #1f2333;
+    --rec-muted: #5f667a;
+    --rec-border: #c9d0e0;
+}
+
+/* ---------- Área principal ---------- */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70vh;
+    padding: 4rem 1rem 5rem;
+    background: var(--rec-bg);
+    text-align: center;
+    border-radius: 24px;
+}
+
+.login-container h1 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--rec-text);
+}
+
+.subtitulo {
+    max-width: 460px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--rec-muted);
+}
+
+/* ---------- Cartão do formulário ---------- */
+
+.card-recovery {
+    width: 100%;
+    max-width: 460px;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(31, 35, 51, 0.08);
+    text-align: left;
+}
+
+.card-recovery .campo {
+    margin-bottom: 1.5rem;
+}
+
+.card-recovery .campo label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--rec-text);
+}
+
+.card-recovery .campo input {
+    width: 100%;
+    height: 52px;
+    padding: 0 1rem;
+    font-size: 1.05rem;
+    color: var(--rec-text);
+    background: #fff;
+    border: 2px solid var(--rec-border);
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-recovery .campo input::placeholder {
+    color: #8a91a5;
+}
+
+.card-recovery .campo input:focus {
+    outline: none;
+    border-color: var(--rec-primary);
+    box-shadow: 0 0 0 4px rgba(74, 63, 240, 0.18);
+}
+
+/* ---------- Botão de enviar ---------- */
+
+.btn-enviar {
+    width: 100%;
+    height: 52px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--rec-primary);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-enviar:hover {
+    background: var(--rec-primary-dark);
+}
+
+.btn-enviar:active {
+    transform: translateY(1px);
+}
+
+.btn-enviar:focus-visible {
+    outline: 3px solid var(--rec-primary);
+    outline-offset: 3px;
+}
+
+.btn-enviar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---------- Mensagem de status ---------- */
+
+.mensagem-status {
+    width: 100%;
+    max-width: 460px;
+    margin-top: 1.25rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--rec-text);
+}
+
+.mensagem-status:empty {
+    display: none;
+}
+
+/* Opcionais: use se quiser colorir a mensagem pelo JavaScript */
+.mensagem-status.sucesso {
+    color: #157347;
+}
+
+.mensagem-status.erro {
+    color: #b02a37;
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 576px) {
+    .login-container {
+        padding: 2.5rem 1rem 3.5rem;
+    }
+
+    .card-recovery {
+        padding: 1.5rem 1.25rem;
+    }
+}
+
+/* Botões da navbar: mesmo tamanho e quinas mais quadradas */
+.navbar-poupemais .btn.btn-cadastro,
+.navbar-poupemais .btn.btn-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 48px;
+    padding: 0 1.25rem;
+    font-size: 1rem;
+    line-height: 1;
+    border: 0;
+    border-radius: 8px;
+}
