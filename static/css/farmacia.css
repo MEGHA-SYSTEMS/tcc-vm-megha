@@ -1,6 +1,6 @@
 :root {
-    --pm-primary: #5B4FE5;
-    --pm-primary-dark: #4a3fd1;
+    --pm-primary: #4f46e5;
+    --pm-primary-dark: #4338ca;
     --pm-bg-light: #EEF1FC;
     --pm-bg-card: #DDEBFA;
     --pm-footer: #8286D6;
@@ -39,18 +39,18 @@ body {
 
 
 .navbar-poupemais {
-    background-color: var(--pm-bg-light);
-    padding: 0.9rem 1.5rem;
-    border-bottom: 1px solid #e3e7f7;
+    background: #ffffff;
+    min-height: 90px;
+    padding: 0 40px;
+    border-bottom: 1px solid #ececec;
 }
 
 
 
 
 .logo-nav {
-    height: 70px;
-    width: auto;
-    object-fit: contain;
+    width: 90px;
+    height: auto;
 }
 
 
@@ -58,8 +58,8 @@ body {
 
 .nome-site {
     font-weight: 700;
-    color: var(--pm-navy);
-    font-size: 1.1rem;
+    color: #1f2235;
+    font-size: 28px;
 }
 
 
@@ -82,10 +82,21 @@ body {
 
 
 
-.btn-cadastro {
-    border-radius: 999px;
-    background: var(--pm-primary);
-    border-color: var(--pm-primary);
+.btn-cadastro,
+.btn-login {
+    background: #4f46e5 !important;
+    border: none !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff !important;
+}
+
+.btn-cadastro:hover,
+.btn-login:hover {
+    background: #4338ca !important;
+    color: #fff !important;
 }
 
 
@@ -684,5 +695,3 @@ body {
 
 
 }
-
-

@@ -487,7 +487,8 @@ body{
 
 
 /* ====================================
-   RODAPÉ
+   RODAPÉ — tipografia padronizada com style.css/register.css
+   (grid de colunas mantido: esta página usa 4 colunas, não 5)
 ==================================== */
 
 .footer-poupemais{
@@ -496,7 +497,7 @@ body{
 
     margin-top: 0;
 
-    padding: 50px 0 25px;
+    padding: 60px 0 25px;
 }
 
 .footer-poupemais .container{
@@ -514,37 +515,37 @@ body{
         1.6fr
         220px;
 
-    gap: 40px;
+    gap: 50px;
 
     align-items: center;
 }
 
 .footer-col h3{
-    font-size: 28px;
+    font-size: 42px;
     font-weight: 700;
 
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 }
 
 .footer-col h5{
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
 
-    margin: 16px 0 12px;
+    margin-bottom: 18px;
 }
 
 .footer-col h6{
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 600;
 
-    margin-bottom: 14px;
+    margin-bottom: 18px;
 
     color: rgba(255,255,255,.85);
 }
 
 .footer-col p{
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 16px;
+    line-height: 1.8;
 
     margin-bottom: 8px;
 
@@ -574,8 +575,8 @@ body{
 }
 
 .redes img{
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 }
 
 /* FOTO */
@@ -586,8 +587,8 @@ body{
 }
 
 .footer-imagem img{
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
 
     object-fit: cover;
 
@@ -597,7 +598,7 @@ body{
 /* LINHA */
 
 .footer-poupemais hr{
-    margin: 30px 0;
+    margin: 35px 0;
 
     border: none;
 
@@ -615,6 +616,23 @@ body{
     gap: 30px;
 }
 
+.footer-bottom h4 {
+    font-size: 22px;
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.footer-bottom p {
+    font-size: 15px;
+
+    margin-bottom: 10px;
+}
+
+.pagamentos {
+    font-size: 16px;
+}
+
 .footer-frase-final{
     max-width: 650px;
 
@@ -627,8 +645,8 @@ body{
 }
 
 .logo-final{
-    width: 80px;
-    height: auto;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 @media (max-width: 992px){

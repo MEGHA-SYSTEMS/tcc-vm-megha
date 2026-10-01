@@ -4,8 +4,8 @@
    Fonte grande e botões altos, pensando no público idoso. */
 
 :root {
-    --rec-primary: var(--pm-primary, #4a3ff0);
-    --rec-primary-dark: #3b31c9;
+    --rec-primary: var(--pm-primary, #4f46e5);
+    --rec-primary-dark: #4338ca;
     --rec-bg: #f3f6fb;
     --rec-text: #1f2333;
     --rec-muted: #5f667a;
@@ -83,7 +83,7 @@
 .card-recovery .campo input:focus {
     outline: none;
     border-color: var(--rec-primary);
-    box-shadow: 0 0 0 4px rgba(74, 63, 240, 0.18);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.18);
 }
 
 /* ---------- Botão de enviar ---------- */
@@ -153,19 +153,4 @@
     .card-recovery {
         padding: 1.5rem 1.25rem;
     }
-}
-
-/* Botões da navbar: mesmo tamanho e quinas mais quadradas */
-.navbar-poupemais .btn.btn-cadastro,
-.navbar-poupemais .btn.btn-login {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    height: 48px;
-    padding: 0 1.25rem;
-    font-size: 1rem;
-    line-height: 1;
-    border: 0;
-    border-radius: 8px;
 }

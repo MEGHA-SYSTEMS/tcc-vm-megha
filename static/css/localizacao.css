@@ -195,7 +195,8 @@ header {
     color: #1f2235;
 }
 
-.btn-cadastro {
+.btn-cadastro,
+.btn-login {
     background: #4f46e5 !important;
 
     border: none !important;
@@ -206,10 +207,14 @@ header {
 
     font-size: 14px;
     font-weight: 500;
+
+    color: #fff !important;
 }
 
-.btn-cadastro:hover {
+.btn-cadastro:hover,
+.btn-login:hover {
     background: #4338ca !important;
+    color: #fff !important;
 }
 
 .icone-nav-img {
