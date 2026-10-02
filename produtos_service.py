@@ -7,9 +7,15 @@ remédio de farmácias diferentes no catálogo e comparar preços.
 import re
 import unicodedata
 
+import cloudinary
+import cloudinary.uploader
 from firebase_admin import firestore
 
 from firebase_config import db
+
+cloudinary.config(secure=True)  # lê a CLOUDINARY_URL do ambiente
+
+TIPOS_IMAGEM = {"image/jpeg", "image/png", "image/webp"}
 
 COLECAO = "produtos"
 
@@ -65,8 +71,11 @@ def listar_produtos(farmacia_id):
     return produtos
 
 
-def adicionar_produto(farmacia_id, form):
-    """Valida o formulário e salva. Devolve (ok, mensagem)."""
+def adicionar_produto(farmacia_id, form, arquivo=None):
+    """Valida o formulário, envia a foto (se houver) e salva.
+
+    Devolve (ok, mensagem).
+    """
     if db is None:
         return False, "Sistema indisponível no momento."
 
@@ -74,7 +83,6 @@ def adicionar_produto(farmacia_id, form):
     categoria = form.get("categoria", "").strip()
     principio = form.get("principio_ativo", "").strip()
     descricao = form.get("descricao", "").strip()
-    imagem = form.get("imagem", "").strip()
 
     if not nome or not descricao:
         return False, "Preencha o nome e a descrição do produto."
@@ -82,12 +90,30 @@ def adicionar_produto(farmacia_id, form):
         return False, "Texto muito longo. Encurte o nome ou a descrição."
     if categoria not in CATEGORIAS:
         return False, "Escolha uma categoria da lista."
-    if imagem and not imagem.lower().startswith(("http://", "https://")):
-        return False, "O link da imagem deve começar com http:// ou https://"
     try:
         preco = converter_preco(form.get("preco", ""))
     except ValueError:
         return False, "Preço inválido. Use um formato como 8,90."
+
+    # Upload só depois das outras validações, para não deixar imagem
+    # órfã no Cloudinary quando o cadastro falha.
+    imagem = ""
+    if arquivo and arquivo.filename:
+        if arquivo.mimetype not in TIPOS_IMAGEM:
+            return False, "Envie uma imagem JPG, PNG ou WEBP."
+        try:
+            resultado = cloudinary.uploader.upload(
+                arquivo,
+                folder="poupemais/produtos",
+                resource_type="image",
+                transformation=[
+                    {"width": 800, "height": 800, "crop": "fill", "gravity": "auto"},
+                    {"fetch_format": "auto", "quality": "auto"},
+                ],
+            )
+            imagem = resultado["secure_url"]
+        except Exception:
+            return False, "Não foi possível enviar a imagem. Tente novamente."
 
     db.collection(COLECAO).add({
         "farmacia_id": farmacia_id,

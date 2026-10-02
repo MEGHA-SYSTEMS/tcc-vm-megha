@@ -172,11 +172,13 @@ main.container > p.text-muted {
     box-shadow: 0 14px 28px rgba(30, 30, 60, 0.16) !important;
 }
 
+/* Imagem quadrada: todas as fotos ficam no mesmo formato */
 .produto-imagem {
-    height: 190px;
-    object-fit: contain;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     background-color: #ffffff;
-    padding: 1.5rem;
+    padding: 0;
 }
 
 .produto-card .card-body {

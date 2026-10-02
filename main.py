@@ -2,6 +2,10 @@ import os
 import unicodedata
 from functools import wraps
 
+from dotenv import load_dotenv
+
+load_dotenv()  # lê o .env ANTES de importar os serviços (Cloudinary, Firebase)
+
 from flask import (
     Flask,
     flash,
@@ -43,6 +47,9 @@ app.secret_key = os.environ.get(
 )
 
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+
+# Limite de tamanho para uploads (fotos de produtos)
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB
 
 
 # ============================================================
@@ -192,7 +199,8 @@ def painel_perfil():
 def painel_adicionar_produto():
     ok, mensagem = adicionar_produto(
         session["farmacia_id"],
-        request.form
+        request.form,
+        request.files.get("imagem_arquivo"),
     )
 
     if ok:
