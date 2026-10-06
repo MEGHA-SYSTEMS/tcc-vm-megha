@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar produto | PoupeMais</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+</head>
+<body class="painel">
+
+  {% include 'dashboard/_navbar.html' %}
+
+  <main class="container py-4 pb-5" style="max-width: 860px;">
+
+    <a href="{{ url_for('painel') }}" class="voltar">&larr; Voltar ao painel</a>
+    <h1 class="h3 painel-titulo mt-2 mb-4">Editar produto</h1>
+
+    {% if erro %}
+      <div class="alert alert-danger" role="alert">{{ erro }}</div>
+    {% endif %}
+
+    <form
+      method="POST"
+      action="{{ url_for('painel_editar_produto', produto_id=produto.id) }}"
+      enctype="multipart/form-data"
+    >
+
+      <div class="painel-card mb-4">
+
+        <div class="mb-3">
+          <label class="form-label" for="nome">Nome do produto</label>
+          <input type="text" class="form-control" id="nome" name="nome"
+                 maxlength="120" value="{{ dados.get('nome', '') }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="categoria">Categoria</label>
+          <select class="form-select" id="categoria" name="categoria" required>
+            <option value="" disabled {{ 'selected' if not dados.get('categoria') }}>Escolha...</option>
+            {% for c in categorias %}
+              <option value="{{ c }}" {{ 'selected' if dados.get('categoria') == c }}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="principio_ativo">
+            Princípio ativo <span class="opcional">(opcional)</span>
+          </label>
+          <input type="text" class="form-control" id="principio_ativo" name="principio_ativo"
+                 maxlength="120" value="{{ dados.get('principio_ativo', '') }}">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="descricao">Descrição</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="4"
+                    maxlength="1000" required>{{ dados.get('descricao', '') }}</textarea>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="preco">Preço (R$)</label>
+            <input type="text" class="form-control" id="preco" name="preco"
+                   inputmode="decimal" value="{{ dados.get('preco', '') }}"
+                   placeholder="8,90" required>
+          </div>
+
+          <div class="col-md-8 mb-1">
+            <label class="form-label" for="imagem_arquivo">
+              Trocar foto <span class="opcional">(opcional)</span>
+            </label>
+            <input type="file" class="form-control" id="imagem_arquivo" name="imagem_arquivo"
+                   accept="image/png, image/jpeg, image/webp">
+            <div class="form-text">Deixe em branco para manter a foto atual.</div>
+          </div>
+
+        </div>
+
+        {% if produto.imagem %}
+          <div class="item-foto mt-2" style="width: 96px; height: 96px;">
+            <img src="{{ produto.imagem }}" alt="Foto atual do produto"
+                 onerror="this.style.display='none'">
+          </div>
+        {% endif %}
+
+      </div>
+
+
+      <!-- ================= DESCONTO ================= -->
+
+      <div class="painel-card mb-4">
+
+        <h2 class="painel-subtitulo">Desconto</h2>
+
+        {% if produto.promocao_ativa %}
+          <div class="alert alert-success py-2" role="alert">
+            Desconto ativo até
+            <strong>{{ produto.promocao_ate_local.strftime('%d/%m/%Y às %H:%M') }}</strong>.
+            Preço atual:
+            <strong>R$ {{ "%.2f"|format(produto.preco_final)|replace(".", ",") }}</strong>
+            (original: R$ {{ "%.2f"|format(produto.preco_original)|replace(".", ",") }}).
+          </div>
+        {% endif %}
+
+        <p class="text-muted small mb-3">
+          Informe a porcentagem e até quando ela vale. Quando o prazo acabar,
+          o produto volta sozinho ao preço original. Para remover o desconto,
+          deixe a porcentagem em branco.
+        </p>
+
+        <div class="row">
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="desconto_percentual">
+              Desconto (%) <span class="opcional">(opcional)</span>
+            </label>
+            <input type="text" class="form-control" id="desconto_percentual"
+                   name="desconto_percentual" inputmode="decimal"
+                   value="{{ dados.get('desconto_percentual', '') }}"
+                   placeholder="ex: 15">
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <label class="form-label" for="promocao_ate">Vale até</label>
+            <input type="datetime-local" class="form-control" id="promocao_ate"
+                   name="promocao_ate"
+                   value="{{ dados.get('promocao_ate', '') }}">
+            <div class="form-text">Horário de Brasília.</div>
+          </div>
+
+        </div>
+
+        <!-- Prévia: aparece sozinha enquanto a pessoa digita -->
+        <div id="previa-desconto" class="alert alert-info mb-0 d-none" role="status">
+          Preço original:
+          <span class="text-decoration-line-through" id="previa-original"></span>
+          &rarr; com desconto:
+          <strong id="previa-final"></strong>
+          <span class="badge bg-danger ms-1" id="previa-pct"></span>
+        </div>
+
+      </div>
+
+      <div class="d-flex gap-2 justify-content-end">
+        <a href="{{ url_for('painel') }}" class="btn btn-outline-primary btn-pm-outline">Cancelar</a>
+        <button type="submit" class="btn btn-primary btn-cadastro">Salvar alterações</button>
+      </div>
+
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      var preco = document.getElementById('preco');
+      var pct = document.getElementById('desconto_percentual');
+      var ate = document.getElementById('promocao_ate');
+      var previa = document.getElementById('previa-desconto');
+
+      function brl(n) { return 'R$ ' + n.toFixed(2).replace('.', ','); }
+
+      // aceita 8,90 / 8.90 / R$ 1.234,56 (igual ao servidor)
+      function lerPreco(txt) {
+        var t = (txt || '').replace('R$', '').replace(/\s/g, '');
+        if (t.indexOf(',') !== -1) t = t.replace(/\./g, '').replace(',', '.');
+        var n = parseFloat(t);
+        return isNaN(n) ? null : n;
+      }
+
+      function atualizar() {
+        var p = lerPreco(preco.value);
+        var d = parseFloat((pct.value || '').replace(',', '.'));
+        if (p === null || isNaN(d) || d < 1 || d > 90) {
+          previa.classList.add('d-none');
+          return;
+        }
+        var final = Math.round(p * (1 - d / 100) * 100) / 100;
+        document.getElementById('previa-original').textContent = brl(p);
+        document.getElementById('previa-final').textContent = brl(final);
+        document.getElementById('previa-pct').textContent = '-' + d + '%';
+        previa.classList.remove('d-none');
+      }
+
+      // não deixa escolher uma data que já passou
+      var agora = new Date();
+      agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+      ate.min = agora.toISOString().slice(0, 16);
+
+      // ao digitar o desconto, exige a data
+      pct.addEventListener('input', function () {
+        ate.required = pct.value.trim() !== '';
+        atualizar();
+      });
+      preco.addEventListener('input', atualizar);
+      ate.required = pct.value.trim() !== '';
+      atualizar();
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

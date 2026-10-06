@@ -222,8 +222,16 @@
 
                             <div class="mt-auto pt-2">
                                 <p class="mb-1 text-muted">A partir de</p>
+                                {% if produto.menor_preco.promocao_ativa %}
+                                    <p class="mb-0 text-muted text-decoration-line-through">
+                                        R$ {{ "%.2f"|format(produto.menor_preco.preco_original)|replace(".", ",") }}
+                                    </p>
+                                {% endif %}
                                 <p class="preco-destaque mb-1">
                                     R$ {{ "%.2f"|format(produto.menor_preco.preco)|replace(".", ",") }}
+                                    {% if produto.menor_preco.promocao_ativa %}
+                                        <span class="badge bg-danger align-middle fs-6">Promoção</span>
+                                    {% endif %}
                                 </p>
                                 <p class="mb-0 text-muted small">
                                     em {{ produto.menor_preco.farmacia }}

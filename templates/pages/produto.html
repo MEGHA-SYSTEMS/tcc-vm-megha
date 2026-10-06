@@ -43,8 +43,15 @@
                 <p class="fs-5">{{ produto.descricao }}</p>
 
                 <div class="alert alert-success fs-5 mt-4" role="alert">
-                    Melhor preço: <strong>R$ {{ "%.2f"|format(produto.precos_ordenados[0].preco)|replace(".", ",") }}</strong>
+                    Melhor preço:
+                    {% if produto.precos_ordenados[0].promocao_ativa %}
+                        <span class="text-decoration-line-through text-muted">R$ {{ "%.2f"|format(produto.precos_ordenados[0].preco_original)|replace(".", ",") }}</span>
+                    {% endif %}
+                    <strong>R$ {{ "%.2f"|format(produto.precos_ordenados[0].preco)|replace(".", ",") }}</strong>
                     em <strong>{{ produto.precos_ordenados[0].farmacia }}</strong>
+                    {% if produto.precos_ordenados[0].promocao_ativa %}
+                        <div class="fs-6 mt-1">Promoção válida até {{ produto.precos_ordenados[0].promocao_ate.strftime('%d/%m/%Y às %H:%M') }}</div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -67,7 +74,17 @@
                             <td>{{ oferta.farmacia }}</td>
                             <td>{{ oferta.endereco }}</td>
                             <td class="fw-bold">
+                                {% if oferta.promocao_ativa %}
+                                    <small class="d-block text-decoration-line-through text-muted fw-normal">
+                                        R$ {{ "%.2f"|format(oferta.preco_original)|replace(".", ",") }}
+                                    </small>
+                                {% endif %}
                                 R$ {{ "%.2f"|format(oferta.preco)|replace(".", ",") }}
+                                {% if oferta.promocao_ativa %}
+                                    <small class="d-block text-danger fw-normal">
+                                        Promoção até {{ oferta.promocao_ate.strftime('%d/%m %H:%M') }}
+                                    </small>
+                                {% endif %}
                                 {% if loop.first %}
                                 <span class="badge bg-success ms-2">Mais barato</span>
                                 {% endif %}

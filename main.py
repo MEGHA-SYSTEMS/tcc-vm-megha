@@ -34,8 +34,10 @@ from perfil_service import (
 from produtos_service import (
     CATEGORIAS,
     adicionar_produto,
+    editar_produto,
     excluir_produto,
     listar_produtos,
+    obter_produto,
 )
 
 
@@ -213,6 +215,72 @@ def painel_adicionar_produto():
             dados=request.form.to_dict(),
             erro=mensagem,
         )
+    )
+
+
+# ============================================================
+# EDITAR PRODUTO
+# ============================================================
+
+@app.route(
+    "/painel/produtos/<produto_id>/editar",
+    methods=["GET", "POST"]
+)
+@login_obrigatorio
+def painel_editar_produto(produto_id):
+    farmacia_id = session["farmacia_id"]
+
+    produto = obter_produto(farmacia_id, produto_id)
+
+    if produto is None:
+        flash("Produto não encontrado.", "danger")
+        return redirect(url_for("painel"))
+
+    if request.method == "POST":
+        ok, mensagem = editar_produto(
+            farmacia_id,
+            produto_id,
+            request.form,
+            request.files.get("imagem_arquivo"),
+        )
+
+        if ok:
+            flash(mensagem, "success")
+            return redirect(url_for("painel"))
+
+        return render_template(
+            "dashboard/produto_editar.html",
+            produto=produto,
+            categorias=CATEGORIAS,
+            dados=request.form.to_dict(),
+            erro=mensagem,
+        )
+
+    # GET: preenche o formulário com os dados atuais
+    dados = {
+        "nome": produto.get("nome", ""),
+        "categoria": produto.get("categoria", ""),
+        "principio_ativo": produto.get("principio_ativo", ""),
+        "descricao": produto.get("descricao", ""),
+        "preco": "{:.2f}".format(
+            produto.get("preco", 0)
+        ).replace(".", ","),
+        "desconto_percentual": "",
+        "promocao_ate": "",
+    }
+
+    # Só preenche o desconto se ele ainda estiver valendo
+    if produto.get("promocao_ativa"):
+        dados["desconto_percentual"] = "%g" % produto["desconto_percentual"]
+        dados["promocao_ate"] = produto["promocao_ate_local"].strftime(
+            "%Y-%m-%dT%H:%M"
+        )
+
+    return render_template(
+        "dashboard/produto_editar.html",
+        produto=produto,
+        categorias=CATEGORIAS,
+        dados=dados,
     )
 
 

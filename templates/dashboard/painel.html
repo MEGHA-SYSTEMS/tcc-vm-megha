@@ -419,27 +419,57 @@
                   </div>
 
 
-                  <div class="item-preco">
+                  <div class="item-preco text-end">
 
-                    R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}
+                    {% if p.promocao_ativa %}
+
+                      <small class="d-block text-decoration-line-through text-muted fw-normal">
+                        R$ {{ "%.2f"|format(p.preco_original)|replace(".", ",") }}
+                      </small>
+
+                      <span class="text-success">
+                        R$ {{ "%.2f"|format(p.preco_final)|replace(".", ",") }}
+                      </span>
+
+                      <small class="d-block text-muted fw-normal">
+                        -{{ "%g"|format(p.desconto_percentual) }}% até
+                        {{ p.promocao_ate_local.strftime('%d/%m %H:%M') }}
+                      </small>
+
+                    {% else %}
+
+                      R$ {{ "%.2f"|format(p.preco)|replace(".", ",") }}
+
+                    {% endif %}
 
                   </div>
 
 
-                  <form
-                    method="POST"
-                    action="{{ url_for('painel_excluir_produto', produto_id=p.id) }}"
-                    onsubmit="return confirm('Excluir este produto?');"
-                  >
+                  <div class="d-flex gap-2">
 
-                    <button
-                      type="submit"
-                      class="btn btn-outline-danger btn-sm"
+                    <a
+                      href="{{ url_for('painel_editar_produto', produto_id=p.id) }}"
+                      class="btn btn-outline-primary btn-sm"
                     >
-                      Excluir
-                    </button>
+                      Editar
+                    </a>
 
-                  </form>
+                    <form
+                      method="POST"
+                      action="{{ url_for('painel_excluir_produto', produto_id=p.id) }}"
+                      onsubmit="return confirm('Excluir este produto?');"
+                    >
+
+                      <button
+                        type="submit"
+                        class="btn btn-outline-danger btn-sm"
+                      >
+                        Excluir
+                      </button>
+
+                    </form>
+
+                  </div>
 
                 </div>
 

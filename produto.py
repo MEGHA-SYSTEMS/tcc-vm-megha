@@ -1,7 +1,7 @@
 """Catálogo: junta os produtos cadastrados pelas farmácias (Firestore)
 e agrupa o mesmo remédio para comparar preços."""
 from firebase_config import db
-from produtos_service import COLECAO, gerar_chave
+from produtos_service import COLECAO, aplicar_promocao, gerar_chave
 
 COLECAO_FARMACIAS = "farmacias"  # ajuste se sua coleção tiver outro nome
 
@@ -47,10 +47,15 @@ def _agrupar(docs):
         if not chave:
             continue
 
+        aplicar_promocao(d)  # preço vigente (com desconto, se ainda valer)
+
         nome_farmacia, endereco = _dados_farmacia(d.get("farmacia_id", ""), cache)
         oferta = {
             "farmacia": nome_farmacia,
-            "preco": d.get("preco", 0),
+            "preco": d["preco_final"],  # é por ele que se ordena o "mais barato"
+            "preco_original": d["preco_original"],
+            "promocao_ativa": d["promocao_ativa"],
+            "promocao_ate": d["promocao_ate_local"],
             "endereco": endereco,
         }
 
