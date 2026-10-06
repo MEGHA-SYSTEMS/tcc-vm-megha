@@ -12,8 +12,7 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
           crossorigin="anonymous">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -25,25 +24,25 @@
 <nav class="navbar navbar-expand-lg navbar-poupemais">
 
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+
+        <!-- CORREÇÃO: antes era href="#" (só adicionava # na URL) -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
 
             <img src="{{ url_for('static', filename='logo.png') }}"
                  alt="Logo PoupeMais"
                  class="logo-nav">
-        
-            <span class="ms-2 nome-site">
-                PoupeMais
-            </span>
-        
+
+            <span class="ms-2 nome-site">PoupeMais</span>
+
         </a>
-        
+
         <div class="search-wrapper d-flex align-items-center ms-3">
-        
+
             <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
                  class="icone-nav-img"
                  alt="Buscar"
                  id="btn-busca">
-        
+
             <input type="text"
                    class="input-busca"
                    id="input-busca"
@@ -51,7 +50,7 @@
                    autocomplete="off">
 
             <div id="resultados-busca" class="resultados-busca"></div>
-        
+
         </div>
 
         <button class="navbar-toggler"
@@ -61,37 +60,358 @@
                 aria-controls="navbarNav"
                 aria-expanded="false"
                 aria-label="Abrir menu">
-
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end"
-        id="navbarNav">
-   
-       <div class="d-flex align-items-center gap-3">
-   
-           <a href="{{ url_for('register') }}"
-              class="btn btn-primary btn-cadastro">
-   
-               É farmácia? Cadastre-se aqui
-   
-           </a>
-   
-           <a href="{{ url_for('login') }}"
-              class="btn btn-outline-primary btn-login">
-   
-               Login
-   
-           </a>
-   
-       </div>
-   
-   </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
+                    É farmácia? Cadastre-se aqui
+                </a>
+
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
 </nav>
+
+
+<main>
+
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="container py-5 hero-section">
+
+    <div class="row align-items-center">
+
+        <div class="col-md-6">
+
+            <span class="hero-topo">
+                SEU ALIADO NA BUSCA POR<br>
+                MEDICAMENTOS MAIS ACESSÍVEIS
+            </span>
+
+            <h1>
+                Compare os preços de medicamentos e economize no cuidado com quem mais importa.
+            </h1>
+
+            <p>“Economizar em remédios é cuidar da saúde com inteligência.”</p>
+
+            <a href="{{ url_for('team') }}" class="btn-saiba-mais">Saiba mais</a>
+
+        </div>
+
+        <div class="col-md-6 text-center">
+
+            <img src="{{ url_for('static', filename='img/idosa.jpg') }}"
+                 class="img-fluid imagem-hero"
+                 alt="Idosa">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     BANNERS DESLIZANTES
+========================================== -->
+
+<section class="container py-4">
+
+    <div class="scroll-produtos">
+        <img src="{{ url_for('static', filename='img/Produto1.jpg') }}" draggable="false" alt="Produto">
+        <img src="{{ url_for('static', filename='img/Produto2.jpg') }}" draggable="false" alt="Produto">
+        <img src="{{ url_for('static', filename='img/Produto3.jpg') }}" draggable="false" alt="Produto">
+        <img src="{{ url_for('static', filename='img/Produto4.jpeg') }}" draggable="false" alt="Produto">
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     BENEFÍCIOS (dois botões de tamanho idêntico)
+========================================== -->
+
+<div class="beneficios-box">
+
+    <!-- CORREÇÃO: link real para a localização (antes: href="#" + onclick relativo) -->
+    <a href="{{ url_for('localizacao') }}" class="item-beneficio" id="card-localizacao">
+
+        <img src="{{ url_for('static', filename='img/icone2.jpg') }}"
+             class="icone-card"
+             alt="Localização">
+
+        <p>Encontre a farmácia mais perto de você.</p>
+
+    </a>
+
+    <a href="{{ url_for('catalogo') }}" class="item-beneficio">
+
+        <img src="{{ url_for('static', filename='img/icone3.jpg') }}"
+             class="icone-card"
+             alt="Catálogo">
+
+        <p>Confira nosso catálogo de produtos.</p>
+
+    </a>
+
+</div>
+
+
+<!-- ==========================================
+     PRODUTOS EM DESTAQUE
+========================================== -->
+
+<section class="container py-5">
+
+    <div class="produtos-destaque">
+
+        <h2 class="titulo-destaque">Cuide do seu bem estar</h2>
+
+        <div class="row text-center">
+
+            {% for letra in ['A', 'B', 'C', 'D'] %}
+            <div class="col-auto">
+                <a href="{{ url_for('catalogo') }}">
+                    <img src="{{ url_for('static', filename='img/produto' ~ letra ~ '.jpg') }}"
+                         class="produto-card"
+                         alt="Produto em destaque">
+                </a>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     SEÇÃO PARA IDOSOS
+========================================== -->
+
+<section class="container py-5 secao-idoso">
+
+    <div class="row align-items-center g-0">
+
+        <div class="col-md-6">
+            <div class="texto-idoso">
+                Este espaço foi criado com muito carinho e dedicação,
+                pensando em facilitar o seu dia a dia.
+                Nosso objetivo é cuidar de seu bolso para que você
+                possa focar no que realmente importa:
+                sua saúde e bem-estar.
+            </div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <img src="{{ url_for('static', filename='img/idoso.jpg') }}"
+                 class="img-idoso"
+                 alt="Idoso">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     CATÁLOGO DE PRODUTOS
+========================================== -->
+
+<section class="catalogo-produtos">
+
+    <h2 class="text-center mb-4">Veja todos os nossos produtos</h2>
+
+    <div class="grid-produtos">
+
+        {# (id, arquivo da imagem, preço) #}
+        {% set lista = [
+            (1, 'produto5.jpg',  '10,40'),
+            (2, 'produto6.jpg',  '14,50'),
+            (3, 'produto7.jpg',  '8,10'),
+            (4, 'produto8.jpg',  '9,60'),
+            (5, 'produto9.jpg',  '13,40'),
+            (6, 'produto10.jpg', '19,10'),
+            (7, 'produto11.jpg', '9,99'),
+            (8, 'produto13.jpg', '10,90'),
+            (9, 'produto14.jpg', '4,60'),
+            (10, 'produto15.jpg', '7,99')
+        ] %}
+
+        {% for pid, img, preco in lista %}
+        <a href="{{ url_for('produto', produto_id=pid) }}" class="produto-card">
+
+            <h5>Produto {{ pid }}</h5>
+
+            <div class="produto-conteudo">
+
+                <img src="{{ url_for('static', filename='img/' ~ img) }}"
+                     alt="Produto {{ pid }}">
+
+                <div class="preco"><span>R$</span> {{ preco }}</div>
+
+            </div>
+
+        </a>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<hr class="divisor-secao">
+
+
+<!-- ==========================================
+     ÁREA DE ATENDIMENTO
+     (removido: card "Central de Atendimento")
+========================================== -->
+
+<section class="atendimento-area">
+
+    <div class="container">
+
+        <div class="cards-atendimento">
+
+            <a href="{{ url_for('contato') }}" class="atendimento-card">
+
+                <img src="{{ url_for('static', filename='img/atendimento2.jpg') }}"
+                     class="icone-atendimento"
+                     alt="Suporte">
+
+                <div class="info-atendimento">
+                    <h5>Precisa de ajuda?</h5>
+                    <p>Suporte</p>
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="texto-informativo">
+            O envelhecimento populacional no Brasil impõe desafios
+            significativos à saúde pública, especialmente no que
+            tange ao acesso farmacoterapêutico de uma população
+            cuja renda é, muitas vezes, limitada por benefícios
+            previdenciários fixos.
+        </div>
+
+    </div>
+
+</section>
+
+
+<hr class="divisor-secao">
+
+
+<!-- ==========================================
+     RODAPÉ
+     (removidos: Editar endereço, Recuperar senha,
+      por Whatsapp, Central de atendimento)
+========================================== -->
+
+<section class="footer-poupemais">
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div class="footer-col">
+                <h3>Poupemais</h3>
+                <p>Preços justos para um cuidado contínuo</p>
+            </div>
+
+            <div class="footer-col">
+                <h6>Companhia</h6>
+                <a href="{{ url_for('index') }}">Início</a>
+                <a href="{{ url_for('catalogo') }}">Catálogo</a>
+                <a href="{{ url_for('localizacao') }}">Localização</a>
+                <a href="{{ url_for('team') }}">Sobre nós</a>
+                <a href="{{ url_for('contato') }}">Contate-nos</a>
+                <a href="{{ url_for('termos') }}">Privacidade e política</a>
+            </div>
+
+            <div class="footer-col">
+                <h6>Perfil</h6>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Cadastre-se</a>
+            </div>
+
+            <div class="footer-col">
+                <h6>Atendimento</h6>
+                <a href="{{ url_for('contato') }}">Tire suas dúvidas</a>
+            </div>
+
+            <div class="footer-imagem">
+                <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosos">
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="footer-bottom">
+            <div class="logo-final">POUPE MAIS</div>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ==========================================
+     MODAL DE LOCALIZAÇÃO
+     (renomeado para .modal-loc: a classe ".modal" colidia com o Bootstrap)
+========================================== -->
+
+<div id="modal-localizacao" class="modal-loc" hidden>
+
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+
+        <svg class="modal-icone" viewBox="0 0 24 24" width="64" height="64" aria-hidden="true">
+            <path fill="#d62828"
+                  d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+
+        <h2 id="modal-titulo">Permitir que o PoupeMais utilize a sua localização?</h2>
+
+        <p id="modal-msg" class="modal-msg" role="status"></p>
+
+        <div class="botoes">
+            <button type="button" id="negar" class="btn btn-outline-secondary">Negar</button>
+            <button type="button" id="permitir" class="btn btn-primary">Permitir</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYJwR5XK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+
+<!-- ==========================================
+     BUSCA (um único handler para a lupa)
+========================================== -->
 
 <script>
 (function () {
@@ -114,7 +434,7 @@
         if (resultados.length === 0) {
             var vazio = document.createElement("div");
             vazio.className = "resultado-vazio";
-            vazio.textContent = "Nenhum produto encontrado";
+            vazio.textContent = "Nenhum resultado encontrado";
             caixa.appendChild(vazio);
         } else {
             resultados.forEach(function (r) {
@@ -140,748 +460,162 @@
 
     function buscar() {
         var termo = input.value.trim();
-        if (termo.length < 2) {
-            fechar();
-            return;
-        }
+        if (termo.length < 2) { fechar(); return; }
+
         fetch(urlBusca + "?q=" + encodeURIComponent(termo))
             .then(function (resp) { return resp.json(); })
             .then(mostrar)
-            .catch(function () { fechar(); });
+            .catch(fechar);
     }
 
-    // Busca enquanto digita (espera 250ms de pausa para não sobrecarregar)
     input.addEventListener("input", function () {
         clearTimeout(timer);
         timer = setTimeout(buscar, 250);
     });
 
-    // Enter ou clique na lupa: abre o primeiro resultado
     function irParaPrimeiro() {
-        if (input.value.trim().length < 2) {
-            input.focus();
-            return;
-        }
+        if (input.value.trim().length < 2) { input.focus(); return; }
         if (ultimosResultados.length > 0) {
             window.location.href = ultimosResultados[0].url;
         } else {
             buscar();
         }
     }
+
     input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
+        if (e.key === "Enter") { e.preventDefault(); irParaPrimeiro(); }
+        if (e.key === "Escape") { fechar(); }
+    });
+
+    // Lupa: se a barra está fechada, abre; se já está aberta, busca.
+    botao.addEventListener("click", function () {
+        if (!input.classList.contains("ativo")) {
+            input.classList.add("ativo");
+            input.focus();
+        } else {
             irParaPrimeiro();
         }
-        if (e.key === "Escape") {
-            fechar();
-        }
     });
-    botao.addEventListener("click", irParaPrimeiro);
 
-    // Clicar fora fecha a lista
     document.addEventListener("click", function (e) {
-        if (!e.target.closest(".search-wrapper")) {
-            fechar();
-        }
+        if (!e.target.closest(".search-wrapper")) { fechar(); }
     });
 })();
 </script>
 
 
-<main>
-
 <!-- ==========================================
-     HERO
-========================================== -->
-
-<section class="container py-5 hero-section">
-
-    <div class="row align-items-center">
-
-        <div class="col-md-6">
-
-            <span class="hero-topo">
-                SEU ALIADO NA BUSCA POR<br>
-                MEDICAMENTOS MAIS ACESSÍVEIS
-            </span>
-
-            <h1>
-                Compare os preços de medicamentos e economize no cuidado com quem mais importa.
-            </h1>
-
-            <p>
-                “Economizar em remédios é cuidar da saúde com inteligência.”
-            </p>
-
-            <a href="{{ url_for('team') }}" class="btn-saiba-mais">
-                Saiba mais
-            </a>
-
-        </div>
-
-        <div class="col-md-6 text-center">
-
-            <img src="{{ url_for('static', filename='img/idosa.jpg') }}"
-                 class="img-fluid imagem-hero"
-                 alt="Idosa">
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==========================================
-     BANNERS DESLIZANTES
-========================================== -->
-
-<section class="container py-4">
-
-    <div class="scroll-produtos">
-
-        <img src="{{ url_for('static', filename='img/Produto1.jpg') }}"
-             draggable="false"
-             alt="Produto">
-
-        <img src="{{ url_for('static', filename='img/Produto2.jpg') }}"
-             draggable="false"
-             alt="Produto">
-
-        <img src="{{ url_for('static', filename='img/Produto3.jpg') }}"
-             draggable="false"
-             alt="Produto">
-
-        <img src="{{ url_for('static', filename='img/Produto4.jpeg') }}"
-             draggable="false"
-             alt="Produto">
-
-    </div>
-
-</section>
-
-
-<!-- ==========================================
-     BENEFÍCIOS
-========================================== -->
-
-<div class="beneficios-box">
-
-    <div class="row g-0">
-        
-        <div class="col-md-4"
-        onclick="window.location.href='localizacao'">
-            <a href="#" class="item-beneficio">
-                
-                <img src="{{url_for('static',filename='img/icone2.jpg')}}" class="icone-card">
-
-                <p>
-                    Encontre a farmácia mais perto de você.
-                </p>
-
-            </a>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <a href="{{ url_for('catalogo') }}" class="item-beneficio">
-        
-                <img src="{{ url_for('static', filename='img/icone3.jpg') }}"
-                     class="icone-card"
-                     alt="Catálogo">
-        
-                <p>
-                    Confira nosso catálogo de produtos.
-                </p>
-        
-            </a>
-        
-        </div>
-        
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- ==========================================
-     PRODUTOS EM DESTAQUE
-========================================== -->
-
-<section class="container py-5">
-
-    <div class="produtos-destaque">
-
-        <h2 class="titulo-destaque">
-            Cuide do seu bem estar
-        </h2>
-
-        <div class="row text-center">
-
-            <div class="col-auto">
-                <a href="#">
-                    <img src="{{ url_for('static', filename='img/produtoA.jpg') }}"
-                         class="produto-card"
-                         alt="Produto">
-                </a>
-            </div>
-
-            <div class="col-auto">
-                <a href="#">
-                    <img src="{{ url_for('static', filename='img/produtoB.jpg') }}"
-                         class="produto-card"
-                         alt="Produto">
-                </a>
-            </div>
-
-            <div class="col-auto">
-                <a href="#">
-                    <img src="{{ url_for('static', filename='img/produtoC.jpg') }}"
-                         class="produto-card"
-                         alt="Produto">
-                </a>
-            </div>
-
-            <div class="col-auto">
-                <a href="#">
-                    <img src="{{ url_for('static', filename='img/produtoD.jpg') }}"
-                         class="produto-card"
-                         alt="Produto">
-                </a>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==========================================
-     SEÇÃO PARA IDOSOS
-========================================== -->
-
-<section class="container py-5 secao-idoso">
-
-    <div class="row align-items-center g-0">
-
-        <div class="col-md-6">
-
-            <div class="texto-idoso">
-
-                Este espaço foi criado com muito carinho e dedicação,
-                pensando em facilitar o seu dia a dia.
-                Nosso objetivo é cuidar de seu bolso para que você
-                possa focar no que realmente importa:
-                sua saúde e bem-estar.
-
-            </div>
-
-        </div>
-
-        <div class="col-md-6 text-center">
-
-            <img src="{{ url_for('static', filename='img/idoso.jpg') }}"
-                 class="img-idoso"
-                 alt="Idoso">
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==========================================
-     CATÁLOGO DE PRODUTOS
-========================================== -->
-
-<section class="catalogo-produtos">
-
-    <h2 class="text-center mb-4">
-        Veja todos os nossos produtos
-    </h2>
-
-    <div class="grid-produtos">
-
-        <a href="{{ url_for('produto', produto_id=1) }}" class="produto-card">
-
-            <h5>Produto 1</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto5.jpg') }}"
-                     alt="Produto 1">
-
-                <div class="preco">
-                    <span>R$</span> 10,40
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=2) }}" class="produto-card">
-
-            <h5>Produto 2</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto6.jpg') }}"
-                     alt="Produto 2">
-
-                <div class="preco">
-                    <span>R$</span> 14,50
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=3) }}" class="produto-card">
-
-            <h5>Produto 3</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto7.jpg') }}"
-                     alt="Produto 3">
-
-                <div class="preco">
-                    <span>R$</span> 8,10
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=4) }}" class="produto-card">
-
-            <h5>Produto 4</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto8.jpg') }}"
-                     alt="Produto 4">
-
-                <div class="preco">
-                    <span>R$</span> 9,60
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=5) }}" class="produto-card">
-
-            <h5>Produto 5</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto9.jpg') }}"
-                     alt="Produto 5">
-
-                <div class="preco">
-                    <span>R$</span> 13,40
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=6) }}" class="produto-card">
-
-            <h5>Produto 6</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto10.jpg') }}"
-                     alt="Produto 6">
-
-                <div class="preco">
-                    <span>R$</span> 19,10
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=7) }}" class="produto-card">
-
-            <h5>Produto 7</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto11.jpg') }}"
-                     alt="Produto 7">
-
-                <div class="preco">
-                    <span>R$</span> 9,99
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=8) }}" class="produto-card">
-
-            <h5>Produto 8</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto13.jpg') }}"
-                     alt="Produto 8">
-
-                <div class="preco">
-                    <span>R$</span> 10,90
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=9) }}" class="produto-card">
-
-            <h5>Produto 9</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto14.jpg') }}"
-                     alt="Produto 9">
-
-                <div class="preco">
-                    <span>R$</span> 4,60
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <a href="{{ url_for('produto', produto_id=10) }}" class="produto-card">
-
-            <h5>Produto 10</h5>
-
-            <div class="produto-conteudo">
-
-                <img src="{{ url_for('static', filename='img/produto15.jpg') }}"
-                     alt="Produto 10">
-
-                <div class="preco">
-                    <span>R$</span> 7,99
-                </div>
-
-            </div>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<hr class="divisor-secao">
-
-
-<hr class="divisor-secao">
-
-
-<!-- ==========================================
-     ÁREA DE ATENDIMENTO
-========================================== -->
-<section class="atendimento-area">
-
-    <div class="container">
-
-        <div class="cards-atendimento">
-
-            <a href="#" class="atendimento-card">
-
-                <img src="{{url_for('static',filename='img/atendimento1.jpg')}}"
-                     class="icone-atendimento"
-                     alt="Atendimento">
-
-                <div class="info-atendimento">
-
-                    <h5>Central de Atendimento</h5>
-
-                    <p>Fale conosco</p>
-
-                </div>
-
-            </a>
-
-            <a href="{{ url_for('contato') }}" class="atendimento-card">
-
-    <img src="{{url_for('static',filename='img/atendimento2.jpg')}}"
-         class="icone-atendimento"
-         alt="Suporte">
-
-    <div class="info-atendimento">
-
-        <h5>Precisa de ajuda?</h5>
-
-        <p>Suporte</p>
-
-    </div>
-
-</a>
-        </div>
-
-        <div class="texto-informativo">
-
-            O envelhecimento populacional no Brasil impõe desafios
-            significativos à saúde pública, especialmente no que
-            tange ao acesso farmacoterapêutico de uma população
-            cuja renda é, muitas vezes, limitada por benefícios
-            previdenciários fixos.
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<hr class="divisor-secao">
-
-<!-- ==========================================
-     RODAPÉ
-========================================== -->
-
-<section class="footer-poupemais">
-
-    <div class="container">
-
-        <div class="footer-top">
-
-            <div class="footer-col">
-
-                <h3>
-                    Poupemais
-                </h3>
-
-                <p>
-                    Preços justos para um cuidado contínuo
-                </p>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Companhia
-                </h6>
-
-                <a href="{{ url_for('index') }}">
-                    Início
-                </a>
-
-                <a href="{{ url_for('catalogo') }}">
-                    Catálogo
-                </a>
-
-                <a href="{{ url_for('localizacao') }}">
-                    Localização
-                </a>
-
-                <a href="{{ url_for('team') }}">
-                    Sobre nós
-                </a>
-
-                <a href="{{ url_for('contato') }}">
-                    Contate-nos
-                </a>
-
-                <a href="{{ url_for('termos') }}">
-                    Privacidade e política
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Perfil
-                </h6>
-
-                <a href="#">
-                    Editar endereço
-                </a>
-
-                <a href="{{ url_for('login') }}">
-                    Login
-                </a>
-
-                <a href="{{ url_for('register') }}">
-                    Cadastre-se
-                </a>
-
-                <a href="{{ url_for('recovery') }}">
-                    Recuperar senha
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Atendimento
-                </h6>
-
-                <a href="#">
-                    Tire suas dúvidas
-                </a>
-
-                <a href="https://wa.me/55SEUNUMERO" target="_blank">
-                    por Whatsapp
-                </a>
-
-                <a href="#">
-                    Central de atendimento
-                </a>
-
-            </div>
-
-
-            <div class="footer-imagem">
-
-                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
-                     alt="Idosa">
-
-            </div>
-
-        </div>
-
-
-        <hr>
-
-
-        <div class="footer-bottom">
-
-            <div class="logo-final">
-                POUPE MAIS
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- ==========================================
-     BOOTSTRAP
-========================================== -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYJwR5XK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-
-
-<!-- ==========================================
-     SLIDER DOS PRODUTOS
+     SLIDER DOS BANNERS (arrastar com o mouse)
 ========================================== -->
 
 <script>
+(function () {
+    var slider = document.querySelector(".scroll-produtos");
+    if (!slider) return;
 
-    const slider = document.querySelector('.scroll-produtos');
+    var isDown = false, startX = 0, scrollLeft = 0;
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    slider.addEventListener('mousedown', (e) => {
-
+    slider.addEventListener("mousedown", function (e) {
         isDown = true;
-
         startX = e.pageX;
-
         scrollLeft = slider.scrollLeft;
-
     });
-
-
-    document.addEventListener('mouseup', () => {
-
-        isDown = false;
-
-    });
-
-
-    slider.addEventListener('mousemove', (e) => {
-
+    document.addEventListener("mouseup", function () { isDown = false; });
+    slider.addEventListener("mousemove", function (e) {
         if (!isDown) return;
-
         e.preventDefault();
-
-        const walk = e.pageX - startX;
-
-        slider.scrollLeft = scrollLeft - walk;
-
+        slider.scrollLeft = scrollLeft - (e.pageX - startX);
     });
-
+})();
 </script>
-<div id="modal-localizacao" class="modal">
 
-    <div class="modal-box">
 
-        <i class="fa-solid fa-location-dot"></i>
-
-        <h2>
-            Permitir que o PoupeMais utilize da sua localização?
-        </h2>
-
-        <div class="botoes">
-
-            <button id="negar">
-                Negar
-            </button>
-
-            <button id="permitir">
-                Permitir
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script src="/static/js/modal.js"></script>
-
+<!-- ==========================================
+     LOCALIZAÇÃO
+     (substitui /static/js/modal.js, que não pude ver)
+========================================== -->
 
 <script>
-    const btnBusca = document.getElementById('btn-busca');
-    const inputBusca = document.getElementById('input-busca');
+(function () {
+    var modal = document.getElementById("modal-localizacao");
+    var msg = document.getElementById("modal-msg");
+    var btnPermitir = document.getElementById("permitir");
+    var btnNegar = document.getElementById("negar");
+    var cardLoc = document.getElementById("card-localizacao");
+    var CHAVE = "poupemais_loc";
 
-    btnBusca.addEventListener('click', () => {
-        inputBusca.classList.toggle('ativo');
+    function lembrar(valor) {
+        try { localStorage.setItem(CHAVE, valor); } catch (e) {}
+    }
+    function lido() {
+        try { return localStorage.getItem(CHAVE); } catch (e) { return null; }
+    }
+    function abrir() { modal.hidden = false; }
+    function fechar() { modal.hidden = true; }
 
-        if (inputBusca.classList.contains('ativo')) {
-            inputBusca.focus();
+    function pedirLocalizacao() {
+        if (!("geolocation" in navigator)) {
+            msg.textContent = "Seu navegador não suporta localização.";
+            return;
+        }
+        if (!window.isSecureContext) {
+            msg.textContent = "A localização só funciona em HTTPS ou em localhost / 127.0.0.1.";
+            return;
+        }
+
+        msg.textContent = "Obtendo sua localização...";
+        btnPermitir.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+            function (pos) {
+                lembrar("permitido");
+                window.location.href =
+                    "{{ url_for('localizacao') }}" +
+                    "?lat=" + pos.coords.latitude.toFixed(6) +
+                    "&lng=" + pos.coords.longitude.toFixed(6);
+            },
+            function (err) {
+                btnPermitir.disabled = false;
+                var erros = {
+                    1: "Permissão negada. Clique no cadeado ao lado do endereço e libere a localização.",
+                    2: "Não foi possível determinar a sua posição.",
+                    3: "Tempo esgotado. Tente novamente."
+                };
+                msg.textContent = erros[err.code] || "Erro ao obter a localização.";
+            },
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+        );
+    }
+
+    btnPermitir.addEventListener("click", pedirLocalizacao);
+
+    btnNegar.addEventListener("click", function () {
+        lembrar("negado");
+        fechar();
+    });
+
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) fechar();
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") fechar();
+    });
+
+    // Botão "Encontre a farmácia mais perto de você":
+    // se ainda não decidiu, pergunta; senão, vai direto para a página.
+    cardLoc.addEventListener("click", function (e) {
+        if (lido() === null) {
+            e.preventDefault();
+            abrir();
         }
     });
+
+    // Pergunta uma única vez, ao entrar no site.
+    if (lido() === null) {
+        setTimeout(abrir, 800);
+    }
+})();
 </script>
 
 </body>
-</body>
-</body>
-
 </html>

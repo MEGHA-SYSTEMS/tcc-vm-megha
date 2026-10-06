@@ -1,0 +1,110 @@
+/* ====================================
+   RODAPÉ PADRÃO (funciona com ou sem Bootstrap)
+==================================== */
+
+.footer-poupemais,
+.footer-poupemais * {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-poupemais {
+    background: #7f83d6;
+    color: #fff;
+    margin: 0;
+    padding: 60px 0 25px;
+}
+
+.footer-inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 240px;
+    gap: 50px;
+    align-items: start;
+}
+
+.footer-poupemais h3 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 16px;
+}
+
+.footer-poupemais h6 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 6px 0 18px;
+}
+
+.footer-poupemais p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0 0 8px;
+    color: rgba(255, 255, 255, .95);
+}
+
+.footer-poupemais .footer-col a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 0 0 10px;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.footer-poupemais .footer-col a:hover {
+    color: #ececff;
+}
+
+.footer-imagem {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-imagem img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.footer-poupemais hr {
+    margin: 35px 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, .35);
+    opacity: 1;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-final {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+@media (max-width: 991px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .footer-marca,
+    .footer-imagem {
+        grid-column: 1 / -1;
+    }
+
+    .footer-imagem {
+        justify-content: flex-start;
+    }
+}

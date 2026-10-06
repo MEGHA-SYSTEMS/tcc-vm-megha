@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -21,16 +21,11 @@ body {
 
 .hero-topo {
     display: block;
-
     color: #e25b5b;
-
     font-size: 18px;
     font-weight: 600;
-
     letter-spacing: 1.5px;
-
     text-transform: uppercase;
-
     margin-bottom: 18px;
 }
 
@@ -45,13 +40,6 @@ body {
     font-size: 18px;
     color: #555;
     margin-top: 20px;
-}
-
-.hero-section .btn {
-    background: #6c63ff;
-    border: none;
-    padding: 10px 35px;
-    border-radius: 8px;
 }
 
 .btn-saiba-mais {
@@ -74,15 +62,10 @@ body {
 .imagem-hero {
     width: 100%;
     max-width: 350px;
-
     height: 350px;
-
     object-fit: cover;
-
     border-radius: 50%;
-
     display: block;
-
     margin: auto;
 }
 
@@ -93,13 +76,9 @@ body {
 
 .scroll-produtos {
     display: flex;
-
     gap: 0;
-
     overflow-x: auto;
-
     padding: 20px 0;
-
     user-select: none;
     -webkit-user-select: none;
 }
@@ -111,93 +90,106 @@ body {
 .scroll-produtos img {
     width: 100%;
     max-width: 1050px;
-
     height: auto;
-
     flex-shrink: 0;
-
     border-radius: 20px;
-
     pointer-events: none;
-
     user-select: none;
     -webkit-user-drag: none;
 }
 
+
 /* ====================================
    BENEFÍCIOS
+   Dois botões com EXATAMENTE o mesmo tamanho (grid 1fr 1fr).
+   O tamanho do box foi mantido (900px de largura, 180px de altura);
+   só o conteúdo interno foi proporcionado.
 ==================================== */
 
 .beneficios-box {
-    background: #ffffff;
-    border: 1px solid #d8d3ff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
-    max-width: 1200px;
+    width: 100%;
+    max-width: 900px;
+    height: 180px;
 
     margin: 40px auto;
 
+    background: #ffffff;
+    border: 1px solid #d8d3ff;
     border-radius: 12px;
 
     overflow: hidden;
 }
 
-.beneficios-box .row {
-    align-items: stretch;
-    justify-content: center;
-}
-
 .item-beneficio {
-    text-decoration: none;
-
-    color: #333;
-
-    padding: 35px 25px;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
 
+    min-width: 0;
+    height: 100%;
+
+    padding: 20px 24px;
+
     text-align: center;
-
-    min-height: 180px;
-
-    transition: 0.3s;
+    text-decoration: none;
+    color: #333;
 
     cursor: pointer;
+    transition: background .3s;
+}
+
+.item-beneficio:first-child {
+    border-right: 2px solid #cfc8ff;
 }
 
 .item-beneficio:hover {
     background: rgba(108, 99, 255, .06);
 }
 
-.col-md-4:not(:last-child) {
-    border-right: 2px solid #CFC8FF;
-}
-
 .icone-card {
-    width: 60px;
-    height: 60px;
-
+    width: 64px;
+    height: 64px;
     object-fit: contain;
-
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .item-beneficio p {
     margin: 0;
-
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
-
+    line-height: 1.35;
     color: #333;
-
-    max-width: 250px;
+    max-width: 260px;
 }
 
+@media (max-width: 575px) {
+    .beneficios-box {
+        height: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .item-beneficio {
+        min-height: 150px;
+    }
+
+    .item-beneficio:first-child {
+        border-right: none;
+        border-bottom: 2px solid #cfc8ff;
+    }
+}
+
+
+/* ====================================
+   PRODUTOS EM DESTAQUE
+==================================== */
+
 .produtos-destaque {
-    padding: 0;
+    border-top: 1px solid #7a7a7a;
+    padding-top: 35px;
 }
 
 .produtos-destaque .row {
@@ -220,29 +212,18 @@ body {
     transform: translateY(-5px);
 }
 
-/* ====================================
-   TÍTULO PRODUTOS DESTAQUE
-==================================== */
-
-.produtos-destaque {
-    border-top: 1px solid #7a7a7a;
-
-    padding-top: 35px;
-}
-
 .titulo-destaque {
     text-align: center;
-
     font-size: 32px;
     font-weight: 700;
-
     color: #1f2235;
-
     margin-bottom: 30px;
 }
 
 
-
+/* ====================================
+   SEÇÃO PARA IDOSOS
+==================================== */
 
 .secao-idoso .row {
     align-items: center;
@@ -255,7 +236,6 @@ body {
     min-height: 250px;
 
     margin: 0 auto;
-
     padding: 40px 50px;
 
     border-radius: 45px;
@@ -265,35 +245,19 @@ body {
     align-items: center;
 
     text-align: center;
-
     font-size: 22px;
     line-height: 1.7;
-
     font-weight: 500;
 }
 
 .img-idoso {
     width: 100%;
     max-width: 500px;
-
     border-radius: 45px;
-
     display: block;
-
     margin-left: 30px;
 }
 
-
-
-
-.titulo-produtos {
-    text-align: center;
-
-    font-size: 34px;
-    font-weight: 700;
-
-    margin-bottom: 30px;
-}
 
 /* ====================================
    CATÁLOGO DE PRODUTOS
@@ -302,40 +266,30 @@ body {
 .catalogo-produtos {
     background: #eceaea;
     max-width: 1150px;
-
     margin: 40px auto;
-
     padding: 35px;
-
     border-radius: 35px;
 }
 
 .catalogo-produtos h2 {
     font-size: 36px;
     font-weight: 700;
-
     margin-bottom: 30px;
 }
 
 .grid-produtos {
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
-
     gap: 20px;
 }
 
 .produto-card {
     background: white;
-
     border-radius: 16px;
-
     padding: 18px 20px;
-
     transition: .3s;
 }
 
-/* Card do catálogo agora é um link (<a>): remove sublinhado e cor de link */
 .grid-produtos a.produto-card {
     display: block;
     text-decoration: none;
@@ -344,29 +298,22 @@ body {
 
 .produto-card h5 {
     text-align: center;
-
     font-size: 24px;
     font-weight: 600;
-
     color: #4a4a4a;
-
     margin-bottom: 15px;
 }
 
 .produto-conteudo {
     display: flex;
-
     align-items: center;
-
     gap: 20px;
 }
 
 .produto-conteudo img {
     width: 280px;
     height: 180px;
-
     object-fit: contain;
-
     flex-shrink: 0;
 }
 
@@ -375,18 +322,15 @@ body {
     color: white;
 
     padding: 14px 18px 14px 26px;
-
     border-radius: 4px 12px 12px 4px;
 
     font-size: 28px;
     font-weight: 700;
 
     min-width: 130px;
-
     text-align: center;
 
     margin-left: auto;
-
     position: relative;
 
     clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
@@ -396,13 +340,20 @@ body {
     font-size: 18px;
 }
 
-.ver-mais {
-    text-align: center;
+@media (max-width: 767px) {
+    .grid-produtos {
+        grid-template-columns: 1fr;
+    }
 
-    margin-top: 25px;
+    .produto-conteudo img {
+        width: 45%;
+        height: 140px;
+    }
 
-    font-size: 20px;
-    font-weight: 600;
+    .preco {
+        font-size: 22px;
+        min-width: 100px;
+    }
 }
 
 
@@ -412,15 +363,10 @@ body {
 
 .atendimento-area {
     width: 100%;
-
     text-align: center;
-
     background: #f1efff;
-
     margin-top: 35px;
-
     padding: 38px 0;
-
     border-top: 2px solid #b8b8b8;
     border-bottom: 2px solid #b8b8b8;
 }
@@ -429,46 +375,35 @@ body {
     max-width: 1200px;
 }
 
-
-/* CARDS */
-
 .cards-atendimento {
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     gap: 25px;
-
     margin-bottom: 35px;
-
     flex-wrap: wrap;
 }
 
 .atendimento-card {
     width: 380px;
+    max-width: 100%;
     min-height: 75px;
 
     background: #eceaff;
-
     padding: 12px 22px;
-
     border-radius: 16px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 16px;
 
     text-decoration: none;
-
     transition: .3s;
 }
 
 .atendimento-card:hover {
     transform: translateY(-3px);
-
     background: #e2deff;
 }
 
@@ -479,20 +414,12 @@ body {
     color: #6c63ff;
 }
 
-
-/* ÍCONES */
-
 .icone-atendimento {
     width: 42px;
     height: 42px;
-
     object-fit: contain;
-
     flex-shrink: 0;
 }
-
-
-/* TEXTO DOS CARDS */
 
 .info-atendimento {
     text-align: left;
@@ -501,37 +428,27 @@ body {
 
 .info-atendimento h5 {
     margin: 0 0 4px;
-
     font-size: 18px;
     font-weight: 600;
-
     color: #222;
 }
 
 .info-atendimento p {
     margin: 0;
-
     font-size: 14px;
-
     color: #666;
 }
 
-
-/* TEXTO INFORMATIVO */
-
 .texto-informativo {
     max-width: 850px;
-
     margin: 0 auto;
-
     font-size: 18px;
     font-weight: 600;
     line-height: 1.6;
-
     color: #444;
-
     text-align: center;
 }
+
 
 /* ====================================
    DIVISOR ENTRE SEÇÕES
@@ -540,26 +457,21 @@ body {
 .divisor-secao {
     width: 100%;
     max-width: 1200px;
-
     margin: 0 auto;
-
     border: none;
-
     border-top: 1px solid #cfcfcf;
 }
 
 
-
 /* ====================================
    RODAPÉ
+   (removido o bloco .redes: não haverá redes sociais)
 ==================================== */
 
 .footer-poupemais {
     background: #7f83d6;
     color: white;
-
     margin-top: 0;
-
     padding: 60px 0 25px;
 }
 
@@ -567,23 +479,16 @@ body {
     max-width: 1200px;
 }
 
-/* PARTE SUPERIOR */
-
 .footer-top {
     display: grid;
-
-    grid-template-columns:
-        2fr 1fr 1fr 1fr 240px;
-
+    grid-template-columns: 2fr 1fr 1fr 1fr 240px;
     gap: 50px;
-
     align-items: center;
 }
 
 .footer-col h3 {
     font-size: 42px;
     font-weight: 700;
-
     margin-bottom: 20px;
 }
 
@@ -591,223 +496,14 @@ body {
 .footer-col h6 {
     font-size: 20px;
     font-weight: 600;
-
     margin-bottom: 18px;
 }
 
 .footer-col p {
     font-size: 16px;
     line-height: 1.8;
-
     margin-bottom: 8px;
-
     color: rgba(255, 255, 255, .95);
-}
-
-/* REDES */
-
-.redes {
-    display: flex;
-    gap: 14px;
-
-    margin-top: 10px;
-}
-
-.redes img {
-    width: 24px;
-    height: 24px;
-}
-
-/* FOTO */
-
-.footer-imagem {
-    display: flex;
-    justify-content: center;
-}
-
-.footer-imagem img {
-    width: 220px;
-    height: 220px;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-}
-
-/* LINHA */
-
-.footer-poupemais hr {
-    margin: 35px 0;
-
-    border: none;
-
-    border-top: 1px solid rgba(255, 255, 255, .35);
-}
-
-/* PARTE INFERIOR */
-
-.footer-bottom {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-bottom h4 {
-    font-size: 22px;
-    font-weight: 700;
-
-    margin-bottom: 5px;
-}
-
-.footer-bottom p {
-    font-size: 15px;
-
-    margin-bottom: 10px;
-}
-
-.pagamentos {
-    font-size: 16px;
-}
-
-.logo-final {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-
-
-/* ====================================
-   NAVBAR
-==================================== */
-
-.navbar-poupemais {
-    background: #ffffff;
-
-    min-height: 90px;
-
-    padding: 0 40px;
-
-    border-bottom: 1px solid #ececec;
-
-    box-shadow: none;
-
-    margin: 0;
-}
-
-.logo-nav {
-    width: 90px;
-    height: auto;
-}
-
-.nome-site {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1f2235;
-}
-
-.btn-cadastro {
-    background: #4f46e5 !important;
-
-    border: none !important;
-
-    padding: 10px 22px;
-
-    border-radius: 8px;
-
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.btn-cadastro:hover {
-    background: #4338ca !important;
-}
-
-.icone-nav-img {
-    width: 24px;
-    height: 24px;
-
-    object-fit: contain;
-
-    cursor: pointer;
-
-    transition: .3s;
-}
-
-.icone-nav-img:hover {
-    transform: scale(1.08);
-}
-
-
-.modal {
-
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, .45);
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
-
-}
-
-.modal-box {
-
-    width: 900px;
-
-    background: #FFF;
-
-    border-radius: 8px;
-
-    padding: 60px;
-
-    text-align: center;
-
-}
-
-.modal-box i {
-
-    font-size: 80px;
-
-    margin-bottom: 30px;
-
-}
-
-.modal-box h2 {
-
-    font-size: 45px;
-
-    font-weight: 500;
-
-}
-
-.botoes {
-
-    display: flex;
-
-    justify-content: space-around;
-
-    margin-top: 60px;
-
-}
-
-.botoes button {
-
-    width: 250px;
-
-    height: 65px;
-
-    font-size: 30px;
-
 }
 
 .footer-col a {
@@ -823,25 +519,172 @@ body {
     color: #ececff;
 }
 
+.footer-imagem {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-imagem img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.footer-poupemais hr {
+    margin: 35px 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, .35);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-final {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+@media (max-width: 991px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .footer-imagem {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ====================================
+   NAVBAR
+==================================== */
+
+.navbar-poupemais {
+    background: #ffffff;
+    min-height: 90px;
+    padding: 0 40px;
+    border-bottom: 1px solid #ececec;
+    box-shadow: none;
+    margin: 0;
+}
+
+.logo-nav {
+    width: 90px;
+    height: auto;
+}
+
+.nome-site {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2235;
+}
+
+.btn-cadastro,
 .btn-login {
     background: #4f46e5 !important;
     color: #fff !important;
     border: none !important;
-
     padding: 10px 22px;
     border-radius: 8px;
-
     font-size: 14px;
     font-weight: 500;
-
     transition: .3s;
 }
 
+.btn-cadastro:hover,
 .btn-login:hover {
     background: #4338ca !important;
 }
 
-/* busca */
+.icone-nav-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.icone-nav-img:hover {
+    transform: scale(1.08);
+}
+
+
+/* ====================================
+   MODAL DE LOCALIZAÇÃO
+   Renomeado de ".modal" para ".modal-loc": o Bootstrap já usa ".modal"
+   (com display:none), o que bloqueava a janela de aparecer.
+==================================== */
+
+.modal-loc {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, .45);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 16px;
+    z-index: 9999;
+}
+
+.modal-loc[hidden] {
+    display: none;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 520px;
+
+    background: #fff;
+    border-radius: 12px;
+
+    padding: 36px 32px;
+    text-align: center;
+}
+
+.modal-icone {
+    margin-bottom: 18px;
+}
+
+.modal-box h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2235;
+}
+
+.modal-msg {
+    min-height: 22px;
+    margin-top: 14px;
+    font-size: 14px;
+    color: #b42318;
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.botoes button {
+    flex: 1 1 0;
+    max-width: 200px;
+    height: 48px;
+    font-size: 17px;
+}
+
+
+/* ====================================
+   BUSCA
+==================================== */
+
 .search-wrapper {
     position: relative;
 }
@@ -849,7 +692,6 @@ body {
 .input-busca {
     width: 0;
     opacity: 0;
-
     padding: 0;
     margin-left: 0;
 
@@ -858,7 +700,6 @@ body {
 
     background: #f5f5f5;
     border-radius: 20px;
-
     font-size: 14px;
 
     transition: width .3s ease, opacity .3s ease, padding .3s ease, margin-left .3s ease;
@@ -867,18 +708,8 @@ body {
 .input-busca.ativo {
     width: 220px;
     opacity: 1;
-
     padding: 8px 14px;
     margin-left: 10px;
-}
-
-
-/* ==========================================
-   BUSCA: DROPDOWN DE SUGESTÕES
-========================================== */
-
-.search-wrapper {
-    position: relative;
 }
 
 .resultados-busca {

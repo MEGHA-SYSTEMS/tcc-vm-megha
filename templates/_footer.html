@@ -1,0 +1,43 @@
+<footer class="footer-poupemais">
+
+    <div class="footer-inner">
+
+        <div class="footer-top">
+
+            <div class="footer-col footer-marca">
+                <h3>Poupemais</h3>
+                <p>Preços justos para um cuidado contínuo</p>
+            </div>
+
+            <div class="footer-col">
+                <h6>Companhia</h6>
+                <a href="{{ url_for('index') }}">Início</a>
+                <a href="{{ url_for('catalogo') }}">Catálogo</a>
+                <a href="{{ url_for('localizacao') }}">Localização</a>
+                <a href="{{ url_for('team') }}">Sobre nós</a>
+                <a href="{{ url_for('contato') }}">Contate-nos</a>
+                <a href="{{ url_for('termos') }}">Privacidade e política</a>
+            </div>
+
+            <div class="footer-col">
+                <h6>Perfil e atendimento</h6>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Cadastre-se</a>
+                <a href="{{ url_for('contato') }}">Tire suas dúvidas</a>
+            </div>
+
+            <div class="footer-imagem">
+                <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosos">
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="footer-bottom">
+            <div class="logo-final">POUPE MAIS</div>
+        </div>
+
+    </div>
+
+</footer>
