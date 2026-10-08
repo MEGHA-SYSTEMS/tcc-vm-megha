@@ -1,4 +1,5 @@
 import os
+import time  # NOVO: usado no cache dos produtos
 import unicodedata
 from functools import wraps
 
@@ -34,10 +35,8 @@ from perfil_service import (
 from produtos_service import (
     CATEGORIAS,
     adicionar_produto,
-    editar_produto,
     excluir_produto,
     listar_produtos,
-    obter_produto,
 )
 
 
@@ -69,13 +68,61 @@ def normalizar(texto):
 
 
 # ============================================================
+# PRODUTOS EM CACHE (NOVO)
+# Evita ler o Firebase inteiro a cada visita à landing
+# e a cada tecla digitada na busca.
+# ============================================================
+
+_CACHE_PRODUTOS = {"quando": 0.0, "dados": []}
+_CACHE_SEGUNDOS = 60
+
+
+def todos_produtos_cache():
+    """get_todos_produtos() com cache de 60s.
+
+    Se o Firebase falhar, devolve a última lista boa e tenta de novo
+    em 10 segundos, sem derrubar a página.
+    """
+    agora = time.time()
+
+    if agora - _CACHE_PRODUTOS["quando"] > _CACHE_SEGUNDOS:
+        try:
+            _CACHE_PRODUTOS["dados"] = get_todos_produtos()
+            _CACHE_PRODUTOS["quando"] = agora
+        except Exception as erro:
+            print(f"[Produtos] Falha ao carregar: {erro}")
+            _CACHE_PRODUTOS["quando"] = agora - _CACHE_SEGUNDOS + 10
+
+    return _CACHE_PRODUTOS["dados"]
+
+
+@app.template_filter("brl")
+def formatar_brl(valor):
+    """Filtro para os templates: 10.4 -> '10,40' | 1234.5 -> '1.234,50'."""
+    try:
+        texto = f"{float(valor):,.2f}"
+    except (TypeError, ValueError):
+        return "—"
+    return texto.replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+# ============================================================
 # PÁGINA INICIAL
 # ============================================================
 
 @app.route("/")
 def index():
-    nome = "poupemais.com"
-    return render_template("index.html", site=nome)
+    # Produtos com foto aparecem primeiro; mostra no máximo 10.
+    produtos = sorted(
+        todos_produtos_cache(),
+        key=lambda p: not p.get("imagem"),
+    )
+
+    return render_template(
+        "index.html",
+        site="poupemais.com",
+        produtos_home=produtos[:10],
+    )
 
 
 # ============================================================
@@ -215,72 +262,6 @@ def painel_adicionar_produto():
             dados=request.form.to_dict(),
             erro=mensagem,
         )
-    )
-
-
-# ============================================================
-# EDITAR PRODUTO
-# ============================================================
-
-@app.route(
-    "/painel/produtos/<produto_id>/editar",
-    methods=["GET", "POST"]
-)
-@login_obrigatorio
-def painel_editar_produto(produto_id):
-    farmacia_id = session["farmacia_id"]
-
-    produto = obter_produto(farmacia_id, produto_id)
-
-    if produto is None:
-        flash("Produto não encontrado.", "danger")
-        return redirect(url_for("painel"))
-
-    if request.method == "POST":
-        ok, mensagem = editar_produto(
-            farmacia_id,
-            produto_id,
-            request.form,
-            request.files.get("imagem_arquivo"),
-        )
-
-        if ok:
-            flash(mensagem, "success")
-            return redirect(url_for("painel"))
-
-        return render_template(
-            "dashboard/produto_editar.html",
-            produto=produto,
-            categorias=CATEGORIAS,
-            dados=request.form.to_dict(),
-            erro=mensagem,
-        )
-
-    # GET: preenche o formulário com os dados atuais
-    dados = {
-        "nome": produto.get("nome", ""),
-        "categoria": produto.get("categoria", ""),
-        "principio_ativo": produto.get("principio_ativo", ""),
-        "descricao": produto.get("descricao", ""),
-        "preco": "{:.2f}".format(
-            produto.get("preco", 0)
-        ).replace(".", ","),
-        "desconto_percentual": "",
-        "promocao_ate": "",
-    }
-
-    # Só preenche o desconto se ele ainda estiver valendo
-    if produto.get("promocao_ativa"):
-        dados["desconto_percentual"] = "%g" % produto["desconto_percentual"]
-        dados["promocao_ate"] = produto["promocao_ate_local"].strftime(
-            "%Y-%m-%dT%H:%M"
-        )
-
-    return render_template(
-        "dashboard/produto_editar.html",
-        produto=produto,
-        categorias=CATEGORIAS,
-        dados=dados,
     )
 
 
@@ -505,9 +486,9 @@ def busca():
     resultados = []
 
     # -----------------------------
-    # Produtos
+    # Produtos (agora com cache)
     # -----------------------------
-    for p in get_todos_produtos():
+    for p in todos_produtos_cache():
         campos = [
             p.get("nome", ""),
             p.get("categoria", ""),

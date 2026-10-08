@@ -357,6 +357,53 @@ body {
 }
 
 
+/* Nome longo não estoura o card */
+.grid-produtos > a.produto-card {
+    min-width: 0;
+}
+
+.produto-card h5 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Preço grande (ex.: R$ 1.234,56) não quebra linha */
+.preco {
+    white-space: nowrap;
+}
+
+/* Produto sem foto: mesmo tamanho da imagem, para o card não mudar de altura */
+.sem-imagem {
+    width: 280px;
+    height: 180px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f3f3;
+    border-radius: 12px;
+
+    color: #999;
+    font-size: 15px;
+}
+
+.catalogo-vazio {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    margin: 20px 0 10px;
+}
+
+@media (max-width: 767px) {
+    .sem-imagem {
+        width: 45%;
+        height: 140px;
+    }
+}
+
 /* ====================================
    ÁREA DE ATENDIMENTO
 ==================================== */
