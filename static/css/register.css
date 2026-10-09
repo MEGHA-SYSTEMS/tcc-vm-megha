@@ -513,3 +513,204 @@ body {
     }
 
 }
+
+
+/* ====================================================================
+   RESPONSIVO - NAVBAR E TELA DE LOGIN (celular)
+==================================================================== */
+
+/* o link era inline: o padding vertical não empurrava nada e o botão
+   ficava sobreposto à navbar quando o menu abria */
+   .btn-cadastro {
+    display: inline-block;
+}
+
+@media (max-width: 991px) {
+
+    .navbar-poupemais {
+        padding: 6px 10px;
+        min-height: 0;
+    }
+
+    .navbar-poupemais .navbar-brand {
+        margin-right: auto;
+    }
+
+    .logo-nav {
+        width: 44px;
+    }
+
+    .nome-site {
+        font-size: 18px;
+        margin-left: 6px;
+    }
+
+    .icone-nav-img {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .navbar-toggler {
+        border: 1px solid #cfd0ea;
+        padding: 4px 8px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .25);
+    }
+
+    .navbar-collapse .btn-cadastro {
+        display: block;
+        text-align: center;
+        margin: 8px 0 12px;
+        padding: 11px 16px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .login-container {
+        margin: 24px auto 36px;
+        padding: 0 16px;
+    }
+
+    .login-container h1 {
+        font-size: 28px;
+    }
+
+    .subtitulo {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .card-login {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .campo {
+        margin-bottom: 14px;
+    }
+
+    .campo label {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .campo input {
+        height: 44px;
+        font-size: 14px;
+    }
+
+    .opcoes-login {
+        font-size: 12px;
+        margin: 8px 0 18px;
+        gap: 8px;
+    }
+
+    .btn-login {
+        height: 46px;
+        font-size: 15px;
+    }
+
+    .texto-login {
+        font-size: 13px;
+        margin-top: 18px;
+    }
+}
+
+
+/* --------------------------------------------------------------------
+   RODAPÉ COMPACTO NO CELULAR (colunas lado a lado, só menor)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .footer-poupemais {
+        padding: 28px 0 16px;
+    }
+
+    .footer-poupemais .footer-top {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 12px;
+        align-items: start;
+        text-align: left;
+    }
+
+    .footer-poupemais .footer-top > .footer-col:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .footer-poupemais .footer-col h3 {
+        font-size: 24px;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .footer-col p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+
+    .footer-poupemais .footer-col h5,
+    .footer-poupemais .footer-col h6 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .footer-poupemais .footer-col a {
+        font-size: 12px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .redes {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .footer-poupemais .redes img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .footer-poupemais .footer-imagem {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .footer-poupemais .footer-imagem img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .footer-poupemais hr {
+        margin: 18px 0;
+    }
+
+    .footer-poupemais .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+
+    .footer-poupemais .footer-bottom h4 {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .footer-poupemais .footer-bottom p {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .footer-poupemais .pagamentos {
+        font-size: 11px;
+    }
+
+    .footer-poupemais .logo-final {
+        font-size: 15px;
+    }
+}

@@ -1,47 +1,62 @@
 <!doctype html>
 <html lang="pt-br">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <title>Plataforma de PoupeMais</title>
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
           crossorigin="anonymous">
 
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
+
 <body>
+
 
 <!-- ==========================================
      NAVBAR
 ========================================== -->
 
+
 <nav class="navbar navbar-expand-lg navbar-poupemais">
+
 
     <div class="container-fluid">
 
+
         <!-- CORREÇÃO: antes era href="#" (só adicionava # na URL) -->
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+
 
             <img src="{{ url_for('static', filename='logo.png') }}"
                  alt="Logo PoupeMais"
                  class="logo-nav">
 
+
             <span class="ms-2 nome-site">PoupeMais</span>
+
 
         </a>
 
+
         <div class="search-wrapper d-flex align-items-center ms-3">
+
 
             <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
                  class="icone-nav-img"
                  alt="Buscar"
                  id="btn-busca">
+
 
             <input type="text"
                    class="input-busca"
@@ -49,9 +64,12 @@
                    placeholder="Buscar produtos..."
                    autocomplete="off">
 
+
             <div id="resultados-busca" class="resultados-busca"></div>
 
+
         </div>
+
 
         <button class="navbar-toggler"
                 type="button"
@@ -63,72 +81,100 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 
-            <div class="d-flex align-items-center gap-3">
+
+            <div class="nav-acoes d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 py-3 py-lg-0">
+
 
                 <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
                     É farmácia? Cadastre-se aqui
                 </a>
 
+
                 <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
                     Login
                 </a>
 
+
             </div>
+
 
         </div>
 
+
     </div>
+
 
 </nav>
 
 
+
+
 <main>
+
 
 <!-- ==========================================
      HERO
 ========================================== -->
 
+
 <section class="container py-5 hero-section">
+
 
     <div class="row align-items-center">
 
+
         <div class="col-md-6">
+
 
             <span class="hero-topo">
                 SEU ALIADO NA BUSCA POR<br>
                 MEDICAMENTOS MAIS ACESSÍVEIS
             </span>
 
+
             <h1>
                 Compare os preços de medicamentos e economize no cuidado com quem mais importa.
             </h1>
 
+
             <p>“Economizar em remédios é cuidar da saúde com inteligência.”</p>
+
 
             <a href="{{ url_for('team') }}" class="btn-saiba-mais">Saiba mais</a>
 
+
         </div>
 
+
         <div class="col-md-6 text-center">
+
 
             <img src="{{ url_for('static', filename='img/idosa.jpg') }}"
                  class="img-fluid imagem-hero"
                  alt="Idosa">
 
+
         </div>
+
 
     </div>
 
+
 </section>
+
+
 
 
 <!-- ==========================================
      BANNERS DESLIZANTES
 ========================================== -->
 
+
 <section class="container py-4">
+
 
     <div class="scroll-produtos">
         <img src="{{ url_for('static', filename='img/Produto1.jpg') }}" draggable="false" alt="Produto">
@@ -137,50 +183,70 @@
         <img src="{{ url_for('static', filename='img/Produto4.jpeg') }}" draggable="false" alt="Produto">
     </div>
 
+
 </section>
+
+
 
 
 <!-- ==========================================
      BENEFÍCIOS (dois botões de tamanho idêntico)
 ========================================== -->
 
+
 <div class="beneficios-box">
+
 
     <!-- CORREÇÃO: link real para a localização (antes: href="#" + onclick relativo) -->
     <a href="{{ url_for('localizacao') }}" class="item-beneficio" id="card-localizacao">
+
 
         <img src="{{ url_for('static', filename='img/icone2.jpg') }}"
              class="icone-card"
              alt="Localização">
 
+
         <p>Encontre a farmácia mais perto de você.</p>
+
 
     </a>
 
+
     <a href="{{ url_for('catalogo') }}" class="item-beneficio">
+
 
         <img src="{{ url_for('static', filename='img/icone3.jpg') }}"
              class="icone-card"
              alt="Catálogo">
 
+
         <p>Confira nosso catálogo de produtos.</p>
+
 
     </a>
 
+
 </div>
+
+
 
 
 <!-- ==========================================
      PRODUTOS EM DESTAQUE
 ========================================== -->
 
+
 <section class="container py-5">
+
 
     <div class="produtos-destaque">
 
+
         <h2 class="titulo-destaque">Cuide do seu bem estar</h2>
 
+
         <div class="row text-center">
+
 
             {% for letra in ['A', 'B', 'C', 'D'] %}
             <div class="col-auto">
@@ -192,20 +258,28 @@
             </div>
             {% endfor %}
 
+
         </div>
+
 
     </div>
 
+
 </section>
+
+
 
 
 <!-- ==========================================
      SEÇÃO PARA IDOSOS
 ========================================== -->
 
+
 <section class="container py-5 secao-idoso">
 
+
     <div class="row align-items-center g-0">
+
 
         <div class="col-md-6">
             <div class="texto-idoso">
@@ -217,35 +291,48 @@
             </div>
         </div>
 
+
         <div class="col-md-6 text-center">
             <img src="{{ url_for('static', filename='img/idoso.jpg') }}"
                  class="img-idoso"
                  alt="Idoso">
         </div>
 
+
     </div>
 
+
 </section>
+
+
 
 
 <!-- ==========================================
      CATÁLOGO DE PRODUTOS
 ========================================== -->
 
+
 <section class="catalogo-produtos">
+
 
     <h2 class="text-center mb-4">Veja todos os nossos produtos</h2>
 
+
     {% if produtos_home %}
 
+
     <div class="grid-produtos">
+
 
         {% for p in produtos_home %}
         <a href="{{ url_for('produto', produto_id=p.id) }}" class="produto-card">
 
+
             <h5 title="{{ p.nome }}">{{ p.nome }}</h5>
 
+
             <div class="produto-conteudo">
+
 
                 {% if p.imagem %}
                 <img src="{{ p.imagem }}" alt="{{ p.nome }}" loading="lazy">
@@ -253,56 +340,82 @@
                 <div class="sem-imagem">Sem imagem</div>
                 {% endif %}
 
+
                 <div class="preco" title="Menor preço: {{ p.menor_preco.farmacia }}">
                     <span>R$</span> {{ p.menor_preco.preco|brl }}
                 </div>
 
+
             </div>
+
 
         </a>
         {% endfor %}
 
+
     </div>
+
 
     <div class="text-center mt-4">
         <a href="{{ url_for('catalogo') }}" class="btn-saiba-mais">Ver catálogo completo</a>
     </div>
 
+
     {% else %}
+
 
     <p class="catalogo-vazio">
         Ainda não há produtos cadastrados. Volte em breve!
     </p>
 
+
     {% endif %}
 
+
 </section>
+
+
+
+
+<hr class="divisor-secao">
+
+
+
 
 <!-- ==========================================
      ÁREA DE ATENDIMENTO
      (removido: card "Central de Atendimento")
 ========================================== -->
 
+
 <section class="atendimento-area">
+
 
     <div class="container">
 
+
         <div class="cards-atendimento">
 
+
             <a href="{{ url_for('contato') }}" class="atendimento-card">
+
 
                 <img src="{{ url_for('static', filename='img/atendimento2.jpg') }}"
                      class="icone-atendimento"
                      alt="Suporte">
+
 
                 <div class="info-atendimento">
                     <h5>Precisa de ajuda?</h5>
                     <p>Suporte</p>
                 </div>
 
+
             </a>
 
+
         </div>
+
 
         <div class="texto-informativo">
             O envelhecimento populacional no Brasil impõe desafios
@@ -312,12 +425,18 @@
             previdenciários fixos.
         </div>
 
+
     </div>
+
 
 </section>
 
 
+
+
 <hr class="divisor-secao">
+
+
 
 
 <!-- ==========================================
@@ -326,16 +445,21 @@
       por Whatsapp, Central de atendimento)
 ========================================== -->
 
+
 <section class="footer-poupemais">
+
 
     <div class="container">
 
+
         <div class="footer-top">
+
 
             <div class="footer-col">
                 <h3>Poupemais</h3>
                 <p>Preços justos para um cuidado contínuo</p>
             </div>
+
 
             <div class="footer-col">
                 <h6>Companhia</h6>
@@ -347,34 +471,45 @@
                 <a href="{{ url_for('termos') }}">Privacidade e política</a>
             </div>
 
+
             <div class="footer-col">
                 <h6>Perfil</h6>
                 <a href="{{ url_for('login') }}">Login</a>
                 <a href="{{ url_for('register') }}">Cadastre-se</a>
             </div>
 
+
             <div class="footer-col">
                 <h6>Atendimento</h6>
                 <a href="{{ url_for('contato') }}">Tire suas dúvidas</a>
             </div>
 
+
             <div class="footer-imagem">
                 <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosos">
             </div>
 
+
         </div>
 
+
         <hr>
+
 
         <div class="footer-bottom">
             <div class="logo-final">POUPE MAIS</div>
         </div>
 
+
     </div>
+
 
 </section>
 
+
 </main>
+
+
 
 
 <!-- ==========================================
@@ -382,37 +517,50 @@
      (renomeado para .modal-loc: a classe ".modal" colidia com o Bootstrap)
 ========================================== -->
 
+
 <div id="modal-localizacao" class="modal-loc" hidden>
 
+
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+
 
         <svg class="modal-icone" viewBox="0 0 24 24" width="64" height="64" aria-hidden="true">
             <path fill="#d62828"
                   d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
         </svg>
 
+
         <h2 id="modal-titulo">Permitir que o PoupeMais utilize a sua localização?</h2>
 
+
         <p id="modal-msg" class="modal-msg" role="status"></p>
+
 
         <div class="botoes">
             <button type="button" id="negar" class="btn btn-outline-secondary">Negar</button>
             <button type="button" id="permitir" class="btn btn-primary">Permitir</button>
         </div>
 
+
     </div>
+
 
 </div>
 
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYJwR5XK/BmnVDxM+D2scQbITxI"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
+
 
 
 <!-- ==========================================
      BUSCA (um único handler para a lupa)
 ========================================== -->
+
 
 <script>
 (function () {
@@ -423,14 +571,17 @@
     var timer = null;
     var ultimosResultados = [];
 
+
     function fechar() {
         caixa.style.display = "none";
         caixa.innerHTML = "";
     }
 
+
     function mostrar(resultados) {
         ultimosResultados = resultados;
         caixa.innerHTML = "";
+
 
         if (resultados.length === 0) {
             var vazio = document.createElement("div");
@@ -443,13 +594,16 @@
                 link.href = r.url;
                 link.className = "resultado-item";
 
+
                 var nome = document.createElement("span");
                 nome.className = "resultado-nome";
                 nome.textContent = r.nome;
 
+
                 var cat = document.createElement("span");
                 cat.className = "resultado-categoria";
                 cat.textContent = r.categoria;
+
 
                 link.appendChild(nome);
                 link.appendChild(cat);
@@ -459,9 +613,11 @@
         caixa.style.display = "block";
     }
 
+
     function buscar() {
         var termo = input.value.trim();
         if (termo.length < 2) { fechar(); return; }
+
 
         fetch(urlBusca + "?q=" + encodeURIComponent(termo))
             .then(function (resp) { return resp.json(); })
@@ -469,10 +625,12 @@
             .catch(fechar);
     }
 
+
     input.addEventListener("input", function () {
         clearTimeout(timer);
         timer = setTimeout(buscar, 250);
     });
+
 
     function irParaPrimeiro() {
         if (input.value.trim().length < 2) { input.focus(); return; }
@@ -483,10 +641,12 @@
         }
     }
 
+
     input.addEventListener("keydown", function (e) {
         if (e.key === "Enter") { e.preventDefault(); irParaPrimeiro(); }
         if (e.key === "Escape") { fechar(); }
     });
+
 
     // Lupa: se a barra está fechada, abre; se já está aberta, busca.
     botao.addEventListener("click", function () {
@@ -498,6 +658,7 @@
         }
     });
 
+
     document.addEventListener("click", function (e) {
         if (!e.target.closest(".search-wrapper")) { fechar(); }
     });
@@ -505,16 +666,21 @@
 </script>
 
 
+
+
 <!-- ==========================================
      SLIDER DOS BANNERS (arrastar com o mouse)
 ========================================== -->
+
 
 <script>
 (function () {
     var slider = document.querySelector(".scroll-produtos");
     if (!slider) return;
 
+
     var isDown = false, startX = 0, scrollLeft = 0;
+
 
     slider.addEventListener("mousedown", function (e) {
         isDown = true;
@@ -531,10 +697,13 @@
 </script>
 
 
+
+
 <!-- ==========================================
      LOCALIZAÇÃO
      (substitui /static/js/modal.js, que não pude ver)
 ========================================== -->
+
 
 <script>
 (function () {
@@ -545,6 +714,7 @@
     var cardLoc = document.getElementById("card-localizacao");
     var CHAVE = "poupemais_loc";
 
+
     function lembrar(valor) {
         try { localStorage.setItem(CHAVE, valor); } catch (e) {}
     }
@@ -553,6 +723,7 @@
     }
     function abrir() { modal.hidden = false; }
     function fechar() { modal.hidden = true; }
+
 
     function pedirLocalizacao() {
         if (!("geolocation" in navigator)) {
@@ -564,8 +735,10 @@
             return;
         }
 
+
         msg.textContent = "Obtendo sua localização...";
         btnPermitir.disabled = true;
+
 
         navigator.geolocation.getCurrentPosition(
             function (pos) {
@@ -588,12 +761,15 @@
         );
     }
 
+
     btnPermitir.addEventListener("click", pedirLocalizacao);
+
 
     btnNegar.addEventListener("click", function () {
         lembrar("negado");
         fechar();
     });
+
 
     modal.addEventListener("click", function (e) {
         if (e.target === modal) fechar();
@@ -601,6 +777,7 @@
     document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") fechar();
     });
+
 
     // Botão "Encontre a farmácia mais perto de você":
     // se ainda não decidiu, pergunta; senão, vai direto para a página.
@@ -611,12 +788,14 @@
         }
     });
 
+
     // Pergunta uma única vez, ao entrar no site.
     if (lido() === null) {
         setTimeout(abrir, 800);
     }
 })();
 </script>
+
 
 </body>
 </html>

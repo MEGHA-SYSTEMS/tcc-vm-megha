@@ -680,3 +680,146 @@ body{
     }
 
 }
+
+
+/* ====================================================================
+   RESPONSIVO - CONTATE-NOS (celular / tablet)
+==================================================================== */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+.formulario {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* --------------------------------------------------------------------
+   TABLET E CELULAR (até 991px): navbar
+   (o contato.css base sobrescrevia a navbar compacta do style.css)
+-------------------------------------------------------------------- */
+@media (max-width: 991px) {
+
+    .navbar-poupemais {
+        padding: 6px 12px;
+        min-height: 0;
+    }
+
+    .logo-nav {
+        width: 44px;
+    }
+
+    .nome-site {
+        font-size: 18px;
+    }
+
+    .navbar-toggler {
+        border: 1px solid #cfd0ea;
+        padding: 6px 10px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .25);
+    }
+
+    /* links do menu em lista, um embaixo do outro */
+    .nav-centro {
+        margin: 8px 0 !important;
+    }
+
+    .nav-centro .nav-link {
+        padding: 10px 4px;
+        font-size: 16px;
+    }
+
+    .nav-centro .nav-item + .nav-item .nav-link {
+        border-left: none;
+        border-top: 1px solid #ececec;
+    }
+
+    /* botões empilhados dentro do menu */
+    .navbar-collapse .d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: .5rem !important;
+        padding: 8px 0 12px;
+    }
+
+    .navbar-collapse .btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .icone-localizacao {
+        justify-content: center;
+        padding: 6px 0;
+    }
+}
+
+/* --------------------------------------------------------------------
+   CELULAR (até 767px)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .contato {
+        padding: 28px 0 24px;
+    }
+
+    .contato h1 {
+        font-size: 30px;
+        margin-bottom: 28px;
+    }
+
+    .contato-conteudo {
+        gap: 28px;
+    }
+
+    .formulario {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .informacoes {
+        width: 100%;
+    }
+
+    .info {
+        margin-bottom: 24px;
+    }
+
+    .info h4 {
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .info p {
+        font-size: 14px;
+    }
+
+    .imagens-contato {
+        margin-top: 32px;
+    }
+
+    .imagem-contato {
+        height: 200px;
+    }
+
+    .atendimento-area {
+        padding: 24px 0;
+    }
+
+    .atendimento-area .texto-informativo {
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 0 4px;
+    }
+}

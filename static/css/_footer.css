@@ -1,6 +1,11 @@
-/* ====================================
-   RODAPÉ PADRÃO (funciona com ou sem Bootstrap)
-==================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ====================================================================
+   RODAPÉ ÚNICO DO POUPEMAIS (desktop + celular)
+   Funciona com ou sem Bootstrap. Link por ÚLTIMO no <head>.
+   Todas as regras começam com ".footer-poupemais" para vencer os
+   rodapés antigos que ainda existem nos outros CSS.
+==================================================================== */
 
 .footer-poupemais,
 .footer-poupemais * {
@@ -15,35 +20,41 @@
     padding: 60px 0 25px;
 }
 
-.footer-inner {
+.footer-poupemais .footer-inner {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
 }
 
-.footer-top {
+.footer-poupemais .footer-top {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 240px;
+    grid-template-columns: 2fr 1fr 1fr 1fr 240px;
     gap: 50px;
-    align-items: start;
+    align-items: center;
+    text-align: left;
 }
 
-.footer-poupemais h3 {
+.footer-poupemais .footer-col {
+    min-width: 0;
+}
+
+.footer-poupemais .footer-col h3 {
     font-size: 42px;
     font-weight: 700;
-    line-height: 1.1;
-    margin: 0 0 16px;
+    margin: 0 0 20px;
+    color: #fff;
 }
 
-.footer-poupemais h6 {
+.footer-poupemais .footer-col h5,
+.footer-poupemais .footer-col h6 {
     font-size: 20px;
     font-weight: 600;
-    line-height: 1.1;
-    margin: 6px 0 18px;
+    margin: 0 0 18px;
+    color: #fff;
 }
 
-.footer-poupemais p {
+.footer-poupemais .footer-col p {
     font-size: 16px;
     line-height: 1.8;
     margin: 0 0 8px;
@@ -63,12 +74,12 @@
     color: #ececff;
 }
 
-.footer-imagem {
+.footer-poupemais .footer-imagem {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-.footer-imagem img {
+.footer-poupemais .footer-imagem img {
     width: 220px;
     height: 220px;
     object-fit: cover;
@@ -79,32 +90,97 @@
     margin: 35px 0;
     border: none;
     border-top: 1px solid rgba(255, 255, 255, .35);
-    opacity: 1;
 }
 
-.footer-bottom {
+.footer-poupemais .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo-final {
+.footer-poupemais .logo-final {
     font-size: 22px;
     font-weight: 700;
+    color: #fff;
 }
 
+
+/* --------------------------------------------------------------------
+   TABLET (até 991px): 2 colunas
+-------------------------------------------------------------------- */
 @media (max-width: 991px) {
-    .footer-top {
+
+    .footer-poupemais .footer-top {
         grid-template-columns: 1fr 1fr;
         gap: 30px;
     }
 
-    .footer-marca,
-    .footer-imagem {
+    .footer-poupemais .footer-imagem {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* --------------------------------------------------------------------
+   CELULAR (até 767px): mesmas colunas lado a lado, só menores
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .footer-poupemais {
+        padding: 28px 0 16px;
+    }
+
+    .footer-poupemais .footer-inner {
+        padding: 0 16px;
+    }
+
+    .footer-poupemais .footer-top {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 12px;
+        align-items: start;
+    }
+
+    .footer-poupemais .footer-top > .footer-col:first-child {
         grid-column: 1 / -1;
     }
 
-    .footer-imagem {
-        justify-content: flex-start;
+    .footer-poupemais .footer-col h3 {
+        font-size: 24px;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .footer-col p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+
+    .footer-poupemais .footer-col h5,
+    .footer-poupemais .footer-col h6 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .footer-poupemais .footer-col a {
+        font-size: 12px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .footer-imagem {
+        grid-column: 1 / -1;
+    }
+
+    .footer-poupemais .footer-imagem img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .footer-poupemais hr {
+        margin: 18px 0;
+    }
+
+    .footer-poupemais .logo-final {
+        font-size: 15px;
     }
 }

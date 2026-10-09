@@ -3,6 +3,7 @@
    Referência: Figma (tela "Catálogo")
    ========================================================== */
 
+
    :root {
     /* Paleta principal — unificada com o resto do site (#4f46e5) */
     --pm-primary: #4f46e5;
@@ -17,12 +18,15 @@
     --pm-radius: 14px;
     --pm-shadow: 0 8px 20px rgba(30, 30, 60, 0.08);
 
+
     font-size: 16px;
 }
+
 
 * {
     box-sizing: border-box;
 }
+
 
 body {
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -31,17 +35,21 @@ body {
     font-size: 1.05rem;
 }
 
+
 a {
     text-decoration: none;
 }
+
 
 img {
     max-width: 100%;
 }
 
+
 /* ==========================================================
    NAVBAR — padronizada com style.css / register.css / etc
    ========================================================== */
+
 
 .navbar-poupemais {
     background: #ffffff;
@@ -52,10 +60,12 @@ img {
     margin: 0;
 }
 
+
 .logo-nav {
     width: 90px;
     height: auto;
 }
+
 
 .nome-site {
     font-size: 28px;
@@ -63,9 +73,11 @@ img {
     color: #1f2235;
 }
 
+
 .search-wrapper {
     position: relative;
 }
+
 
 .icone-nav-img {
     width: 24px;
@@ -75,9 +87,11 @@ img {
     transition: .3s;
 }
 
+
 .icone-nav-img:hover {
     transform: scale(1.08);
 }
+
 
 .input-busca {
     width: 0;
@@ -91,6 +105,7 @@ img {
     font-size: 1rem;
 }
 
+
 .input-busca.ativo {
     width: 220px;
     opacity: 1;
@@ -98,6 +113,7 @@ img {
     padding: 0.25rem 0.25rem;
     outline: none;
 }
+
 
 /* Botões da navbar — mesmo tamanho/formato do resto do site */
 .btn-cadastro,
@@ -112,28 +128,34 @@ img {
     white-space: nowrap;
 }
 
+
 .btn-cadastro:hover,
 .btn-login:hover {
     background: #4338ca !important;
     color: #fff !important;
 }
 
+
 /* ==========================================================
    CABEÇALHO ANTIGO (site-header) — sobra de template
    ========================================================== */
+
 
 .site-header {
     display: none;
 }
 
+
 /* ==========================================================
    TÍTULO DA PÁGINA / CATÁLOGO
    ========================================================== */
+
 
 main.container {
     max-width: 1200px;
     padding-top: 2.5rem;
 }
+
 
 main.container > h1 {
     font-weight: 800;
@@ -142,20 +164,24 @@ main.container > h1 {
     margin-bottom: 0.25rem;
 }
 
+
 main.container > p.text-muted {
     color: var(--pm-muted) !important;
     font-size: 1.05rem !important;
     margin-bottom: 2rem;
 }
 
+
 /* ==========================================================
    CARDS DE PRODUTO
    ========================================================== */
+
 
 .produto-card-link {
     display: block;
     color: inherit;
 }
+
 
 .produto-card {
     background-color: var(--pm-bg-card);
@@ -166,11 +192,13 @@ main.container > p.text-muted {
     overflow: hidden;
 }
 
+
 .produto-card:hover,
 .produto-card:focus-within {
     transform: translateY(-5px);
     box-shadow: 0 14px 28px rgba(30, 30, 60, 0.16) !important;
 }
+
 
 /* Imagem quadrada: todas as fotos ficam no mesmo formato */
 .produto-imagem {
@@ -181,10 +209,12 @@ main.container > p.text-muted {
     padding: 0;
 }
 
+
 .produto-card .card-body {
     background-color: var(--pm-bg-card);
     padding: 1.1rem 1.25rem 1.4rem;
 }
+
 
 .produto-card .badge {
     background-color: #ffffff !important;
@@ -195,6 +225,7 @@ main.container > p.text-muted {
     border-radius: 999px;
 }
 
+
 .produto-card .card-title {
     font-weight: 700;
     font-size: 1.05rem;
@@ -202,9 +233,11 @@ main.container > p.text-muted {
     margin: 0.6rem 0 0.4rem;
 }
 
+
 .produto-card .text-muted {
     color: var(--pm-muted) !important;
 }
+
 
 .preco-destaque {
     font-size: 1.5rem;
@@ -213,9 +246,11 @@ main.container > p.text-muted {
     margin: 0;
 }
 
+
 .produto-card .small {
     font-size: 0.85rem;
 }
+
 
 /* Estado sem produtos cadastrados */
 .alert.alert-info {
@@ -226,9 +261,11 @@ main.container > p.text-muted {
     padding: 1.5rem;
 }
 
+
 /* ==========================================================
    RODAPÉ — padronizado com style.css / register.css / etc
    ========================================================== */
+
 
 .footer-poupemais {
     background: #7f83d6;
@@ -237,9 +274,11 @@ main.container > p.text-muted {
     padding: 60px 0 25px;
 }
 
+
 .footer-poupemais .container {
     max-width: 1200px;
 }
+
 
 .footer-top {
     display: grid;
@@ -248,11 +287,13 @@ main.container > p.text-muted {
     align-items: center;
 }
 
+
 .footer-col h3 {
     font-size: 42px;
     font-weight: 700;
     margin-bottom: 20px;
 }
+
 
 .footer-col h5,
 .footer-col h6 {
@@ -261,12 +302,14 @@ main.container > p.text-muted {
     margin-bottom: 18px;
 }
 
+
 .footer-col p {
     font-size: 16px;
     line-height: 1.8;
     margin-bottom: 8px;
     color: rgba(255, 255, 255, .95);
 }
+
 
 .footer-col a {
     display: block;
@@ -277,9 +320,11 @@ main.container > p.text-muted {
     transition: .2s;
 }
 
+
 .footer-col a:hover {
     color: #ececff;
 }
+
 
 .redes {
     display: flex;
@@ -287,15 +332,18 @@ main.container > p.text-muted {
     margin-top: 10px;
 }
 
+
 .redes img {
     width: 24px;
     height: 24px;
 }
 
+
 .footer-imagem {
     display: flex;
     justify-content: center;
 }
+
 
 .footer-imagem img {
     width: 220px;
@@ -304,11 +352,13 @@ main.container > p.text-muted {
     border-radius: 50%;
 }
 
+
 .footer-poupemais hr {
     margin: 35px 0;
     border: none;
     border-top: 1px solid rgba(255, 255, 255, .35);
 }
+
 
 .footer-bottom {
     display: flex;
@@ -318,34 +368,41 @@ main.container > p.text-muted {
     gap: 1rem;
 }
 
+
 .footer-bottom h4 {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 5px;
 }
 
+
 .footer-bottom p {
     font-size: 15px;
     margin-bottom: 10px;
 }
 
+
 .pagamentos {
     font-size: 16px;
 }
+
 
 .logo-final {
     font-size: 22px;
     font-weight: 700;
 }
 
+
 /* ==========================================================
    RESPONSIVO
    ========================================================== */
+
 
 @media (max-width: 991px) {
     .footer-top {
         grid-template-columns: 1fr 1fr;
     }
+
 
     .footer-imagem {
         grid-column: span 2;
@@ -353,20 +410,24 @@ main.container > p.text-muted {
     }
 }
 
+
 @media (max-width: 768px) {
     main.container > h1 {
         font-size: 1.6rem;
     }
+
 
     .footer-top {
         grid-template-columns: 1fr;
         text-align: center;
     }
 
+
     .redes {
         justify-content: center;
     }
 }
+
 
 /* Foco visível no teclado — acessibilidade para público idoso */
 a:focus-visible,
@@ -376,13 +437,16 @@ button:focus-visible,
     outline-offset: 2px;
 }
 
+
 /* ==========================================
    BUSCA: DROPDOWN DE SUGESTÕES
 ========================================== */
 
+
 .search-wrapper {
     position: relative;
 }
+
 
 .resultados-busca {
     display: none;
@@ -399,6 +463,7 @@ button:focus-visible,
     z-index: 2000;
 }
 
+
 .resultado-item {
     display: flex;
     flex-direction: column;
@@ -407,13 +472,16 @@ button:focus-visible,
     border-bottom: 1px solid #eeeeee;
 }
 
+
 .resultado-item:last-child {
     border-bottom: none;
 }
 
+
 .resultado-item:hover {
     background: #f1f6ff;
 }
+
 
 .resultado-nome {
     color: #222222;
@@ -421,13 +489,212 @@ button:focus-visible,
     font-weight: 600;
 }
 
+
 .resultado-categoria {
     color: #777777;
     font-size: 0.85rem;
 }
+
 
 .resultado-vazio {
     padding: 12px 14px;
     color: #777777;
     font-size: 0.95rem;
 }
+@media (max-width: 767px) {
+    .footer-poupemais .footer-top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    .footer-poupemais .footer-inner {
+        padding: 0 16px;
+    }
+}
+
+
+
+
+/* ====================================================================
+   RESPONSIVO - CATÁLOGO E PÁGINA DO PRODUTO (celular)
+==================================================================== */
+
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+/* --------------------------------------------------------------------
+   TABLET E CELULAR (até 991px): navbar
+-------------------------------------------------------------------- */
+@media (max-width: 991px) {
+
+
+    .navbar-poupemais {
+        position: relative;
+        padding: 6px 12px;
+        min-height: 0;
+    }
+
+
+    .logo-nav {
+        width: 44px;
+    }
+
+
+    .nome-site {
+        font-size: 18px;
+    }
+
+
+    .search-wrapper {
+        position: static;
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
+
+    .input-busca.ativo {
+        width: min(150px, 38vw);
+        margin-left: 8px;
+    }
+
+
+    .resultados-busca {
+        left: 12px;
+        right: 12px;
+        width: auto;
+        min-width: 0;
+        margin-top: 0;
+    }
+
+
+    .navbar-toggler {
+        border: 1px solid #cfd0ea;
+        padding: 6px 10px;
+    }
+
+
+    .navbar-collapse .d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        padding: 8px 0 12px;
+    }
+
+
+    .navbar-collapse .btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+}
+
+
+/* --------------------------------------------------------------------
+   CELULAR (até 767px)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+
+    body {
+        font-size: .95rem;
+    }
+
+
+    main.container {
+        padding-top: 1.2rem;
+    }
+
+
+    main.container > h1 {
+        font-size: 1.35rem;
+    }
+
+
+    main.container > p.text-muted {
+        font-size: .85rem !important;
+        margin-bottom: 1rem;
+    }
+
+
+    /* 2 produtos por linha (antes ficava 1 cartão gigante por linha) */
+    main.container .row.g-4 {
+        --bs-gutter-x: .75rem;
+        --bs-gutter-y: .75rem;
+    }
+
+
+    main.container .row.g-4 > .col-12 {
+        width: 50%;
+    }
+
+
+    .produto-card .card-body {
+        padding: .6rem .7rem .8rem;
+    }
+
+
+    .produto-card .badge {
+        font-size: .6rem;
+        padding: .25rem .5rem;
+    }
+
+
+    .produto-card .card-title {
+        font-size: .85rem;
+        margin: .4rem 0 .3rem;
+    }
+
+
+    .produto-card .text-muted {
+        font-size: .72rem;
+    }
+
+
+    .preco-destaque {
+        font-size: 1.05rem;
+    }
+
+
+    .produto-card .small {
+        font-size: .68rem;
+    }
+
+
+    /* página do produto */
+    main.container .row.g-5 {
+        --bs-gutter-y: 1.25rem;
+    }
+
+
+    main.container h1 {
+        font-size: 1.35rem;
+    }
+
+
+    main.container h2 {
+        font-size: 1.1rem;
+    }
+
+
+    main.container .fs-5 {
+        font-size: .95rem !important;
+    }
+
+
+    main.container .table {
+        font-size: .85rem !important;
+    }
+
+
+    main.container > p.text-muted.fs-5 {
+        font-size: .85rem !important;
+    }
+}
+
+
+

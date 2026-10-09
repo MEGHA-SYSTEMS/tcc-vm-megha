@@ -20,6 +20,10 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/contato.css') }}">
 
+    <!-- rodapé: este link deve ficar por ÚLTIMO -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/_footer.css') }}">
+
 </head>
 
 <body>
@@ -313,52 +317,12 @@
 </section>
 
 <!-- ==========================================
-     ÁREA DE ATENDIMENTO
+     TEXTO INFORMATIVO
 ========================================== -->
 
 <section class="atendimento-area">
 
     <div class="container">
-
-        <div class="cards-atendimento">
-
-            <a href="#" class="atendimento-card">
-
-                <img src="{{ url_for('static', filename='img/atendimento1.jpg') }}"
-                     class="icone-atendimento"
-                     alt="Atendimento">
-
-                <div class="info-atendimento">
-
-                    <h5>Central de Atendimento</h5>
-
-                    <p>Fale conosco</p>
-
-                </div>
-
-                <span class="seta-card">›</span>
-
-            </a>
-
-            <a href="{{ url_for('contato') }}" class="atendimento-card">
-
-                <img src="{{ url_for('static', filename='img/atendimento2.jpg') }}"
-                     class="icone-atendimento"
-                     alt="Suporte">
-
-                <div class="info-atendimento">
-
-                    <h5>Precisa de ajuda?</h5>
-
-                    <p>Suporte</p>
-
-                </div>
-
-                <span class="seta-card">›</span>
-
-            </a>
-
-        </div>
 
         <div class="texto-informativo">
 
@@ -376,109 +340,7 @@
 
 </main>
 
-<!-- ==========================================
-     RODAPÉ
-========================================== -->
-
-<section class="footer-poupemais">
-
-    <div class="container">
-
-        <div class="footer-top">
-
-            <div class="footer-col">
-
-                <h3>Poupemais</h3>
-
-                <p>
-                    Preços justos para um cuidado contínuo
-                </p>
-
-                <h5>Nossas redes:</h5>
-
-                <div class="redes">
-
-                    <a href="#">
-                        <img src="{{ url_for('static', filename='img/twitter.png') }}" alt="Twitter">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn">
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="footer-col">
-
-                <h6>Companhia</h6>
-
-                <a href="{{ url_for('contato') }}">
-                    Contate-nos
-                </a>
-
-                <a href="{{ url_for('team') }}">
-                    Sobre nós
-                </a>
-
-                <a href="{{ url_for('termos') }}">
-                    Privacidade e política
-                </a>
-
-                <a href="#">
-                    Editar endereço
-                </a>
-
-            </div>
-
-            <div class="footer-frase">
-
-                <p>
-                    “Cuidar da saúde é cuidar da qualidade de vida.
-                    Nosso objetivo é ajudar os idosos a encontrarem
-                    seus medicamentos com mais facilidade, economia
-                    e segurança.”
-                </p>
-
-            </div>
-
-            <div class="footer-imagem">
-
-                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
-                     alt="Idosos">
-
-            </div>
-
-        </div>
-
-        <hr>
-
-        <div class="footer-bottom">
-
-            <p class="footer-frase-final">
-                “A saúde não tem idade. Comparar preços de medicamentos
-                é uma forma de garantir mais tranquilidade, autonomia
-                e qualidade de vida para os idosos.”
-            </p>
-
-            <img src="{{ url_for('static', filename='logo.png') }}"
-                 alt="Logo PoupeMais"
-                 class="logo-final">
-
-        </div>
-
-    </div>
-
-</section>
+{% include '_footer.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+
 * {
     margin: 0;
     padding: 0;
@@ -7,33 +8,45 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 body {
     background: #f5f5f5;
 }
+
+
 
 
 /* ====================================
    HEADER - CADASTRO
 ==================================== */
 
+
 .topo {
     width: 100%;
     height: 90px;
 
+
     background: white;
 
+
     border-bottom: 1px solid #d9d9d9;
+
 
     display: flex;
     align-items: center;
 
+
     position: relative;
+
 
     padding: 0 40px;
 }
 
 
+
+
 /* MENU + LUPA */
+
 
 .menu-area {
     display: flex;
@@ -41,11 +54,13 @@ body {
     gap: 15px;
 }
 
+
 .menu {
     font-size: 42px;
     cursor: pointer;
     color: #1f2235;
 }
+
 
 .pesquisa {
     font-size: 30px;
@@ -54,7 +69,10 @@ body {
 }
 
 
+
+
 /* LOGO */
+
 
 .logo {
     position: absolute;
@@ -62,62 +80,84 @@ body {
     transform: translateX(-50%);
 }
 
+
 .logo img {
     width: 60px;
 }
+
+
 
 
 /* ====================================
    CONTEÚDO DO CADASTRO
 ==================================== */
 
+
 .login-container {
     min-height: calc(100vh - 90px);
+
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
+
     padding-top: 60px;
 }
 
 
+
+
 /* TÍTULO */
+
 
 .login-container h1 {
     font-size: 56px;
     font-weight: 500;
     color: #1f2235;
 
+
     margin-bottom: 8px;
 }
+
 
 .subtitulo {
     font-size: 18px;
     color: #666;
 
+
     margin-bottom: 35px;
 }
+
+
 
 
 /* ====================================
    CARD DO CADASTRO
 ==================================== */
 
+
 .card-login {
     width: 420px;
 
+
     background: white;
+
 
     padding: 25px;
 
+
     border-radius: 12px;
+
 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 
+
+
 /* LABELS */
+
 
 .form-label {
     font-size: 14px;
@@ -125,12 +165,16 @@ body {
 }
 
 
+
+
 /* INPUTS */
+
 
 .form-control {
     height: 45px;
     border-radius: 8px;
 }
+
 
 .form-control::placeholder {
     color: #b5b5b5;
@@ -138,7 +182,10 @@ body {
 }
 
 
+
+
 /* CHECKBOX */
+
 
 .form-check-label {
     font-size: 12px;
@@ -146,45 +193,298 @@ body {
 }
 
 
+
+
 /* ====================================
    BOTÃO CRIAR CONTA
 ==================================== */
+
 
 .btn-login {
     width: 100%;
     height: 48px;
 
+
     border: none;
     border-radius: 8px;
 
+
     background: #4f46e5;
 
+
     color: white;
+
 
     font-size: 16px;
     font-weight: 500;
 
+
     margin-top: 10px;
+
 
     transition: 0.3s;
 }
+
 
 .btn-login:hover {
     background: #4338ca;
 }
 
 
+
+
 /* ====================================
    TEXTO FINAL
 ==================================== */
+
 
 .texto-login {
     margin-top: 25px;
     font-size: 14px;
 }
 
+
 .texto-login a {
     color: #4f46e5;
     text-decoration: none;
     font-weight: 500;
+}
+
+
+
+
+/* ====================================================================
+   RESPONSIVO - TELA DE CADASTRO (celular)
+==================================================================== */
+
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+@media (max-width: 767px) {
+
+
+    .topo {
+        height: 64px;
+        padding: 0 14px;
+    }
+
+
+    .menu-area {
+        gap: 10px;
+    }
+
+
+    .menu {
+        font-size: 28px;
+    }
+
+
+    .pesquisa {
+        font-size: 20px;
+    }
+
+
+    .logo img {
+        width: 40px;
+    }
+
+
+    .login-container {
+        min-height: calc(100vh - 64px);
+        padding: 24px 16px 40px;
+    }
+
+
+    .login-container h1 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+
+    .subtitulo {
+        font-size: 14px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+
+    .card-login {
+        padding: 18px 16px;
+    }
+
+
+    .card-login .mb-3 {
+        margin-bottom: .75rem !important;
+    }
+
+
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+
+    .form-control {
+        height: 42px;
+        font-size: 14px;
+    }
+
+
+    .form-check-label {
+        font-size: 12px;
+    }
+
+
+    .btn-login {
+        height: 44px;
+        font-size: 15px;
+    }
+
+
+    .texto-login {
+        font-size: 13px;
+        margin-top: 18px;
+        text-align: center;
+    }
+}
+
+
+/* ====================================
+   NAVBAR (igual à da tela de entrar)
+==================================== */
+
+.navbar-poupemais {
+    background: #ffffff;
+    min-height: 90px;
+    padding: 0 40px;
+    border-bottom: 1px solid #ececec;
+}
+
+.logo-nav {
+    width: 90px;
+    height: auto;
+}
+
+.nome-site {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2235;
+    margin-left: 10px;
+}
+
+.icone-nav-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin-left: 15px;
+}
+
+.btn-cadastro {
+    display: inline-block;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-cadastro:hover {
+    background: #4338ca;
+    color: white;
+}
+
+
+/* ---------- celular / tablet ---------- */
+
+@media (max-width: 991px) {
+
+    .navbar-poupemais {
+        padding: 6px 10px;
+        min-height: 0;
+    }
+
+    .navbar-poupemais .navbar-brand {
+        margin-right: auto;
+    }
+
+    .logo-nav {
+        width: 44px;
+    }
+
+    .nome-site {
+        font-size: 18px;
+        margin-left: 6px;
+    }
+
+    .icone-nav-img {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .navbar-toggler {
+        border: 1px solid #cfd0ea;
+        padding: 4px 8px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .25);
+    }
+
+    .navbar-collapse .btn-cadastro {
+        display: block;
+        text-align: center;
+        margin: 8px 0 12px;
+        padding: 11px 16px;
+    }
+}
+
+
+/* ====================================
+   CADASTRO - LAYOUT SEGURO EM QUALQUER TELA
+==================================== */
+
+.login-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 60px 16px 60px;
+    min-height: calc(100vh - 90px);
+}
+
+.login-container h1,
+.login-container .subtitulo {
+    text-align: center;
+}
+
+.card-login {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.card-login .form-control {
+    width: 100%;
+    min-width: 0;
+}
+
+.texto-login {
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+
+    .login-container {
+        padding: 24px 12px 40px;
+    }
 }

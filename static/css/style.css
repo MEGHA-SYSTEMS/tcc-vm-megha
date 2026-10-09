@@ -806,3 +806,416 @@ body {
     color: #777777;
     font-size: 0.95rem;
 }
+
+
+/* ====================================================================
+   RESPONSIVIDADE (celular / tablet) - versão 2
+   Fica no FIM do arquivo de propósito: sobrescreve o que vem antes
+   sem mexer nas regras do desktop.
+==================================================================== */
+
+
+/* --- Rede de segurança: nada empurra a página para o lado --- */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ".hero-section { padding: 50px 0 }" zerava o espaço lateral do .container */
+.hero-section {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* width:100% + margin-left:30px passava 30px da coluna */
+.img-idoso {
+    width: calc(100% - 30px);
+    max-width: 500px;
+}
+
+/* Botão do menu (três barras) */
+.navbar-toggler {
+    border: 1px solid #cfd0ea;
+    padding: 6px 10px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 .2rem rgba(79, 70, 229, .25);
+}
+
+
+
+/* --------------------------------------------------------------------
+   TABLET E CELULAR (até 991px): navbar
+-------------------------------------------------------------------- */
+@media (max-width: 991px) {
+
+    .navbar-poupemais {
+        position: relative;
+        padding: 6px 12px;
+        min-height: 0;
+    }
+
+    .logo-nav {
+        width: 44px;
+    }
+
+    .nome-site {
+        font-size: 18px;
+    }
+
+    .search-wrapper {
+        position: static;
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
+    .input-busca.ativo {
+        width: min(150px, 38vw);
+        margin-left: 8px;
+    }
+
+    .resultados-busca {
+        left: 12px;
+        right: 12px;
+        width: auto;
+        min-width: 0;
+        margin-top: 0;
+    }
+
+    .nav-acoes .btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .footer-col {
+        min-width: 0;
+    }
+}
+
+
+
+/* --------------------------------------------------------------------
+   CELULAR (até 767px): tudo menor, mantendo o desenho do site
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    /* topo */
+    .hero-section {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .hero-topo {
+        font-size: 11px;
+        letter-spacing: .5px;
+        margin-bottom: 10px;
+    }
+
+    .hero-section h1 {
+        font-size: clamp(22px, 6.5vw, 28px);
+        line-height: 1.2;
+        overflow-wrap: break-word;
+    }
+
+    .hero-section p {
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    .btn-saiba-mais {
+        padding: 9px 22px;
+        font-size: 14px;
+    }
+
+    .hero-section .col-md-6.text-center {
+        margin-top: 16px;
+    }
+
+    .imagem-hero {
+        max-width: 190px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* banners */
+    .scroll-produtos {
+        padding: 8px 0;
+    }
+
+    .scroll-produtos img {
+        border-radius: 14px;
+    }
+
+    /* os dois botões (localização / catálogo) continuam lado a lado */
+    .beneficios-box {
+        width: calc(100% - 24px);
+        margin: 18px auto;
+        height: auto;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .item-beneficio {
+        min-height: 0;
+        padding: 14px 10px;
+    }
+
+    .item-beneficio:first-child {
+        border-right: 1px solid #cfc8ff;
+        border-bottom: none;
+    }
+
+    .icone-card {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 8px;
+    }
+
+    .item-beneficio p {
+        font-size: 12px;
+    }
+
+    /* "Cuide do seu bem estar": 2 por linha */
+    .produtos-destaque {
+        padding-top: 20px;
+    }
+
+    .titulo-destaque {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .produtos-destaque .row {
+        gap: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .produtos-destaque .col-auto {
+        width: calc(50% - 5px);
+        padding: 0;
+    }
+
+    .produtos-destaque img {
+        max-width: 100%;
+    }
+
+    /* seção do idoso */
+    .texto-idoso {
+        padding: 20px 16px;
+        min-height: 0;
+        font-size: 15px;
+        line-height: 1.55;
+        border-radius: 24px;
+    }
+
+    .img-idoso {
+        width: 100%;
+        max-width: 320px;
+        margin: 14px auto 0;
+        border-radius: 24px;
+    }
+
+    /* "Veja todos os nossos produtos": 2 por linha */
+    .catalogo-produtos {
+        margin: 16px 10px;
+        padding: 16px 10px;
+        border-radius: 22px;
+    }
+
+    .catalogo-produtos h2 {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .grid-produtos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .produto-card {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .produto-card h5 {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .produto-conteudo {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .produto-conteudo img {
+        width: 100%;
+        height: 80px;
+        min-width: 0;
+    }
+
+    .preco {
+        margin: 0 auto;
+        min-width: 0;
+        padding: 6px 12px 6px 18px;
+        font-size: 15px;
+    }
+
+    .preco span {
+        font-size: 11px;
+    }
+
+    /* atendimento */
+    .atendimento-area {
+        margin-top: 20px;
+        padding: 24px 0;
+    }
+
+    .cards-atendimento {
+        margin-bottom: 18px;
+    }
+
+    .atendimento-card {
+        width: 100%;
+        min-height: 60px;
+        padding: 10px 14px;
+    }
+
+    .info-atendimento h5 {
+        font-size: 15px;
+    }
+
+    .info-atendimento p {
+        font-size: 12px;
+    }
+
+    .texto-informativo {
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 0 4px;
+    }
+
+    .divisor-secao {
+        width: calc(100% - 24px);
+    }
+}
+
+
+
+/* --------------------------------------------------------------------
+   CELULAR PEQUENO (até 400px)
+-------------------------------------------------------------------- */
+@media (max-width: 400px) {
+
+    .nome-site {
+        font-size: 16px;
+    }
+
+    .logo-nav {
+        width: 40px;
+    }
+}
+
+
+
+/* --------------------------------------------------------------------
+   RODAPÉ COMPACTO NO CELULAR (colunas lado a lado, só menor)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .footer-poupemais {
+        padding: 28px 0 16px;
+    }
+
+    .footer-poupemais .footer-top {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 12px;
+        align-items: start;
+        text-align: left;
+    }
+
+    .footer-poupemais .footer-top > .footer-col:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .footer-poupemais .footer-col h3 {
+        font-size: 24px;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .footer-col p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+
+    .footer-poupemais .footer-col h5,
+    .footer-poupemais .footer-col h6 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .footer-poupemais .footer-col a {
+        font-size: 12px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+    .footer-poupemais .redes {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .footer-poupemais .redes img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .footer-poupemais .footer-imagem {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .footer-poupemais .footer-imagem img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .footer-poupemais hr {
+        margin: 18px 0;
+    }
+
+    .footer-poupemais .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+
+    .footer-poupemais .footer-bottom h4 {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .footer-poupemais .footer-bottom p {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .footer-poupemais .pagamentos {
+        font-size: 11px;
+    }
+
+    .footer-poupemais .logo-final {
+        font-size: 15px;
+    }
+}

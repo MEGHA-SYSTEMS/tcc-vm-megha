@@ -35,8 +35,10 @@ from perfil_service import (
 from produtos_service import (
     CATEGORIAS,
     adicionar_produto,
+    editar_produto,
     excluir_produto,
     listar_produtos,
+    obter_produto,
 )
 
 
@@ -264,7 +266,70 @@ def painel_adicionar_produto():
         )
     )
 
+# ============================================================
+# EDITAR PRODUTO
+# ============================================================
 
+def _dados_do_produto(produto):
+    """Converte o produto salvo nos valores iniciais do formulário."""
+    preco = produto.get("preco") or 0
+    desconto = produto.get("desconto_percentual")
+    fim = produto.get("promocao_ate_local")  # só existe com desconto ativo
+
+    return {
+        "nome": produto.get("nome", ""),
+        "categoria": produto.get("categoria", ""),
+        "principio_ativo": produto.get("principio_ativo", ""),
+        "descricao": produto.get("descricao", ""),
+        "preco": f"{preco:.2f}".replace(".", ","),
+        "desconto_percentual": (
+            desconto if produto.get("promocao_ativa") and desconto else ""
+        ),
+        "promocao_ate": fim.strftime("%Y-%m-%dT%H:%M") if fim else "",
+    }
+
+
+@app.route(
+    "/painel/produtos/<produto_id>/editar",
+    methods=["GET", "POST"]
+)
+@login_obrigatorio
+def painel_editar_produto(produto_id):
+    farmacia_id = session["farmacia_id"]
+
+    # só encontra se o produto for da farmácia logada
+    produto = obter_produto(farmacia_id, produto_id)
+
+    if produto is None:
+        flash("Produto não encontrado.", "danger")
+        return redirect(url_for("painel"))
+
+    if request.method == "POST":
+        ok, mensagem = editar_produto(
+            farmacia_id,
+            produto_id,
+            request.form,
+            request.files.get("imagem_arquivo"),
+        )
+
+        if ok:
+            flash(mensagem, "success")
+            return redirect(url_for("painel"))
+
+        return render_template(
+            "dashboard/produto_editar.html",
+            produto=produto,
+            categorias=CATEGORIAS,
+            dados=request.form.to_dict(),
+            erro=mensagem,
+        )
+
+    return render_template(
+        "dashboard/produto_editar.html",
+        produto=produto,
+        categorias=CATEGORIAS,
+        dados=_dados_do_produto(produto),
+    )
 # ============================================================
 # EXCLUIR PRODUTO
 # ============================================================

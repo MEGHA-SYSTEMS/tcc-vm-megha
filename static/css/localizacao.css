@@ -4,6 +4,7 @@
     border-radius: 8px;
 }
 
+
 * {
     margin: 0;
     padding: 0;
@@ -11,158 +12,236 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 .logoloca {
+
 
     width: 10%;
     height: 20px;
 }
 
+
 body {
+
 
     background: #eef2fa;
 
+
 }
 
+
 header {
+
 
     width: 100%;
     height: 75px;
 
+
     background: white;
 
+
     display: flex;
+
 
     justify-content: space-between;
 
+
     align-items: center;
+
 
     padding: 0 30px;
 
+
     border-bottom: 1px solid #ccc;
 
+
 }
+
 
 .logo {
 
+
     width: 170px;
 
+
 }
+
 
 .menu {
 
+
     font-size: 40px;
+
 
     cursor: pointer;
 
+
 }
+
 
 .pin {
 
+
     font-size: 40px;
 
+
 }
+
 
 .cadastro {
 
+
     background: #4f46e5;
+
 
     color: white;
 
+
     border: none;
+
 
     padding: 12px 22px;
 
+
     border-radius: 6px;
+
 
     cursor: pointer;
 
+
 }
+
 
 .conteudo {
 
+
     display: flex;
+
 
     justify-content: space-evenly;
 
+
     align-items: flex-start;
+
 
     margin-top: 60px;
 
+
 }
+
 
 .mapa {
 
+
     width: 70%;
 
+
 }
+
 
 .formulario {
 
+
     width: 300px;
+
 
     background: white;
 
+
     border-radius: 10px;
+
 
     padding: 25px;
 
+
     box-shadow: 0 0 15px rgba(0, 0, 0, .08);
 
+
 }
+
 
 .formulario h2 {
 
+
     text-align: center;
+
 
     margin-bottom: 25px;
 
+
 }
+
 
 .formulario label {
 
+
     display: block;
+
 
     margin-top: 15px;
 
+
     margin-bottom: 5px;
 
+
 }
+
 
 .formulario input {
 
+
     width: 100%;
+
 
     height: 45px;
 
+
     padding-left: 10px;
+
 
     border: 1px solid #ddd;
 
+
     border-radius: 5px;
 
+
 }
+
 
 #buscar {
 
+
     width: 100%;
+
 
     height: 50px;
 
+
     margin-top: 30px;
+
 
     border: none;
 
+
     border-radius: 6px;
+
 
     background: #4f46e5;
 
+
     color: white;
+
 
     font-size: 17px;
 
+
     cursor: pointer;
 
+
 }
+
+
+
 
 
 
@@ -170,24 +249,32 @@ header {
    NAVBAR
 ==================================== */
 
+
 .navbar-poupemais {
     background: #ffffff;
 
+
     min-height: 90px;
+
 
     padding: 0 40px;
 
+
     border-bottom: 1px solid #ececec;
+
 
     box-shadow: none;
 
+
     margin: 0;
 }
+
 
 .logo-nav {
     width: 90px;
     height: auto;
 }
+
 
 .nome-site {
     font-size: 28px;
@@ -195,21 +282,28 @@ header {
     color: #1f2235;
 }
 
+
 .btn-cadastro,
 .btn-login {
     background: #4f46e5 !important;
 
+
     border: none !important;
+
 
     padding: 10px 22px;
 
+
     border-radius: 8px;
+
 
     font-size: 14px;
     font-weight: 500;
 
+
     color: #fff !important;
 }
+
 
 .btn-cadastro:hover,
 .btn-login:hover {
@@ -217,92 +311,133 @@ header {
     color: #fff !important;
 }
 
+
 .icone-nav-img {
     width: 24px;
     height: 24px;
 
+
     object-fit: contain;
+
 
     cursor: pointer;
 
+
     transition: .3s;
 }
+
 
 .icone-nav-img:hover {
     transform: scale(1.08);
 }
 
 
+
+
 .modal {
 
+
     position: fixed;
+
 
     top: 0;
     left: 0;
 
+
     width: 100%;
     height: 100%;
 
+
     background: rgba(0, 0, 0, .45);
 
+
     display: flex;
+
 
     justify-content: center;
     align-items: center;
 
+
     z-index: 9999;
 
+
 }
+
 
 .modal-box {
 
+
     width: 900px;
+
 
     background: #FFF;
 
+
     border-radius: 8px;
+
 
     padding: 60px;
 
+
     text-align: center;
 
+
 }
+
 
 .modal-box i {
 
+
     font-size: 80px;
+
 
     margin-bottom: 30px;
 
+
 }
+
 
 .modal-box h2 {
 
+
     font-size: 45px;
+
 
     font-weight: 500;
 
+
 }
+
 
 .botoes {
 
+
     display: flex;
+
 
     justify-content: space-around;
 
+
     margin-top: 60px;
 
+
 }
+
 
 .botoes button {
 
+
     width: 250px;
+
 
     height: 65px;
 
+
     font-size: 30px;
 
+
 }
+
 
 .footer-col a {
     display: block;
@@ -313,9 +448,13 @@ header {
     transition: .2s;
 }
 
+
 .footer-col a:hover {
     color: #ececff;
 }
+
+
+
 
 
 
@@ -323,134 +462,187 @@ header {
    ÁREA DE ATENDIMENTO
 ==================================== */
 
+
 .atendimento-area {
     width: 100%;
 
+
     text-align: center;
+
 
     background: #f1efff;
 
+
     margin-top: 35px;
 
+
     padding: 38px 0;
+
 
     border-top: 2px solid #b8b8b8;
     border-bottom: 2px solid #b8b8b8;
 }
+
 
 .atendimento-area .container {
     max-width: 1200px;
 }
 
 
+
+
 /* CARDS */
+
 
 .cards-atendimento {
     display: flex;
 
+
     justify-content: center;
     align-items: center;
 
+
     gap: 25px;
+
 
     margin-bottom: 35px;
 
+
     flex-wrap: wrap;
 }
+
 
 .atendimento-card {
     width: 380px;
     min-height: 75px;
 
+
     background: #ffffff;
+
 
     padding: 12px 22px;
 
+
     border-radius: 16px;
+
 
     display: flex;
     align-items: center;
 
+
     gap: 16px;
 
+
     text-decoration: none;
+
 
     transition: .3s;
 }
 
+
 .atendimento-card:hover {
     transform: translateY(-3px);
+
 
     background: #fafafa;
 }
 
 
+
+
 /* ÍCONES */
+
 
 .icone-atendimento {
     width: 42px;
     height: 42px;
 
+
     object-fit: contain;
+
 
     flex-shrink: 0;
 }
 
 
+
+
 /* TEXTO DOS CARDS */
+
 
 .info-atendimento {
     text-align: left;
 }
 
+
 .info-atendimento h5 {
     margin: 0 0 4px;
+
 
     font-size: 18px;
     font-weight: 600;
 
+
     color: #222;
 }
+
 
 .info-atendimento p {
     margin: 0;
 
+
     font-size: 14px;
+
 
     color: #666;
 }
 
 
+
+
 /* TEXTO INFORMATIVO */
+
 
 .texto-informativo {
     max-width: 850px;
 
+
     margin: 0 auto;
+
 
     font-size: 18px;
     font-weight: 600;
     line-height: 1.6;
 
+
     color: #444;
+
 
     text-align: center;
 }
+
 
 /* ====================================
    DIVISOR ENTRE SEÇÕES
 ==================================== */
 
+
 .divisor-secao {
     width: 100%;
     max-width: 1200px;
 
+
     margin: 0 auto;
+
 
     border: none;
 
+
     border-top: 1px solid #cfcfcf;
 }
+
+
+
 
 
 
@@ -458,123 +650,452 @@ header {
    RODAPÉ
 ==================================== */
 
+
 .footer-poupemais {
     background: #7f83d6;
     color: white;
 
+
     margin-top: 0;
+
 
     padding: 60px 0 25px;
 }
+
 
 .footer-poupemais .container {
     max-width: 1200px;
 }
 
+
 /* PARTE SUPERIOR */
+
 
 .footer-top {
     display: grid;
 
+
     grid-template-columns:
         2fr 1fr 1fr 1fr 240px;
 
+
     gap: 50px;
+
 
     align-items: center;
 }
+
 
 .footer-col h3 {
     font-size: 42px;
     font-weight: 700;
 
+
     margin-bottom: 20px;
 }
+
 
 .footer-col h5,
 .footer-col h6 {
     font-size: 20px;
     font-weight: 600;
 
+
     margin-bottom: 18px;
 }
+
 
 .footer-col p {
     font-size: 16px;
     line-height: 1.8;
 
+
     margin-bottom: 8px;
+
 
     color: rgba(255, 255, 255, .95);
 }
 
+
 /* REDES */
+
 
 .redes {
     display: flex;
     gap: 14px;
 
+
     margin-top: 10px;
 }
+
 
 .redes img {
     width: 24px;
     height: 24px;
 }
 
+
 /* FOTO */
+
 
 .footer-imagem {
     display: flex;
     justify-content: center;
 }
 
+
 .footer-imagem img {
     width: 220px;
     height: 220px;
 
+
     object-fit: cover;
+
 
     border-radius: 50%;
 }
 
+
 /* LINHA */
+
 
 .footer-poupemais hr {
     margin: 35px 0;
 
+
     border: none;
+
 
     border-top: 1px solid rgba(255, 255, 255, .35);
 }
 
+
 /* PARTE INFERIOR */
+
 
 .footer-bottom {
     display: flex;
+
 
     justify-content: space-between;
     align-items: center;
 }
 
+
 .footer-bottom h4 {
     font-size: 22px;
     font-weight: 700;
 
+
     margin-bottom: 5px;
 }
+
 
 .footer-bottom p {
     font-size: 15px;
 
+
     margin-bottom: 10px;
 }
+
 
 .pagamentos {
     font-size: 16px;
 }
 
+
 .logo-final {
     font-size: 22px;
     font-weight: 700;
 }
+
+
+
+
+/* ====================================================================
+   RESPONSIVO - LOCALIZAÇÃO (celular / tablet)
+==================================================================== */
+
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+
+/* --------------------------------------------------------------------
+   TABLET E CELULAR (até 991px)
+-------------------------------------------------------------------- */
+@media (max-width: 991px) {
+
+
+    /* navbar compacta */
+    .navbar-poupemais {
+        padding: 6px 12px;
+        min-height: 0;
+    }
+
+
+    .navbar-poupemais .navbar-brand {
+        margin-right: auto;
+    }
+
+
+    .logo-nav {
+        width: 44px;
+    }
+
+
+    .nome-site {
+        font-size: 18px;
+    }
+
+
+    .navbar-toggler {
+        border: 1px solid #cfd0ea;
+        padding: 6px 10px;
+    }
+
+
+    .navbar-collapse .d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        padding: 8px 0 12px;
+    }
+
+
+    .navbar-collapse .btn-cadastro {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+
+    /* mapa em cima, formulário embaixo (antes ficavam lado a lado e estouravam) */
+    .conteudo {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin: 16px 12px;
+    }
+
+
+    .mapa {
+        width: 100%;
+    }
+
+
+    #map {
+        width: 100%;
+        height: 320px;
+    }
+
+
+    .formulario {
+        width: 100%;
+        max-width: none;
+        padding: 18px 16px;
+    }
+}
+
+
+/* --------------------------------------------------------------------
+   CELULAR (até 767px)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+
+    #map {
+        height: 280px;
+    }
+
+
+    .formulario h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+
+    .formulario label {
+        font-size: 13px;
+        margin-top: 10px;
+        margin-bottom: 4px;
+    }
+
+
+    .formulario input {
+        height: 40px;
+        font-size: 14px;
+    }
+
+
+    #buscar {
+        height: 44px;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+
+
+    /* atendimento */
+    .atendimento-area {
+        margin-top: 20px;
+        padding: 24px 0;
+    }
+
+
+    .cards-atendimento {
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+
+    .atendimento-card {
+        min-height: 60px;
+        padding: 10px 14px;
+    }
+
+
+    .info-atendimento h5 {
+        font-size: 15px;
+    }
+
+
+    .info-atendimento p {
+        font-size: 12px;
+    }
+
+
+    .texto-informativo {
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 0 4px;
+    }
+
+
+    .divisor-secao {
+        width: calc(100% - 24px);
+    }
+}
+
+
+
+
+/* --------------------------------------------------------------------
+   RODAPÉ COMPACTO NO CELULAR (colunas lado a lado, só menor)
+-------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+
+    .footer-poupemais {
+        padding: 28px 0 16px;
+    }
+
+
+    .footer-poupemais .footer-top {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 12px;
+        align-items: start;
+        text-align: left;
+    }
+
+
+    .footer-poupemais .footer-top > .footer-col:first-child {
+        grid-column: 1 / -1;
+    }
+
+
+    .footer-poupemais .footer-col h3 {
+        font-size: 24px;
+        margin-bottom: 6px;
+    }
+
+
+    .footer-poupemais .footer-col p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+
+
+    .footer-poupemais .footer-col h5,
+    .footer-poupemais .footer-col h6 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+
+    .footer-poupemais .footer-col a {
+        font-size: 12px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+
+    .footer-poupemais .redes {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+
+    .footer-poupemais .redes img {
+        width: 20px;
+        height: 20px;
+    }
+
+
+    .footer-poupemais .footer-imagem {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+
+    .footer-poupemais .footer-imagem img {
+        width: 90px;
+        height: 90px;
+    }
+
+
+    .footer-poupemais hr {
+        margin: 18px 0;
+    }
+
+
+    .footer-poupemais .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+
+
+    .footer-poupemais .footer-bottom h4 {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+
+    .footer-poupemais .footer-bottom p {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+
+    .footer-poupemais .pagamentos {
+        font-size: 11px;
+    }
+
+
+    .footer-poupemais .logo-final {
+        font-size: 15px;
+    }
+}
+

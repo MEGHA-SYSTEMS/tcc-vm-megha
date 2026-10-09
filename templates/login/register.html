@@ -18,6 +18,10 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/register.css') }}">
 
+    <!-- rodapé: este link deve ficar por ÚLTIMO -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/_footer.css') }}">
+
 </head>
 
 
@@ -183,148 +187,7 @@
 </main>
 
 
-
-<!-- ==========================================
-     RODAPÉ
-========================================== -->
-
-<footer class="footer-poupemais">
-
-    <div class="container">
-
-        <div class="footer-top">
-
-
-            <div class="footer-col">
-
-                <h3>
-                    Poupemais
-                </h3>
-
-                <p>
-                    Preços justos para um cuidado contínuo
-                </p>
-
-                <h5>
-                    Nossas redes:
-                </h5>
-
-                <div class="redes">
-
-                    <img src="{{ url_for('static', filename='img/twitter.png') }}"
-                         alt="Twitter">
-
-                    <img src="{{ url_for('static', filename='img/facebook.png') }}"
-                         alt="Facebook">
-
-                    <img src="{{ url_for('static', filename='img/instagram.png') }}"
-                         alt="Instagram">
-
-                    <img src="{{ url_for('static', filename='img/linkedin.png') }}"
-                         alt="LinkedIn">
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Companhia
-                </h6>
-
-                <a href="{{ url_for('contato') }}">
-                    Contate-nos
-                </a>
-
-                <a href="{{ url_for('team') }}">
-                    Sobre nós
-                </a>
-
-                <a href="{{ url_for('termos') }}">
-                    Privacidade e política
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Perfil
-                </h6>
-
-                <a href="#">
-                    Editar endereço
-                </a>
-
-            </div>
-
-
-            <div class="footer-col">
-
-                <h6>
-                    Atendimento
-                </h6>
-
-                <a href="#">
-                    Tire suas dúvidas
-                </a>
-
-                <a href="#">
-                    por Whatsapp
-                </a>
-
-                <a href="#">
-                    Central de atendimento
-                </a>
-
-            </div>
-
-
-            <div class="footer-imagem">
-
-                <img src="{{ url_for('static', filename='img/idosos.jpg') }}"
-                     alt="Idosa">
-
-            </div>
-
-
-        </div>
-
-
-        <hr>
-
-
-        <div class="footer-bottom">
-
-            <div>
-
-                <h4>
-                    Formas de pagamento
-                </h4>
-
-                <p>
-                    Parcele em até 3x sem juros!
-                </p>
-
-                <div class="pagamentos">
-                    PIX • VISA • MASTERCARD
-                </div>
-
-            </div>
-
-
-            <div class="logo-final">
-                POUPE MAIS
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
+{% include '_footer.html' %}
 
 
 <!-- Bootstrap JS -->
