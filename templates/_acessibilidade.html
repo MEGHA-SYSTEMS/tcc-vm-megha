@@ -1,0 +1,84 @@
+{# ==========================================
+   ACESSIBILIDADE (incluir antes do fechamento do body)
+========================================== #}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/acessibilidade.css') }}">
+
+
+<!-- VLibras (widget oficial do Governo Federal) -->
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+
+
+<!-- Painel de acessibilidade -->
+<div class="a11y-widget" id="a11y-widget">
+
+    <div class="a11y-painel" id="a11y-painel" role="dialog" aria-label="Opções de acessibilidade" hidden>
+
+        <p class="a11y-titulo">Acessibilidade</p>
+
+        <div class="a11y-linha">
+            <span class="a11y-rotulo">Tamanho do conteúdo</span>
+
+            <div class="a11y-zoom-controles">
+                <button type="button" class="a11y-btn" data-acao="diminuir" aria-label="Diminuir tamanho">A−</button>
+                <span class="a11y-nivel" id="a11y-nivel" aria-live="polite">100%</span>
+                <button type="button" class="a11y-btn" data-acao="aumentar" aria-label="Aumentar tamanho">A+</button>
+            </div>
+        </div>
+
+        <button type="button" class="a11y-opcao" data-acao="contraste" aria-pressed="false">
+            <span>Alto contraste</span>
+            <span class="a11y-chave" aria-hidden="true"></span>
+        </button>
+
+        <button type="button" class="a11y-opcao" data-acao="links" aria-pressed="false">
+            <span>Sublinhar links</span>
+            <span class="a11y-chave" aria-hidden="true"></span>
+        </button>
+
+        <div class="a11y-voz" id="a11y-voz">
+            <p class="a11y-rotulo">Leitura em voz alta</p>
+
+            <div class="a11y-voz-botoes">
+                <button type="button" class="a11y-btn a11y-btn-texto" data-acao="ler-pagina">Ler página</button>
+                <button type="button" class="a11y-btn a11y-btn-texto" data-acao="ler-selecao">Ler seleção</button>
+                <button type="button" class="a11y-btn a11y-btn-texto" data-acao="parar" disabled>Parar</button>
+                <button type="button" class="a11y-btn a11y-btn-texto" data-acao="velocidade" aria-label="Alterar velocidade da leitura">Velocidade: Normal</button>
+            </div>
+
+            <p class="a11y-voz-status" id="a11y-voz-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <button type="button" class="a11y-restaurar" data-acao="restaurar">
+            Restaurar padrão
+        </button>
+
+    </div>
+
+    <button type="button"
+            class="a11y-toggle"
+            id="a11y-toggle"
+            aria-expanded="false"
+            aria-controls="a11y-painel"
+            aria-label="Abrir opções de acessibilidade"
+            title="Acessibilidade">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <circle cx="12" cy="4.5" r="2" fill="#fff"/>
+            <path fill="#fff" d="M4 8.5h16v2h-5.5v3.2l2.3 6.8-1.9.7-2.4-6.2h-1l-2.4 6.2-1.9-.7 2.3-6.8v-3.2H4z"/>
+        </svg>
+    </button>
+
+</div>
+
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+
+<script src="{{ url_for('static', filename='js/acessibilidade.js') }}"></script>

@@ -51,6 +51,7 @@ def _agrupar(docs):
 
         nome_farmacia, endereco = _dados_farmacia(d.get("farmacia_id", ""), cache)
         oferta = {
+            "farmacia_id": d.get("farmacia_id", ""),
             "farmacia": nome_farmacia,
             "preco": d["preco_final"],  # é por ele que se ordena o "mais barato"
             "preco_original": d["preco_original"],

@@ -1,0 +1,292 @@
+/* ====================================
+   PÁGINA DE DESEMPENHO DA FARMÁCIA
+   (reaproveita .painel-card e .painel-titulo do painel.css)
+==================================== */
+
+:root {
+    --dp-primary: #4f46e5;
+    --dp-navy: #0B1F4B;
+    --dp-muted: #5b6472;
+    --dp-bg: #EEF1FC;
+}
+
+
+/* ---------- topo ---------- */
+
+.desempenho-topo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+.desempenho-titulo {
+    margin: 0 0 4px;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--dp-navy);
+}
+
+.desempenho-sub {
+    color: var(--dp-muted);
+    max-width: 560px;
+}
+
+.filtro-periodo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.voltar-painel {
+    display: inline-block;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dp-primary);
+    text-decoration: none;
+}
+
+.voltar-painel:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- cartões de resumo ---------- */
+
+.cards-resumo {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card-resumo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    padding: 18px 20px;
+
+    background: #fff;
+    border: 1px solid #e3e6f3;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(30, 30, 60, 0.06);
+}
+
+.card-resumo.destaque {
+    background: var(--dp-primary);
+    border-color: var(--dp-primary);
+}
+
+.card-resumo-rotulo {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--dp-primary);
+}
+
+.card-resumo-valor {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--dp-navy);
+}
+
+.card-resumo-valor small {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dp-muted);
+}
+
+.card-resumo-nota {
+    font-size: 0.82rem;
+    color: var(--dp-muted);
+}
+
+.card-resumo.destaque .card-resumo-rotulo,
+.card-resumo.destaque .card-resumo-valor,
+.card-resumo.destaque .card-resumo-valor small,
+.card-resumo.destaque .card-resumo-nota {
+    color: #fff;
+}
+
+
+/* ---------- gráficos ---------- */
+
+.grafico-box {
+    position: relative;
+    height: 280px;
+}
+
+.nota-grafico {
+    margin: 12px 0 0;
+    font-size: 0.82rem;
+    color: var(--dp-muted);
+}
+
+
+/* ---------- alertas ---------- */
+
+.lista-alertas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.alerta-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 12px;
+    border-left: 5px solid #f0ad4e;
+    background: #fff8ec;
+}
+
+.alerta-item.alerta-acima {
+    border-left-color: #dc3545;
+    background: #fdeeee;
+}
+
+.alerta-item > div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: anywhere;
+}
+
+.alerta-item span {
+    font-size: 0.9rem;
+    color: var(--dp-muted);
+}
+
+
+/* ---------- tabela ---------- */
+
+.tabela-desempenho thead th {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--dp-muted);
+    white-space: nowrap;
+}
+
+.td-nome {
+    font-weight: 700;
+    color: var(--dp-navy);
+    min-width: 160px;
+}
+
+.pos {
+    display: inline-block;
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pos-1 {
+    background: #d9f2e3;
+    color: #146c43;
+}
+
+.pos-meio {
+    background: #fff3cd;
+    color: #8a6100;
+}
+
+.pos-ruim {
+    background: #f8d7da;
+    color: #a52834;
+}
+
+.pos-neutra {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.dif-alta {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.dif-baixa {
+    color: #198754;
+    font-weight: 700;
+}
+
+
+/* ====================================
+   RESPONSIVO
+==================================== */
+
+@media (max-width: 991px) {
+
+    .cards-resumo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+
+    .desempenho-titulo {
+        font-size: 1.5rem;
+    }
+
+    .desempenho-sub {
+        font-size: 0.9rem;
+    }
+
+    .cards-resumo {
+        gap: 10px;
+    }
+
+    .card-resumo {
+        padding: 12px 14px;
+        border-radius: 12px;
+    }
+
+    .card-resumo-rotulo {
+        font-size: 0.68rem;
+    }
+
+    .card-resumo-valor {
+        font-size: 1.5rem;
+    }
+
+    .card-resumo-nota {
+        font-size: 0.74rem;
+    }
+
+    .grafico-box {
+        height: 230px;
+    }
+
+    .alerta-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .alerta-item .btn {
+        width: 100%;
+    }
+
+    .tabela-desempenho {
+        font-size: 0.85rem;
+    }
+}

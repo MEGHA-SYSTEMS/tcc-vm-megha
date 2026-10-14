@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desempenho | PoupeMais</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/desempenho.css') }}">
+</head>
+
+<body class="painel">
+
+  {% include 'dashboard/_navbar.html' %}
+
+  <main class="container py-4 pb-5">
+
+    <!-- ================= TOPO ================= -->
+
+    <div class="desempenho-topo">
+
+      <div>
+        <h1 class="desempenho-titulo">Desempenho</h1>
+        <p class="desempenho-sub mb-0">
+          Veja como os clientes procuram os produtos da {{ nome }}
+          e como seus preços se comparam ao mercado.
+        </p>
+      </div>
+
+      <div class="filtro-periodo" role="group" aria-label="Período">
+        {% for d in [7, 30, 90] %}
+          <a
+            href="{{ url_for('painel_desempenho', dias=d) }}"
+            class="btn btn-sm {{ 'btn-primary' if d == dias else 'btn-outline-primary' }}"
+            {% if d == dias %}aria-current="true"{% endif %}
+          >
+            {{ d }} dias
+          </a>
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <a href="{{ url_for('painel') }}" class="voltar-painel">&larr; Voltar ao painel</a>
+
+
+    <!-- ================= CARTÕES ================= -->
+
+    <section class="cards-resumo" aria-label="Resumo">
+
+      <div class="card-resumo">
+        <span class="card-resumo-rotulo">Consultas</span>
+        <strong class="card-resumo-valor">{{ dados.resumo.consultas }}</strong>
+        <span class="card-resumo-nota">nos últimos {{ dias }} dias</span>
+      </div>
+
+      <div class="card-resumo">
+        <span class="card-resumo-rotulo">Produtos</span>
+        <strong class="card-resumo-valor">{{ dados.resumo.total_produtos }}</strong>
+        <span class="card-resumo-nota">cadastrados</span>
+      </div>
+
+      <div class="card-resumo">
+        <span class="card-resumo-rotulo">Promoções</span>
+        <strong class="card-resumo-valor">{{ dados.resumo.promocoes_ativas }}</strong>
+        <span class="card-resumo-nota">ativas agora</span>
+      </div>
+
+      <div class="card-resumo destaque">
+        <span class="card-resumo-rotulo">Menor preço</span>
+        <strong class="card-resumo-valor">
+          {{ dados.resumo.menor_preco }}
+          <small>de {{ dados.resumo.com_concorrencia }}</small>
+        </strong>
+        <span class="card-resumo-nota">produtos com concorrência</span>
+      </div>
+
+    </section>
+
+
+    <!-- ================= ALERTAS ================= -->
+
+    {% if dados.alertas %}
+
+      <section class="painel-card mb-4">
+
+        <h2 class="painel-titulo">Atenção</h2>
+
+        <ul class="lista-alertas">
+
+          {% for a in dados.alertas %}
+
+            <li class="alerta-item alerta-{{ a.tipo }}">
+
+              <div>
+                <strong>{{ a.nome }}</strong>
+                <span>{{ a.texto }}</span>
+              </div>
+
+              <a
+                href="{{ url_for('painel_editar_produto', produto_id=a.doc_id) }}"
+                class="btn btn-outline-primary btn-sm"
+              >
+                Editar
+              </a>
+
+            </li>
+
+          {% endfor %}
+
+        </ul>
+
+      </section>
+
+    {% endif %}
+
+
+    <!-- ================= CONSULTAS POR DIA ================= -->
+
+    <section class="painel-card mb-4">
+
+      <h2 class="painel-titulo">Consultas por dia</h2>
+
+      {% if dados.resumo.consultas > 0 %}
+
+        <div class="grafico-box">
+          <canvas
+            id="grafico-dia"
+            role="img"
+            aria-label="Gráfico de linha com o número de consultas aos seus produtos por dia"
+          ></canvas>
+        </div>
+
+      {% else %}
+
+        <p class="vazio">
+          Ainda não há consultas neste período.
+          Quando os clientes abrirem a página dos seus produtos, os números aparecem aqui.
+        </p>
+
+      {% endif %}
+
+    </section>
+
+
+    <!-- ================= MERCADO E RANKING ================= -->
+
+    <div class="row g-4 mb-4">
+
+      <div class="col-lg-7">
+
+        <section class="painel-card h-100">
+
+          <h2 class="painel-titulo">Seu preço x mercado</h2>
+
+          {% if dados.graficos.mercado.labels %}
+
+            <div class="grafico-box">
+              <canvas
+                id="grafico-mercado"
+                role="img"
+                aria-label="Gráfico de barras comparando seu preço com a média e o menor preço do mercado"
+              ></canvas>
+            </div>
+
+            <p class="nota-grafico">
+              Mostra os produtos que outras farmácias também vendem.
+              A média considera apenas os concorrentes.
+            </p>
+
+          {% else %}
+
+            <p class="vazio">
+              Nenhum dos seus produtos tem concorrência por enquanto.
+            </p>
+
+          {% endif %}
+
+        </section>
+
+      </div>
+
+      <div class="col-lg-5">
+
+        <section class="painel-card h-100">
+
+          <h2 class="painel-titulo">Posição no ranking</h2>
+
+          {% if dados.resumo.total_produtos > 0 %}
+
+            <div class="grafico-box">
+              <canvas
+                id="grafico-ranking"
+                role="img"
+                aria-label="Gráfico de rosca com quantos produtos estão em 1º, 2º, 3º lugar ou pior, ou sem concorrência"
+              ></canvas>
+            </div>
+
+            <p class="nota-grafico">
+              Posição do seu preço entre as farmácias que vendem o mesmo produto.
+            </p>
+
+          {% else %}
+
+            <p class="vazio">Cadastre produtos para ver sua posição.</p>
+
+          {% endif %}
+
+        </section>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= TABELA ================= -->
+
+    <section class="painel-card">
+
+      <h2 class="painel-titulo">Produtos mais consultados</h2>
+
+      {% if dados.tabela %}
+
+        <div class="table-responsive">
+
+          <table class="table tabela-desempenho align-middle mb-0">
+
+            <thead>
+              <tr>
+                <th scope="col">Produto</th>
+                <th scope="col" class="text-end">Consultas</th>
+                <th scope="col" class="text-end">Seu preço</th>
+                <th scope="col" class="text-end">Média concorrência</th>
+                <th scope="col">Posição</th>
+                <th scope="col" class="text-end">Diferença</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for p in dados.tabela %}
+
+                <tr>
+
+                  <td>
+                    <div class="td-nome">{{ p.nome }}</div>
+                    <small class="text-muted">{{ p.categoria }}</small>
+                  </td>
+
+                  <td class="text-end fw-bold">{{ p.consultas }}</td>
+
+                  <td class="text-end text-nowrap">R$ {{ p.preco|brl }}</td>
+
+                  <td class="text-end text-nowrap">
+                    {% if p.media is none %}—{% else %}R$ {{ p.media|brl }}{% endif %}
+                  </td>
+
+                  <td>
+                    {% if p.total == 1 %}
+                      <span class="pos pos-neutra">Sem concorrência</span>
+                    {% else %}
+                      <span class="pos {{ 'pos-1' if p.posicao == 1 else 'pos-ruim' if p.posicao == p.total else 'pos-meio' }}">
+                        {{ p.posicao }}º de {{ p.total }}
+                      </span>
+                    {% endif %}
+                  </td>
+
+                  <td class="text-end text-nowrap">
+                    {% if p.dif_media_pct is none %}
+                      —
+                    {% else %}
+                      <span class="{{ 'dif-alta' if p.dif_media_pct > 0 else 'dif-baixa' if p.dif_media_pct < 0 else '' }}">
+                        {{ "%+.1f"|format(p.dif_media_pct)|replace(".", ",") }}%
+                      </span>
+                    {% endif %}
+                  </td>
+
+                </tr>
+
+              {% endfor %}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      {% else %}
+
+        <p class="vazio">
+          Nenhum produto foi consultado neste período ainda.
+        </p>
+
+      {% endif %}
+
+    </section>
+
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script>
+  (function () {
+      if (typeof Chart === "undefined") return;
+
+      var G = {{ dados.graficos|tojson }};
+
+      var AZUL = "#4f46e5";
+      var ROXO = "#8286D6";
+      var VERDE = "#198754";
+      var VERMELHO = "#dc3545";
+      var CINZA = "#9aa1b2";
+
+      Chart.defaults.font.family = '"Segoe UI", Roboto, Arial, sans-serif';
+
+      function reais(valor) {
+          return "R$ " + Number(valor).toFixed(2).replace(".", ",");
+      }
+
+      /* ---------- consultas por dia ---------- */
+
+      var elDia = document.getElementById("grafico-dia");
+
+      if (elDia) {
+          new Chart(elDia, {
+              type: "line",
+              data: {
+                  labels: G.dia.labels,
+                  datasets: [{
+                      label: "Consultas",
+                      data: G.dia.valores,
+                      borderColor: AZUL,
+                      backgroundColor: "rgba(79, 70, 229, 0.12)",
+                      fill: true,
+                      tension: 0.3,
+                      pointRadius: 2
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: { legend: { display: false } },
+                  scales: {
+                      y: { beginAtZero: true, ticks: { precision: 0 } },
+                      x: { ticks: { maxTicksLimit: 10 } }
+                  }
+              }
+          });
+      }
+
+      /* ---------- seu preço x mercado ---------- */
+
+      var elMercado = document.getElementById("grafico-mercado");
+
+      if (elMercado) {
+          new Chart(elMercado, {
+              type: "bar",
+              data: {
+                  labels: G.mercado.labels,
+                  datasets: [
+                      { label: "Seu preço", data: G.mercado.meu, backgroundColor: AZUL },
+                      { label: "Média dos concorrentes", data: G.mercado.media, backgroundColor: ROXO },
+                      { label: "Menor do mercado", data: G.mercado.menor, backgroundColor: VERDE }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      legend: { position: "bottom" },
+                      tooltip: {
+                          callbacks: {
+                              label: function (ctx) {
+                                  return ctx.dataset.label + ": " + reais(ctx.parsed.y);
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                          ticks: { callback: function (v) { return reais(v); } }
+                      },
+                      x: { ticks: { maxRotation: 45, minRotation: 0 } }
+                  }
+              }
+          });
+      }
+
+      /* ---------- posição no ranking ---------- */
+
+      var elRanking = document.getElementById("grafico-ranking");
+
+      if (elRanking) {
+          new Chart(elRanking, {
+              type: "doughnut",
+              data: {
+                  labels: G.ranking.labels,
+                  datasets: [{
+                      data: G.ranking.valores,
+                      backgroundColor: [VERDE, AZUL, VERMELHO, CINZA]
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: { legend: { position: "bottom" } }
+              }
+          });
+      }
+  })();
+  
+  </script>
+
+  {% include '_acessibilidade.html' %}
+
+</body>
+</html>

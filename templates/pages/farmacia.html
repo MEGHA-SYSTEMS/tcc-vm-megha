@@ -19,7 +19,9 @@
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- ==========================================
+         NAVBAR
+    ========================================== -->
     <nav class="navbar navbar-expand-lg navbar-poupemais">
         <div class="container-fluid">
 
@@ -54,7 +56,7 @@
                 class="collapse navbar-collapse justify-content-end"
                 id="navbarFarmacia"
             >
-                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <div class="nav-acoes d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 py-3 py-lg-0">
 
                     <a
                         href="{{ url_for('catalogo') }}"
@@ -77,9 +79,11 @@
     </nav>
 
 
-    <main class="container py-5">
+    <main class="container py-4 py-md-5">
 
-        <!-- PERFIL DA FARMÁCIA -->
+        <!-- ==========================================
+             PERFIL DA FARMÁCIA
+        ========================================== -->
         <section class="farmacia-perfil">
 
             <div class="farmacia-avatar">
@@ -128,7 +132,9 @@
         </section>
 
 
-        <!-- CATÁLOGO -->
+        <!-- ==========================================
+             CATÁLOGO
+        ========================================== -->
         <section class="catalogo-farmacia">
 
             <div class="titulo-catalogo">
@@ -150,11 +156,12 @@
 
             {% if produtos %}
 
-                <div class="row g-4">
+                <!-- 2 por linha no celular, 3 no tablet, 3 no desktop -->
+                <div class="row g-2 g-sm-3 g-lg-4">
 
                     {% for produto in produtos %}
 
-                        <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="col-6 col-md-4">
 
                             <div class="card produto-card h-100">
 
@@ -164,6 +171,7 @@
                                         src="{{ produto.imagem }}"
                                         class="card-img-top produto-imagem"
                                         alt="Foto de {{ produto.nome }}"
+                                        loading="lazy"
                                     >
 
                                 {% else %}
@@ -198,24 +206,27 @@
                                     {% endif %}
 
                                     <div class="produto-preco mt-auto">
-                                        <span>Preço</span>
+                                        <span class="preco-label">Preço</span>
 
-                                        {% if produto.promocao_ativa %}
-                                            <small class="text-decoration-line-through">
-                                                R$ {{ "%.2f"|format(produto.preco_original)|replace(".", ",") }}
-                                            </small>
-                                        {% endif %}
+                                        <div class="preco-valores">
 
-                                        <strong>
-                                            R$
-                                            {{ "%.2f"|format(produto.preco_final)|replace(".", ",") }}
-                                        </strong>
+                                            {% if produto.promocao_ativa %}
+                                                <small class="preco-antigo">
+                                                    R$ {{ "%.2f"|format(produto.preco_original)|replace(".", ",") }}
+                                                </small>
+                                            {% endif %}
 
-                                        {% if produto.promocao_ativa %}
-                                            <small class="d-block text-danger">
-                                                Promoção até {{ produto.promocao_ate_local.strftime('%d/%m %H:%M') }}
-                                            </small>
-                                        {% endif %}
+                                            <strong>
+                                                R$ {{ "%.2f"|format(produto.preco_final)|replace(".", ",") }}
+                                            </strong>
+
+                                            {% if produto.promocao_ativa %}
+                                                <small class="preco-promo">
+                                                    Promoção até {{ produto.promocao_ate_local.strftime('%d/%m %H:%M') }}
+                                                </small>
+                                            {% endif %}
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -249,6 +260,9 @@
     </main>
 
 
+    <!-- ==========================================
+         RODAPÉ
+    ========================================== -->
     <footer class="footer-poupemais">
         <div class="container">
 
@@ -268,5 +282,7 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
 
+    {% include '_acessibilidade.html' %}
+    
 </body>
 </html>

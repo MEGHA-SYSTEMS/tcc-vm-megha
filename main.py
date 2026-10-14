@@ -40,7 +40,7 @@ from produtos_service import (
     listar_produtos,
     obter_produto,
 )
-
+from desempenho_service import montar_desempenho, registrar_consultas
 
 app = Flask(__name__)
 
@@ -200,6 +200,25 @@ def painel():
     )
 
 
+@app.route("/painel/desempenho")
+@login_obrigatorio
+def painel_desempenho():
+    dias = request.args.get("dias", 30, type=int)
+    if dias not in (7, 30, 90):
+        dias = 30
+
+    dados = montar_desempenho(
+        session["farmacia_id"],
+        todos_produtos_cache(),
+        dias,
+    )
+
+    return render_template(
+        "dashboard/desempenho.html",
+        nome=session["farmacia_nome"],
+        dados=dados,
+        dias=dias,
+    )
 # ============================================================
 # EDITAR PERFIL DA FARMÁCIA
 # ============================================================
@@ -617,7 +636,7 @@ def produto(produto_id):
         return redirect(
             url_for("catalogo")
         )
-
+    registrar_consultas(produto, session)
     return render_template(
         "pages/produto.html",
         site=nome,

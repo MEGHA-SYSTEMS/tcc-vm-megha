@@ -1,0 +1,324 @@
+/* ====================================
+   PAINEL DE ACESSIBILIDADE
+   Fica no canto inferior ESQUERDO para não
+   colidir com o botão do VLibras (lado direito).
+==================================== */
+
+.a11y-widget {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 9000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.a11y-toggle {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #4f46e5;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.a11y-toggle:hover {
+    background: #4338ca;
+    transform: scale(1.06);
+}
+
+.a11y-toggle:focus-visible,
+.a11y-btn:focus-visible,
+.a11y-opcao:focus-visible,
+.a11y-restaurar:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+.a11y-painel {
+    width: 260px;
+    max-width: calc(100vw - 32px);
+
+    background: #fff;
+    color: #1f2235;
+
+    border: 1px solid #d8d3ff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .22);
+
+    padding: 16px;
+}
+
+.a11y-painel[hidden] {
+    display: none;
+}
+
+.a11y-titulo {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0B1F4B;
+}
+
+.a11y-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.a11y-rotulo {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.a11y-zoom-controles {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.a11y-btn {
+    min-width: 38px;
+    height: 36px;
+
+    border: 1px solid #4f46e5;
+    border-radius: 8px;
+
+    background: #fff;
+    color: #4f46e5;
+
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.a11y-btn:hover:not(:disabled) {
+    background: #4f46e5;
+    color: #fff;
+}
+
+.a11y-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.a11y-nivel {
+    min-width: 42px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.a11y-opcao {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 10px 12px;
+    margin-bottom: 8px;
+
+    border: 1px solid #e3e3f0;
+    border-radius: 10px;
+
+    background: #f7f7fd;
+    color: #1f2235;
+
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+
+.a11y-opcao:hover {
+    background: #eeeefb;
+}
+
+/* Chave liga/desliga */
+.a11y-chave {
+    position: relative;
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 20px;
+
+    border-radius: 999px;
+    background: #b9bbd0;
+    transition: background .2s;
+}
+
+.a11y-chave::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+    background: #fff;
+    transition: transform .2s;
+}
+
+.a11y-opcao[aria-pressed="true"] .a11y-chave {
+    background: #4f46e5;
+}
+
+.a11y-opcao[aria-pressed="true"] .a11y-chave::after {
+    transform: translateX(16px);
+}
+
+/* Leitura em voz alta */
+
+.a11y-voz {
+    margin: 12px 0 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e3e3f0;
+}
+
+.a11y-voz .a11y-rotulo {
+    margin: 0 0 8px;
+}
+
+.a11y-voz-botoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.a11y-btn-texto {
+    width: 100%;
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 13px;
+}
+
+.a11y-voz-status {
+    min-height: 18px;
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #5b6472;
+}
+
+.a11y-restaurar {
+    width: 100%;
+    padding: 9px 12px;
+    margin-top: 4px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #4f46e5;
+
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+/* ====================================
+   AMPLIAR CONTEÚDO
+   Aplica zoom em tudo, menos no VLibras e no próprio painel.
+   O valor de --a11y-zoom vem do JavaScript.
+==================================== */
+
+html.a11y-zoom-ativo body > *:not([vw]):not(.a11y-widget):not(script):not(link) {
+    zoom: var(--a11y-zoom, 1);
+}
+
+
+/* ====================================
+   SUBLINHAR LINKS
+==================================== */
+
+html.a11y-links body a:not([vw] a):not(.a11y-widget a) {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+}
+
+
+/* ====================================
+   ALTO CONTRASTE
+   Fundo preto, texto branco, links amarelos.
+   O VLibras e o painel ficam de fora.
+==================================== */
+
+html.a11y-contraste body {
+    background: #000 !important;
+}
+
+html.a11y-contraste body *:not([vw]):not([vw] *):not(.a11y-widget):not(.a11y-widget *) {
+    background-color: #000 !important;
+    background-image: none !important;
+    color: #fff !important;
+    border-color: #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+html.a11y-contraste body a:not([vw] a):not(.a11y-widget a),
+html.a11y-contraste body a:not([vw] a):not(.a11y-widget a) * {
+    color: #ffeb3b !important;
+    text-decoration: underline !important;
+}
+
+html.a11y-contraste body button:not(.a11y-widget button),
+html.a11y-contraste body .btn:not(.a11y-widget .btn) {
+    border: 2px solid #ffeb3b !important;
+    color: #ffeb3b !important;
+}
+
+html.a11y-contraste body input:not(.a11y-widget input),
+html.a11y-contraste body select,
+html.a11y-contraste body textarea {
+    border: 2px solid #fff !important;
+}
+
+/* Fotos continuam visíveis */
+html.a11y-contraste body img:not([vw] img):not(.a11y-widget img) {
+    filter: grayscale(1) contrast(1.15);
+}
+
+
+/* ====================================
+   CELULAR
+==================================== */
+
+@media (max-width: 767px) {
+
+    .a11y-widget {
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .a11y-toggle {
+        width: 46px;
+        height: 46px;
+    }
+
+    .a11y-toggle svg {
+        width: 22px;
+        height: 22px;
+    }
+}
