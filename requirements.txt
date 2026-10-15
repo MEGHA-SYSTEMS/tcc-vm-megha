@@ -3,3 +3,4 @@ firebase-admin
 gunicorn
 cloudinary
 python-dotenv
+requests

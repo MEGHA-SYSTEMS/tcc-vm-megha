@@ -1099,3 +1099,43 @@ img {
     }
 }
 
+/* ===== Cole isto no FINAL do seu localizacao.css (não substitua o arquivo) ===== */
+
+#usar-localizacao {
+    margin-top: 8px;
+}
+
+.aviso-mapa {
+    margin: 8px 0;
+    font-size: 0.95rem;
+}
+
+.lista-farmacias {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.item-farmacia {
+    text-align: left;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.item-farmacia:hover {
+    background: #f3f8ff;
+}
+
+.item-farmacia strong {
+    display: block;
+}
+
+.item-farmacia small {
+    color: #555;
+}

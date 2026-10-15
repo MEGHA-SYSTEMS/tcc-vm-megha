@@ -1,5 +1,5 @@
 import os
-import time  # NOVO: usado no cache dos produtos
+import time  # usado no cache dos produtos
 import unicodedata
 from functools import wraps
 
@@ -25,6 +25,7 @@ from farmacia_service import (
     obter_farmacia,
     buscar_farmacias,
     excluir_farmacia,
+    listar_farmacias_mapa,  # NOVO
 )
 from login_service import entrar
 from perfil_service import (
@@ -70,7 +71,7 @@ def normalizar(texto):
 
 
 # ============================================================
-# PRODUTOS EM CACHE (NOVO)
+# PRODUTOS EM CACHE
 # Evita ler o Firebase inteiro a cada visita à landing
 # e a cada tecla digitada na busca.
 # ============================================================
@@ -219,6 +220,8 @@ def painel_desempenho():
         dados=dados,
         dias=dias,
     )
+
+
 # ============================================================
 # EDITAR PERFIL DA FARMÁCIA
 # ============================================================
@@ -285,6 +288,7 @@ def painel_adicionar_produto():
         )
     )
 
+
 # ============================================================
 # EDITAR PRODUTO
 # ============================================================
@@ -349,6 +353,8 @@ def painel_editar_produto(produto_id):
         categorias=CATEGORIAS,
         dados=_dados_do_produto(produto),
     )
+
+
 # ============================================================
 # EXCLUIR PRODUTO
 # ============================================================
@@ -513,6 +519,12 @@ def localizacao():
     )
 
 
+# NOVO: farmácias cadastradas (com coordenadas) para o mapa
+@app.route("/api/farmacias")
+def api_farmacias():
+    return jsonify(listar_farmacias_mapa())
+
+
 # ============================================================
 # CATÁLOGO
 # ============================================================
@@ -549,6 +561,7 @@ def perfil_farmacia(farmacia_id):
     return render_template(
         "pages/farmacia.html",
         farmacia=farmacia,
+        farmacia_id=farmacia_id,  # NOVO
         produtos=produtos,
         site="poupemais.com",
     )
@@ -570,7 +583,7 @@ def busca():
     resultados = []
 
     # -----------------------------
-    # Produtos (agora com cache)
+    # Produtos (com cache)
     # -----------------------------
     for p in todos_produtos_cache():
         campos = [

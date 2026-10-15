@@ -110,13 +110,14 @@
                     <div class="farmacia-dado">
                         <strong>Endereço</strong>
 
-                        <span>
+                        <a href="{{ url_for('localizacao', farmacia=farmacia_id) }}">
                             {{ farmacia.endereco.rua }},
                             {{ farmacia.endereco.numero }} -
                             {{ farmacia.endereco.bairro }},
                             {{ farmacia.endereco.cidade }} -
                             CEP {{ farmacia.endereco.cep }}
-                        </span>
+                            <small>(ver no mapa)</small>
+                        </a>
                     </div>
                 {% endif %}
 

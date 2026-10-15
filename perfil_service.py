@@ -1,34 +1,17 @@
 """Perfil da farmácia (dados no documento farmacias/<uid> do Firestore).
 
-
-
-
 A farmácia edita: nome, endereço, telefone, horário, descrição, logo, capa
 e galeria de fotos (por link). O CNPJ e o e-mail NÃO são editáveis aqui.
 """
 import re
 
-
-
-
 from firebase_admin import firestore
 
-
-
-
 from firebase_config import db
-
-
-
+from geocoding import geocodificar  # NOVO
 
 MAX_FOTOS = 6
 CAMPOS_ENDERECO = ("cep", "rua", "numero", "bairro", "cidade")
-
-
-
-
-
-
 
 
 def formatar_cnpj(cnpj):
@@ -38,12 +21,6 @@ def formatar_cnpj(cnpj):
     return f"{n[:2]}.{n[2:5]}.{n[5:8]}/{n[8:12]}-{n[12:]}"
 
 
-
-
-
-
-
-
 def obter_perfil(farmacia_id):
     """Devolve o perfil já com valores padrão para o que ainda não existe."""
     dados = {}
@@ -51,9 +28,6 @@ def obter_perfil(farmacia_id):
         doc = db.collection("farmacias").document(farmacia_id).get()
         if doc.exists:
             dados = doc.to_dict()
-
-
-
 
     endereco = dados.get("endereco") or {}
     partes = [
@@ -80,12 +54,6 @@ def obter_perfil(farmacia_id):
     return perfil
 
 
-
-
-
-
-
-
 def dados_para_formulario(perfil):
     """Transforma o perfil nos valores iniciais do formulário de edição."""
     dados = {
@@ -102,29 +70,14 @@ def dados_para_formulario(perfil):
     return dados
 
 
-
-
-
-
-
-
 def _link_valido(url):
     return url.lower().startswith(("http://", "https://")) and len(url) <= 500
-
-
-
-
-
-
 
 
 def salvar_perfil(farmacia_id, form):
     """Valida o formulário e atualiza o perfil. Devolve (ok, mensagem)."""
     if db is None:
         return False, "Sistema indisponível no momento."
-
-
-
 
     nome = form.get("nome", "").strip()
     telefone = form.get("telefone", "").strip()
@@ -134,9 +87,6 @@ def salvar_perfil(farmacia_id, form):
     capa = form.get("capa", "").strip()
     fotos = [l.strip() for l in form.get("fotos", "").splitlines() if l.strip()]
     endereco = {c: form.get(c, "").strip() for c in CAMPOS_ENDERECO}
-
-
-
 
     if not nome or len(nome) > 120:
         return False, "Informe o nome da farmácia (até 120 caracteres)."
@@ -155,10 +105,10 @@ def salvar_perfil(farmacia_id, form):
             return False, ("Os links de imagem devem começar com http:// ou "
                            "https://")
 
+    ref = db.collection("farmacias").document(farmacia_id)
+    atual = ref.get().to_dict() or {}
 
-
-
-    db.collection("farmacias").document(farmacia_id).update({
+    campos = {
         "nome": nome,
         "endereco": endereco,
         "telefone": telefone,
@@ -168,7 +118,26 @@ def salvar_perfil(farmacia_id, form):
         "capa": capa,
         "fotos": fotos,
         "atualizado_em": firestore.SERVER_TIMESTAMP,
-    })
+    }
+
+    # NOVO: só geocodifica se o endereço mudou ou se ainda não tem coordenadas
+    sem_mapa = False
+    if atual.get("endereco") != endereco or atual.get("lat") is None:
+        coords = geocodificar(
+            endereco["rua"], endereco["numero"],
+            endereco["bairro"], endereco["cidade"], endereco["cep"],
+        )
+        if coords:
+            campos["lat"], campos["lng"] = coords
+        else:
+            # evita deixar a farmácia num ponto antigo/errado do mapa
+            campos["lat"] = firestore.DELETE_FIELD
+            campos["lng"] = firestore.DELETE_FIELD
+            sem_mapa = True
+
+    ref.update(campos)
+
+    if sem_mapa:
+        return True, ("Perfil atualizado, mas não conseguimos localizar o endereço "
+                      "no mapa. Confira rua, número e bairro.")
     return True, "Perfil atualizado!"
-
-

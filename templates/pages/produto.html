@@ -48,7 +48,14 @@
                         <span class="text-decoration-line-through text-muted">R$ {{ "%.2f"|format(produto.precos_ordenados[0].preco_original)|replace(".", ",") }}</span>
                     {% endif %}
                     <strong>R$ {{ "%.2f"|format(produto.precos_ordenados[0].preco)|replace(".", ",") }}</strong>
-                    em <strong>{{ produto.precos_ordenados[0].farmacia }}</strong>
+                    em
+                    {% if produto.precos_ordenados[0].farmacia_id %}
+                        <a href="{{ url_for('perfil_farmacia', farmacia_id=produto.precos_ordenados[0].farmacia_id) }}" class="alert-link">
+                            <strong>{{ produto.precos_ordenados[0].farmacia }}</strong>
+                        </a>
+                    {% else %}
+                        <strong>{{ produto.precos_ordenados[0].farmacia }}</strong>
+                    {% endif %}
                     {% if produto.precos_ordenados[0].promocao_ativa %}
                         <div class="fs-6 mt-1">Promoção válida até {{ produto.precos_ordenados[0].promocao_ate.strftime('%d/%m/%Y às %H:%M') }}</div>
                     {% endif %}
@@ -71,8 +78,22 @@
                     <tbody>
                         {% for oferta in produto.precos_ordenados %}
                         <tr {% if loop.first %}class="table-success"{% endif %}>
-                            <td>{{ oferta.farmacia }}</td>
-                            <td>{{ oferta.endereco }}</td>
+                            <td>
+                                {% if oferta.farmacia_id %}
+                                    <a href="{{ url_for('perfil_farmacia', farmacia_id=oferta.farmacia_id) }}">{{ oferta.farmacia }}</a>
+                                {% else %}
+                                    {{ oferta.farmacia }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if oferta.farmacia_id %}
+                                    <a href="{{ url_for('localizacao', farmacia=oferta.farmacia_id) }}">
+                                        {{ oferta.endereco }} <small>(ver no mapa)</small>
+                                    </a>
+                                {% else %}
+                                    {{ oferta.endereco }}
+                                {% endif %}
+                            </td>
                             <td class="fw-bold">
                                 {% if oferta.promocao_ativa %}
                                     <small class="d-block text-decoration-line-through text-muted fw-normal">

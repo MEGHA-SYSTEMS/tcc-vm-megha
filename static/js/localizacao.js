@@ -1,159 +1,211 @@
-navigator.geolocation.getCurrentPosition(
-    sucesso,
-    erro,
-    {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-    }
-);
-
-function sucesso(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    console.log(latitude, longitude);
-}
-
-function erro(error) {
-    console.log(error.message);
-}
+const CIDADE_PADRAO = "Matão, SP";
 
 const map = L.map('map', {
     zoomControl: false,
     attributionControl: false
-}).setView([-21.6033, -48.3658], 15);
-
+}).setView([-21.6033, -48.3658], 14);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
 }).addTo(map);
 
-const farmacias = [
+let farmacias = [];          // vêm do Firestore via /api/farmacias
+let origem = null;           // {lat, lng} de quem está procurando
+let marcadorOrigem = null;
+const marcadores = {};       // id da farmácia -> marcador
 
-    {
-        nome: "Drogasil",
-        lat: -21.6030,
-        lon: -48.3650,
-       
-    },
-
-    {
-        nome: "Droga Raia",
-        lat: -21.6020,
-        lon: -48.3665,
-      
-    },
-
-    {
-        nome: "Farmácia São Paulo",
-        lat: -21.6042,
-        lon: -48.3641,
-       
-    }
-
-];
+const elLista = document.getElementById("lista-farmacias");
+const elAviso = document.getElementById("aviso-mapa");
 
 
-if (navigator.geolocation) {
+/* ---------- utilidades ---------- */
 
-    navigator.geolocation.getCurrentPosition(function (position) {
-
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        map.setView([latitude, longitude], 16);
-
-        L.marker([latitude, longitude])
-            .addTo(map)
-            .bindPopup("local atual")
-            .openPopup();
-
-    }, function () {
-
-        alert("Não foi possível obter sua localização.");
-
-    });
-
-} else {
-
-    alert("Seu navegador não suporta Geolocalização.");
-
+function escapar(texto) {
+    const d = document.createElement("div");
+    d.textContent = texto ?? "";
+    return d.innerHTML;
 }
 
-document.getElementById("buscar").addEventListener("click", buscarEndereco);
-
-async function buscarEndereco() {
-
-    const bairro = document.getElementById("bairro").value;
-    const rua = document.getElementById("rua").value;
-    const numero = document.getElementById("numero").value;
-
-    const endereco =
-        `${rua} ${numero}, ${bairro}, Matão, SP`;
-
-    const resposta = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}`
-    );
-
-    const dados = await resposta.json();
-
-    if (dados.length == 0) {
-
-        alert("Endereço não encontrado.");
-
-        return;
-
-    }
-
-    const lat = parseFloat(dados[0].lat);
-    const lon = parseFloat(dados[0].lon);
-
-    map.setView([lat, lon],17);
-
-    L.marker([lat, lon])
-    .addTo(map)
-    .bindPopup("Endereço pesquisado")
-    .openPopup();
-    
-    mostrarFarmacias(lat, lon);
+function distanciaKm(a, b) {
+    const R = 6371;
+    const rad = x => x * Math.PI / 180;
+    const dLat = rad(b.lat - a.lat);
+    const dLng = rad(b.lng - a.lng);
+    const h = Math.sin(dLat / 2) ** 2 +
+        Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-async function mostrarFarmacias(lat, lon){
+function textoDistancia(km) {
+    return km < 1
+        ? `${Math.round(km * 1000)} m`
+        : `${km.toFixed(1).replace(".", ",")} km`;
+}
 
-    const query = `
-    [out:json];
-    (
-      node["amenity"="pharmacy"](around:2000,${lat},${lon});
-      way["amenity"="pharmacy"](around:2000,${lat},${lon});
-      relation["amenity"="pharmacy"](around:2000,${lat},${lon});
-    );
-    out center;
+function avisar(texto) {
+    elAviso.textContent = texto || "";
+}
+
+
+/* ---------- farmácias cadastradas ---------- */
+
+function popupHtml(f) {
+    const dist = f.distancia != null
+        ? `<br><small>${textoDistancia(f.distancia)} de você</small>` : "";
+
+    return `
+        <b>${escapar(f.nome)}</b><br>
+        <small>${escapar(f.endereco)}</small>${dist}<br>
+        <a href="/farmacia/${encodeURIComponent(f.id)}">Ver farmácia</a> ·
+        <a target="_blank" rel="noopener"
+           href="https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lng}">Como chegar</a>
     `;
+}
 
-    const resposta = await fetch(
-        "https://overpass-api.de/api/interpreter",
-        {
-            method:"POST",
-            body:query
-        }
-    );
+function desenharMarcadores() {
+    farmacias.forEach(f => {
+        const m = L.marker([f.lat, f.lng]).addTo(map).bindPopup(popupHtml(f));
+        marcadores[f.id] = m;
+    });
+}
 
-    const dados = await resposta.json();
+function renderizarLista() {
+    if (!farmacias.length) {
+        elLista.innerHTML = "<p>Nenhuma farmácia cadastrada com localização ainda.</p>";
+        return;
+    }
 
-    dados.elements.forEach(farmacia => {
+    const ordenadas = [...farmacias];
+    if (origem) ordenadas.sort((a, b) => a.distancia - b.distancia);
 
-        const latitude = farmacia.lat || farmacia.center.lat;
-        const longitude = farmacia.lon || farmacia.center.lon;
+    elLista.innerHTML = "";
+    ordenadas.forEach(f => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "item-farmacia";
+        btn.innerHTML = `
+            <strong>${escapar(f.nome)}</strong>
+            <small>${escapar(f.endereco)}${f.distancia != null ? " · " + textoDistancia(f.distancia) : ""}</small>
+        `;
+        btn.addEventListener("click", () => focarFarmacia(f.id));
+        elLista.appendChild(btn);
+    });
+}
 
-        const nome = farmacia.tags.name || "Farmácia";
+function focarFarmacia(id) {
+    const f = farmacias.find(x => x.id === id);
+    if (!f) return;
+    map.setView([f.lat, f.lng], 17);
+    marcadores[id].openPopup();
+}
 
-        L.marker([latitude, longitude])
+async function carregarFarmacias() {
+    try {
+        const resp = await fetch("/api/farmacias");
+        farmacias = await resp.json();
+    } catch (e) {
+        farmacias = [];
+        avisar("Não foi possível carregar as farmácias agora.");
+    }
 
-            .addTo(map)
+    desenharMarcadores();
+    renderizarLista();
 
-            .bindPopup(`<b>${nome}</b>`);
+    // veio da página da farmácia/produto: /localizacao?farmacia=ID
+    const id = new URLSearchParams(window.location.search).get("farmacia");
+    if (id) {
+        focarFarmacia(id);
+    } else if (farmacias.length) {
+        map.fitBounds(farmacias.map(f => [f.lat, f.lng]), { padding: [40, 40], maxZoom: 16 });
+    }
+}
 
+
+/* ---------- origem (localização atual ou endereço) ---------- */
+
+function definirOrigem(lat, lng, rotulo) {
+    origem = { lat, lng };
+
+    if (marcadorOrigem) map.removeLayer(marcadorOrigem);
+    marcadorOrigem = L.marker([lat, lng]).addTo(map).bindPopup(rotulo);
+
+    farmacias.forEach(f => {
+        f.distancia = distanciaKm(origem, f);
+        marcadores[f.id].setPopupContent(popupHtml(f));
     });
 
+    renderizarLista();
+
+    // enquadra você + as 3 farmácias mais próximas
+    const proximas = [...farmacias]
+        .sort((a, b) => a.distancia - b.distancia)
+        .slice(0, 3)
+        .map(f => [f.lat, f.lng]);
+
+    if (proximas.length) {
+        map.fitBounds([[lat, lng], ...proximas], { padding: [40, 40], maxZoom: 16 });
+    } else {
+        map.setView([lat, lng], 16);
+    }
+    marcadorOrigem.openPopup();
 }
+
+document.getElementById("usar-localizacao").addEventListener("click", () => {
+    if (!navigator.geolocation) {
+        avisar("Seu navegador não suporta geolocalização.");
+        return;
+    }
+
+    avisar("Obtendo sua localização...");
+
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            avisar("");
+            definirOrigem(pos.coords.latitude, pos.coords.longitude, "Você está aqui");
+        },
+        err => {
+            if (err.code === 1) {
+                avisar("Permissão negada. Libere a localização no navegador ou digite seu endereço.");
+            } else {
+                avisar("Não foi possível obter sua localização. Tente digitar o endereço.");
+            }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+});
+
+document.getElementById("buscar").addEventListener("click", async () => {
+    const bairro = document.getElementById("bairro").value.trim();
+    const rua = document.getElementById("rua").value.trim();
+    const cep = document.getElementById("cep").value.trim();
+    const numero = document.getElementById("numero").value.trim();
+
+    if (!rua && !cep) {
+        avisar("Digite pelo menos a rua ou o CEP.");
+        return;
+    }
+
+    avisar("Procurando endereço...");
+
+    const consulta = [`${rua} ${numero}`.trim(), bairro, cep, CIDADE_PADRAO]
+        .filter(Boolean).join(", ");
+
+    try {
+        const resp = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(consulta)}`
+        );
+        const dados = await resp.json();
+
+        if (!dados.length) {
+            avisar("Endereço não encontrado.");
+            return;
+        }
+
+        avisar("");
+        definirOrigem(parseFloat(dados[0].lat), parseFloat(dados[0].lon), "Endereço pesquisado");
+    } catch (e) {
+        avisar("Erro ao buscar o endereço. Tente de novo.");
+    }
+});
+
+carregarFarmacias();
