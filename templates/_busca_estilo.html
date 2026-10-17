@@ -1,0 +1,97 @@
+<!-- Estilo da barra de pesquisa (mesmo da página inicial) + aviso de sintomas. -->
+<style>
+    .search-wrapper {
+        position: relative;
+    }
+
+    .input-busca {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+        margin-left: 0;
+        border: none;
+        outline: none;
+        background: #f5f5f5;
+        border-radius: 20px;
+        font-size: 14px;
+        transition: width .3s ease, opacity .3s ease, padding .3s ease, margin-left .3s ease;
+    }
+
+    .input-busca.ativo {
+        width: 220px;
+        opacity: 1;
+        padding: 8px 14px;
+        margin-left: 10px;
+    }
+
+    .resultados-busca {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        min-width: 280px;
+        margin-top: 6px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+        z-index: 2000;
+    }
+
+    .resultado-item {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 14px;
+        text-decoration: none;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .resultado-item:hover { background: #f1f6ff; }
+    .resultado-nome { color: #222222; font-size: 1rem; font-weight: 600; }
+    .resultado-categoria { color: #777777; font-size: 0.85rem; }
+    .resultado-vazio { padding: 12px 14px; color: #777777; font-size: 0.95rem; }
+
+    .resultado-aviso {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        background: #fff8e1;
+        border-bottom: 1px solid #f0e0a0;
+        color: #5c4a00;
+    }
+
+    .resultado-todos {
+        display: block;
+        padding: 10px 14px;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #4f46e5;
+        text-decoration: none;
+        background: #f7f7ff;
+    }
+
+    .resultado-todos:hover { background: #ececff; }
+
+    @media (max-width: 991px) {
+        .search-wrapper {
+            position: static;
+            margin-left: auto;
+            margin-right: 8px;
+        }
+
+        .input-busca.ativo {
+            width: min(150px, 38vw);
+            margin-left: 8px;
+        }
+
+        .resultados-busca {
+            left: 12px;
+            right: 12px;
+            width: auto;
+            min-width: 0;
+            margin-top: 0;
+        }
+    }
+</style>

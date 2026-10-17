@@ -1,0 +1,79 @@
+<!-- Botão "voltar" reutilizável. Entra na navbar, ao lado da logo. Não aparece na página inicial. -->
+<style>
+  .btn-voltar-pagina {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dde1ee;
+    border-radius: 50%;
+    background: #fff;
+    color: #2b3a8f;
+    cursor: pointer;
+    padding: 0;
+  }
+  .btn-voltar-pagina:hover { background: #f3f5ff; }
+  .btn-voltar-pagina:focus-visible { outline: 3px solid #5b4ee8; outline-offset: 2px; }
+  .btn-voltar-pagina svg { width: 22px; height: 22px; }
+
+  /* junta a setinha e a logo */
+  .voltar-e-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .voltar-e-marca .navbar-brand { margin-right: 0; }
+
+  /* plano B: página sem navbar reconhecida */
+  .btn-voltar-pagina.voltar-solto {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 1040;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+</style>
+
+<button type="button" id="btn-voltar-pagina" class="btn-voltar-pagina"
+        aria-label="Voltar para a tela anterior" title="Voltar" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+  </svg>
+</button>
+
+<script>
+  (function () {
+    var botao = document.getElementById('btn-voltar-pagina');
+    var inicio = "{{ url_for('index') }}";
+
+    // não mostra na página inicial
+    if (window.location.pathname === inicio) return;
+
+    // coloca a setinha na navbar, antes da logo
+    var marca = document.querySelector('.navbar .navbar-brand');
+    if (marca && marca.parentNode) {
+      var grupo = document.createElement('div');
+      grupo.className = 'voltar-e-marca';
+      marca.parentNode.insertBefore(grupo, marca);
+      grupo.appendChild(botao);
+      grupo.appendChild(marca);
+    } else {
+      botao.classList.add('voltar-solto');  // sem navbar: fixa no topo
+    }
+    botao.hidden = false;
+
+    botao.addEventListener('click', function () {
+      var veioDoSite = document.referrer &&
+        new URL(document.referrer).origin === window.location.origin;
+      if (window.history.length > 1 && veioDoSite) {
+        window.history.back();
+      } else {
+        window.location.href = inicio;  // sem histórico: vai para o início
+      }
+    });
+  })();
+</script>

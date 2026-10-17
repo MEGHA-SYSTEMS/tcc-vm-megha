@@ -37,6 +37,11 @@
                 <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2">
                     {{ produto.categoria }}
                 </span>
+
+                {% if produto.exige_receita %}
+                    <span class="badge text-bg-warning mb-2 ms-1">Exige receita médica</span>
+                {% endif %}
+
                 <h1 class="mb-3">{{ produto.nome }}</h1>
 
                 <p class="fs-5"><strong>Princípio ativo:</strong> {{ produto.principio_ativo }}</p>
@@ -92,6 +97,9 @@
                                     </a>
                                 {% else %}
                                     {{ oferta.endereco }}
+                                {% if oferta.exige_receita %}
+                                    <small class="badge text-bg-warning ms-1">Exige receita</small>
+                                {% endif %}
                                 {% endif %}
                             </td>
                             <td class="fw-bold">

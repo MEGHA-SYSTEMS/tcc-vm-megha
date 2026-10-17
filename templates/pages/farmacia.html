@@ -15,6 +15,59 @@
         rel="stylesheet"
         href="{{ url_for('static', filename='css/farmacia.css') }}"
     >
+
+    <style>
+        .farmacia-capa {
+            width: 100%;
+            aspect-ratio: 6 / 1;
+            min-height: 120px;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #e9ecf5;
+            margin-bottom: 1rem;
+        }
+        .farmacia-capa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .farmacia-logo {
+            width: 96px;
+            height: 96px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #dde1ee;
+            overflow: hidden;
+        }
+        .farmacia-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .farmacia-descricao {
+            margin: 0.5rem 0 1rem;
+            max-width: 70ch;
+        }
+        .farmacia-galeria {
+            margin-top: 2rem;
+        }
+        .galeria-item {
+            display: block;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #eee;
+        }
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -82,13 +135,38 @@
     <main class="container py-4 py-md-5">
 
         <!-- ==========================================
+             CAPA
+        ========================================== -->
+        {% if farmacia.capa %}
+            <div class="farmacia-capa">
+                <img
+                    src="{{ farmacia.capa }}"
+                    alt="Foto de capa de {{ farmacia.nome }}"
+                    data-pos-x="{{ farmacia.capa_pos_x|default(50) }}"
+                    data-pos-y="{{ farmacia.capa_pos|default(50) }}"
+                    onerror="this.parentElement.style.display='none'"
+                >
+            </div>
+        {% endif %}
+
+
+        <!-- ==========================================
              PERFIL DA FARMÁCIA
         ========================================== -->
         <section class="farmacia-perfil">
 
-            <div class="farmacia-avatar">
-                {{ farmacia.nome[0]|upper }}
-            </div>
+            {% if farmacia.logo %}
+                <div class="farmacia-logo">
+                    <img
+                        src="{{ farmacia.logo }}"
+                        alt="Logo de {{ farmacia.nome }}"
+                    >
+                </div>
+            {% else %}
+                <div class="farmacia-avatar">
+                    {{ farmacia.nome[0]|upper }}
+                </div>
+            {% endif %}
 
             <div class="farmacia-info">
 
@@ -103,6 +181,12 @@
                 {% if farmacia.razao_social %}
                     <p class="razao-social">
                         {{ farmacia.razao_social }}
+                    </p>
+                {% endif %}
+
+                {% if farmacia.descricao %}
+                    <p class="farmacia-descricao">
+                        {{ farmacia.descricao }}
                     </p>
                 {% endif %}
 
@@ -121,6 +205,20 @@
                     </div>
                 {% endif %}
 
+                {% if farmacia.telefone %}
+                    <div class="farmacia-dado">
+                        <strong>Telefone</strong>
+                        <span>{{ farmacia.telefone }}</span>
+                    </div>
+                {% endif %}
+
+                {% if farmacia.horario %}
+                    <div class="farmacia-dado">
+                        <strong>Horário</strong>
+                        <span>{{ farmacia.horario }}</span>
+                    </div>
+                {% endif %}
+
                 {% if farmacia.cnpj %}
                     <div class="farmacia-dado">
                         <strong>CNPJ</strong>
@@ -131,6 +229,39 @@
             </div>
 
         </section>
+
+
+        <!-- ==========================================
+             GALERIA
+        ========================================== -->
+        {% if farmacia.fotos %}
+            <section class="farmacia-galeria">
+
+                <p class="farmacia-label">
+                    GALERIA
+                </p>
+
+                <div class="row g-2 g-md-3">
+                    {% for foto in farmacia.fotos %}
+                        <div class="col-6 col-md-4">
+                            <a
+                                href="{{ foto }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="galeria-item"
+                            >
+                                <img
+                                    src="{{ foto }}"
+                                    alt="Foto {{ loop.index }} de {{ farmacia.nome }}"
+                                    loading="lazy"
+                                >
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+        {% endif %}
 
 
         <!-- ==========================================
@@ -189,6 +320,13 @@
                                     <span class="produto-categoria">
                                         {{ produto.categoria }}
                                     </span>
+
+                                    {% if produto.exige_receita %}
+                                    <span class="badge text-bg-warning align-self-start mb-1">
+                                        Exige receita médica
+                                    </span>
+                                    
+                                    {% endif %}
 
                                     <h3>
                                         {{ produto.nome }}
@@ -283,7 +421,13 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
 
+    <script>
+        document.querySelectorAll('.farmacia-capa img[data-pos-x]').forEach(function (img) {
+            img.style.objectPosition = img.dataset.posX + '% ' + img.dataset.posY + '%';
+        });
+    </script>
+
     {% include '_acessibilidade.html' %}
-    
+
 </body>
 </html>

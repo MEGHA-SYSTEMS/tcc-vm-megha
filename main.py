@@ -4,6 +4,7 @@ import unicodedata
 from functools import wraps
 
 from dotenv import load_dotenv
+from sintomas import AVISO_SINTOMAS, achar_categorias
 
 load_dotenv()  # lê o .env ANTES de importar os serviços (Cloudinary, Firebase)
 
@@ -234,23 +235,27 @@ def painel_perfil():
     if request.method == "POST":
         ok, mensagem = salvar_perfil(
             farmacia_id,
-            request.form
+            request.form,
+            {
+                "logo": request.files.get("logo"),
+                "capa": request.files.get("capa"),
+                "galeria": request.files.getlist("galeria"),
+            },
         )
-
         if ok:
-            session["farmacia_nome"] = request.form.get(
-                "nome",
-                ""
-            ).strip()
-
+            session["farmacia_nome"] = request.form.get("nome", "").strip()
             flash(mensagem, "success")
-
             return redirect(url_for("painel"))
 
+        # Em caso de erro, mostra o formulário de novo. Usamos os dados
+        # salvos como base (para manter logo, capa e galeria na tela) e
+        # por cima os textos que a pessoa acabou de digitar.
+        dados = dados_para_formulario(obter_perfil(farmacia_id))
+        dados.update(request.form.to_dict())
         return render_template(
             "dashboard/perfil_editar.html",
             perfil=obter_perfil(farmacia_id),
-            dados=request.form.to_dict(),
+            dados=dados,
             erro=mensagem,
         )
 
@@ -568,70 +573,106 @@ def perfil_farmacia(farmacia_id):
 
 
 # ============================================================
-# BUSCA COM SUGESTÕES
+# BUSCA (produtos, farmácias e sintomas)
+# Substitui a função "busca" antiga inteira.
+# Precisa do import:  from sintomas import AVISO_SINTOMAS, achar_categorias
 # ============================================================
 
-@app.route("/busca")
-def busca():
-    termo = normalizar(
-        request.args.get("q", "").strip()
-    )
+def _item_produto(p):
+    menor = p.get("menor_preco") or {}
+    return {
+        "tipo": "produto",
+        "id": p["id"],
+        "nome": p["nome"],
+        "categoria": p.get("categoria", ""),
+        "imagem": p.get("imagem", ""),
+        "preco": menor.get("preco"),
+        "exige_receita": bool(p.get("exige_receita")),
+        "url": url_for("produto", produto_id=p["id"]),
+    }
+
+
+def _pesquisar(termo_digitado):
+    """Procura produtos, farmácias e sintomas.
+
+    Devolve (resultados, e_sintoma). Quando e_sintoma é True, quem
+    chamou deve mostrar o aviso "não somos médicos".
+    """
+    termo = normalizar((termo_digitado or "").strip())
 
     if len(termo) < 2:
-        return jsonify([])
+        return [], False
 
     resultados = []
 
-    # -----------------------------
-    # Produtos (com cache)
-    # -----------------------------
+    # Produtos pelo nome, categoria ou princípio ativo
     for p in todos_produtos_cache():
         campos = [
             p.get("nome", ""),
             p.get("categoria", ""),
             p.get("principio_ativo", ""),
         ]
+        if any(termo in normalizar(campo) for campo in campos):
+            resultados.append(_item_produto(p))
 
-        if any(
-            termo in normalizar(campo)
-            for campo in campos
-        ):
-            resultados.append({
-                "tipo": "produto",
-                "id": p["id"],
-                "nome": p["nome"],
-                "categoria": p.get(
-                    "categoria",
-                    ""
-                ),
-                "url": url_for(
-                    "produto",
-                    produto_id=p["id"]
-                ),
-            })
-
-    # -----------------------------
     # Farmácias
-    # -----------------------------
     for farmacia in buscar_farmacias(termo):
         resultados.append({
             "tipo": "farmacia",
             "id": farmacia["uid"],
-            "nome": farmacia.get(
-                "nome",
-                ""
-            ),
+            "nome": farmacia.get("nome", ""),
             "categoria": "Farmácia",
-            "url": url_for(
-                "perfil_farmacia",
-                farmacia_id=farmacia["uid"]
-            ),
+            "url": url_for("perfil_farmacia", farmacia_id=farmacia["uid"]),
         })
 
-    return jsonify(
-        resultados[:8]
-    )
+    # Sintomas (dor de cabeça, azia, tosse...)
+    categorias_sintoma = achar_categorias(termo)
+    if categorias_sintoma:
+        ja_listados = {r["id"] for r in resultados if r["tipo"] == "produto"}
+        for p in todos_produtos_cache():
+            if (
+                p.get("categoria") in categorias_sintoma
+                and not p.get("exige_receita")  # remédio com receita não é sugerido
+                and p["id"] not in ja_listados
+            ):
+                resultados.append(_item_produto(p))
 
+    return resultados, bool(categorias_sintoma)
+
+
+@app.route("/busca")
+def busca():
+    """Lista rápida da barra de pesquisa (JSON)."""
+    resultados, e_sintoma = _pesquisar(request.args.get("q", ""))
+    resultados = resultados[:8]
+
+    if e_sintoma:
+        resultados.insert(0, {
+            "tipo": "aviso",
+            "id": "",
+            "nome": AVISO_SINTOMAS,
+            "categoria": "",
+            "url": "",
+        })
+
+    return jsonify(resultados)
+
+
+@app.route("/pesquisa")
+def pesquisa():
+    """Página com todos os resultados (Enter na barra de pesquisa)."""
+    q = request.args.get("q", "").strip()
+    resultados, e_sintoma = _pesquisar(q)
+
+    return render_template(
+        "pages/pesquisa.html",
+        q=q,
+        produtos=[r for r in resultados if r["tipo"] == "produto"],
+        farmacias=[r for r in resultados if r["tipo"] == "farmacia"],
+        e_sintoma=e_sintoma,
+        aviso=AVISO_SINTOMAS,
+        site="poupemais.com",
+    )
 
 # ============================================================
 # PÁGINA DO PRODUTO

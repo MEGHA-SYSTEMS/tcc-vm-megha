@@ -4,17 +4,22 @@ Cada produto guarda o 'farmacia_id' de quem cadastrou. O campo 'chave' é o
 nome normalizado (minúsculo, sem acento), usado depois para juntar o mesmo
 remédio de farmácias diferentes no catálogo e comparar preços.
 """
+import logging
 import re
 import unicodedata
 from datetime import datetime, timedelta, timezone
 
 import cloudinary
 import cloudinary.uploader
+from dotenv import load_dotenv
 from firebase_admin import firestore
 
 from firebase_config import db
 
+load_dotenv()  # lê o arquivo .env (precisa vir ANTES do config)
 cloudinary.config(secure=True)  # lê a CLOUDINARY_URL do ambiente
+
+logger = logging.getLogger(__name__)
 
 TIPOS_IMAGEM = {"image/jpeg", "image/png", "image/webp"}
 
@@ -179,6 +184,7 @@ def _validar_dados(form):
         "principio_ativo": principio,
         "descricao": descricao,
         "preco": preco,
+        "exige_receita": form.get("exige_receita") == "on",
     }, None
 
 
@@ -203,6 +209,7 @@ def _enviar_imagem(arquivo):
         )
         return resultado["secure_url"], None
     except Exception:
+        logger.exception("Falha no upload para o Cloudinary")
         return None, "Não foi possível enviar a imagem. Tente novamente."
 
 

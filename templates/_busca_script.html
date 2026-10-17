@@ -1,0 +1,105 @@
+<!-- Script da barra de pesquisa. Usado na página inicial e no catálogo. -->
+<script>
+(function () {
+    var input = document.getElementById("input-busca");
+    var caixa = document.getElementById("resultados-busca");
+    var botao = document.getElementById("btn-busca");
+    if (!input || !caixa || !botao) return;
+
+    var urlBusca = "{{ url_for('busca') }}";
+    var urlPesquisa = "{{ url_for('pesquisa') }}";
+    var timer = null;
+
+    function fechar() {
+        caixa.style.display = "none";
+        caixa.innerHTML = "";
+    }
+
+    function irParaPesquisa() {
+        var termo = input.value.trim();
+        if (termo.length < 2) { input.focus(); return; }
+        window.location.href = urlPesquisa + "?q=" + encodeURIComponent(termo);
+    }
+
+    function mostrar(resultados) {
+        caixa.innerHTML = "";
+
+        if (resultados.length === 0) {
+            var vazio = document.createElement("div");
+            vazio.className = "resultado-vazio";
+            vazio.textContent = "Nenhum resultado encontrado";
+            caixa.appendChild(vazio);
+        } else {
+            resultados.forEach(function (r) {
+                if (r.tipo === "aviso") {
+                    var aviso = document.createElement("div");
+                    aviso.className = "resultado-aviso";
+                    aviso.textContent = r.nome;
+                    caixa.appendChild(aviso);
+                    return;
+                }
+
+                var link = document.createElement("a");
+                link.href = r.url;
+                link.className = "resultado-item";
+
+                var nome = document.createElement("span");
+                nome.className = "resultado-nome";
+                nome.textContent = r.nome;
+
+                var cat = document.createElement("span");
+                cat.className = "resultado-categoria";
+                cat.textContent = r.categoria;
+
+                link.appendChild(nome);
+                link.appendChild(cat);
+                caixa.appendChild(link);
+            });
+
+            var todos = document.createElement("a");
+            todos.className = "resultado-todos";
+            todos.href = urlPesquisa + "?q=" + encodeURIComponent(input.value.trim());
+            todos.textContent = "Ver todos os resultados";
+            caixa.appendChild(todos);
+        }
+        caixa.style.display = "block";
+    }
+
+    function buscar() {
+        var termo = input.value.trim();
+        if (termo.length < 2) { fechar(); return; }
+
+        fetch(urlBusca + "?q=" + encodeURIComponent(termo))
+            .then(function (resp) { return resp.json(); })
+            .then(mostrar)
+            .catch(fechar);
+    }
+
+    // busca enquanto digita (espera 250 ms de pausa)
+    input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(buscar, 250);
+    });
+
+    // Enter: abre a página com todos os resultados
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { e.preventDefault(); irParaPesquisa(); }
+        if (e.key === "Escape") { fechar(); }
+    });
+
+    // Lupa: se a barra está fechada, abre; se já está aberta, pesquisa.
+    botao.addEventListener("click", function () {
+        if (!input.classList.contains("ativo")) {
+            input.classList.add("ativo");
+            input.focus();
+        } else {
+            irParaPesquisa();
+        }
+    });
+
+    // clicar fora fecha a lista
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".search-wrapper")) { fechar(); }
+    });
+})();
+</script>

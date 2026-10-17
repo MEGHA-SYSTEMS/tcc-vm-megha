@@ -58,6 +58,7 @@ def _agrupar(docs):
             "promocao_ativa": d["promocao_ativa"],
             "promocao_ate": d["promocao_ate_local"],
             "endereco": endereco,
+            "exige_receita": bool(d.get("exige_receita")),
         }
 
         grupo = grupos.get(chave)
@@ -80,6 +81,7 @@ def _agrupar(docs):
         grupo["precos"].sort(key=lambda p: p["preco"])
         grupo["precos_ordenados"] = grupo["precos"]
         grupo["menor_preco"] = grupo["precos"][0]
+        grupo["exige_receita"] = any(p["exige_receita"] for p in grupo["precos"])
         produtos.append(grupo)
     produtos.sort(key=lambda p: p["nome"].lower())
     return produtos
