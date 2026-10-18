@@ -1,0 +1,80 @@
+{# Navbar padrão das páginas públicas (igual à da página inicial).
+   Traz junto o CSS e o JS da busca, então a página só precisa de:
+   {% include '_navbar_publica.html' %}
+   Quem está logado como farmácia vê o perfil no lugar de Login/Cadastre-se. #}
+
+{% include '_busca_estilo.html' %}
+
+<nav class="navbar navbar-expand-lg navbar-poupemais">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="Logo PoupeMais"
+                 class="logo-nav">
+
+            <span class="ms-2 nome-site">PoupeMais</span>
+
+        </a>
+
+
+        <div class="search-wrapper d-flex align-items-center ms-3">
+
+            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
+                 class="icone-nav-img"
+                 alt="Buscar"
+                 id="btn-busca">
+
+            <input type="text"
+                   class="input-busca"
+                   id="input-busca"
+                   placeholder="Buscar produtos..."
+                   autocomplete="off">
+
+            <div id="resultados-busca" class="resultados-busca"></div>
+
+        </div>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+            <div class="nav-acoes d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 py-3 py-lg-0">
+
+                {% if farmacia_logada %}
+
+                    {% include '_perfil_nav.html' %}
+
+                {% else %}
+
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
+                        É farmácia? Cadastre-se aqui
+                    </a>
+
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+                        Login
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+{% include '_busca_script.html' %}

@@ -1,6 +1,7 @@
 import os
 import time  # usado no cache dos produtos
 import unicodedata
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 
 from dotenv import load_dotenv
@@ -43,6 +44,14 @@ from produtos_service import (
     obter_produto,
 )
 from desempenho_service import montar_desempenho, registrar_consultas
+from anuncio_service import (
+    MAX_ATIVOS as ANUNCIOS_MAX,
+    adicionar_anuncio,
+    excluir_anuncio,
+    excluir_anuncios_da_farmacia,
+    listar_anuncios_farmacia,
+    listar_anuncios_home,
+)
 
 app = Flask(__name__)
 
@@ -52,6 +61,9 @@ app.secret_key = os.environ.get(
 )
 
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+
+# "Lembrar de mim": o login dura 30 dias
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=30)
 
 # Limite de tamanho para uploads (fotos de produtos)
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB
@@ -109,25 +121,94 @@ def formatar_brl(valor):
         return "—"
     return texto.replace(",", "X").replace(".", ",").replace("X", ".")
 
+@app.context_processor
+def injetar_farmacia_logada():
+    """Deixa 'farmacia_logada' disponível em todos os templates."""
+    farmacia_id = session.get("farmacia_id")
+
+    if not farmacia_id:
+        return {"farmacia_logada": None}
+
+    # a logo fica guardada na sessão para não consultar o Firestore a cada página
+    if "farmacia_logo" not in session:
+        try:
+            session["farmacia_logo"] = obter_perfil(farmacia_id).get("logo", "")
+        except Exception:
+            session["farmacia_logo"] = ""
+
+    nome = session.get("farmacia_nome", "")
+
+    return {
+        "farmacia_logada": {
+            "nome": nome,
+            "logo": session.get("farmacia_logo", ""),
+            "inicial": nome[:1].upper(),
+        }
+    }
 
 # ============================================================
 # PÁGINA INICIAL
 # ============================================================
 
+
+def _promocoes_home(produtos, limite=8):
+    """Ofertas com desconto ainda válido, as de maior desconto primeiro.
+
+    De cada produto fica só a melhor oferta em promoção, então o mesmo
+    remédio em duas farmácias não aparece repetido.
+    """
+    agora = datetime.now(timezone.utc)
+    lista = []
+
+    for p in produtos:
+        melhor = None
+
+        for oferta in p.get("precos", []):
+            ate = oferta.get("promocao_ate")
+            original = oferta.get("preco_original") or 0
+
+            if not oferta.get("promocao_ativa") or not ate or original <= 0:
+                continue
+            if ate <= agora:  # o cache pode guardar uma promoção que já acabou
+                continue
+
+            desconto = round((1 - oferta["preco"] / original) * 100)
+            if desconto < 1:
+                continue
+
+            if melhor is None or desconto > melhor["desconto"]:
+                melhor = {
+                    "id": p["id"],
+                    "nome": p["nome"],
+                    "imagem": p.get("imagem", ""),
+                    "farmacia": oferta["farmacia"],
+                    "preco": oferta["preco"],
+                    "preco_original": original,
+                    "desconto": desconto,
+                    "ate": ate,
+                }
+
+        if melhor:
+            lista.append(melhor)
+
+    lista.sort(key=lambda x: (-x["desconto"], x["ate"]))
+    return lista[:limite]
+
+
 @app.route("/")
 def index():
+    todos = todos_produtos_cache()
+
     # Produtos com foto aparecem primeiro; mostra no máximo 10.
-    produtos = sorted(
-        todos_produtos_cache(),
-        key=lambda p: not p.get("imagem"),
-    )
+    produtos = sorted(todos, key=lambda p: not p.get("imagem"))
 
     return render_template(
         "index.html",
         site="poupemais.com",
         produtos_home=produtos[:10],
+        promocoes=_promocoes_home(todos),
+        anuncios=listar_anuncios_home(),
     )
-
 
 # ============================================================
 # LOGIN / PROTEÇÃO DE ROTAS
@@ -147,8 +228,9 @@ def login_obrigatorio(rota):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email", "")
+        email = request.form.get("email", "").strip().lower()
         senha = request.form.get("senha", "")
+        lembrar = bool(request.form.get("lembrar"))
 
         ok, mensagem, farmacia = entrar(email, senha)
 
@@ -156,16 +238,44 @@ def login():
             session.clear()
             session["farmacia_id"] = farmacia["uid"]
             session["farmacia_nome"] = farmacia["nome"]
+            # marcado: fica 30 dias logado; desmarcado: sai ao fechar o navegador
+            session.permanent = lembrar
 
-            return redirect(url_for("painel"))
+            resposta = redirect(url_for("painel"))
+
+            # guarda só o e-mail (nunca a senha) para preencher da próxima vez
+            if lembrar:
+                resposta.set_cookie(
+                    "email_lembrado",
+                    email,
+                    max_age=30 * 24 * 60 * 60,
+                    httponly=True,
+                    samesite="Lax",
+                )
+            else:
+                resposta.delete_cookie("email_lembrado")
+
+            return resposta
 
         return render_template(
             "login/register.html",
             mensagem=mensagem,
             email=email,
+            lembrar=lembrar,
         )
 
-    return render_template("login/register.html")
+    # quem ainda está logado vai direto para o painel
+    if "farmacia_id" in session:
+        return redirect(url_for("painel"))
+
+    # e-mail lembrado de uma visita anterior
+    email_lembrado = request.cookies.get("email_lembrado", "")
+
+    return render_template(
+        "login/register.html",
+        email=email_lembrado,
+        lembrar=bool(email_lembrado),
+    )
 
 
 # ============================================================
@@ -181,6 +291,8 @@ def _contexto_painel(**extra):
         "perfil": obter_perfil(farmacia_id),
         "produtos": listar_produtos(farmacia_id),
         "categorias": CATEGORIAS,
+        "anuncios": listar_anuncios_farmacia(farmacia_id),
+        "anuncios_max": ANUNCIOS_MAX,
         "dados": {},
     }
 
@@ -244,6 +356,7 @@ def painel_perfil():
         )
         if ok:
             session["farmacia_nome"] = request.form.get("nome", "").strip()
+            session.pop("farmacia_logo", None)
             flash(mensagem, "success")
             return redirect(url_for("painel"))
 
@@ -384,6 +497,36 @@ def painel_excluir_produto(produto_id):
 
 
 # ============================================================
+# ANÚNCIOS DO CARROSSEL
+# ============================================================
+
+@app.route("/painel/anuncios", methods=["POST"])
+@login_obrigatorio
+def painel_adicionar_anuncio():
+    ok, mensagem = adicionar_anuncio(
+        session["farmacia_id"],
+        session["farmacia_nome"],
+        request.form,
+        request.files.get("imagem_arquivo"),
+    )
+
+    flash(mensagem, "success" if ok else "danger")
+    return redirect(url_for("painel"))
+
+
+@app.route("/painel/anuncios/<anuncio_id>/excluir", methods=["POST"])
+@login_obrigatorio
+def painel_excluir_anuncio(anuncio_id):
+    ok, mensagem = excluir_anuncio(
+        session["farmacia_id"],
+        anuncio_id,
+    )
+
+    flash(mensagem, "success" if ok else "danger")
+    return redirect(url_for("painel"))
+
+
+# ============================================================
 # EXCLUIR CONTA
 # ============================================================
 
@@ -393,11 +536,12 @@ def painel_excluir_produto(produto_id):
 )
 @login_obrigatorio
 def painel_excluir_conta():
-    ok, mensagem = excluir_farmacia(
-        session["farmacia_id"]
-    )
+    farmacia_id = session["farmacia_id"]
+
+    ok, mensagem = excluir_farmacia(farmacia_id)
 
     if ok:
+        excluir_anuncios_da_farmacia(farmacia_id)
         session.clear()
         flash(mensagem, "success")
         return redirect(url_for("index"))
@@ -574,7 +718,6 @@ def perfil_farmacia(farmacia_id):
 
 # ============================================================
 # BUSCA (produtos, farmácias e sintomas)
-# Substitui a função "busca" antiga inteira.
 # Precisa do import:  from sintomas import AVISO_SINTOMAS, achar_categorias
 # ============================================================
 

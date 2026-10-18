@@ -116,6 +116,7 @@
                     id="email"
                     name="email"
                     type="email"
+                    autocomplete="username"
                     value="{{ email or '' }}"
                     placeholder="Digite seu e-mail"
                     required>
@@ -133,6 +134,7 @@
                     id="senha"
                     name="senha"
                     type="password"
+                    autocomplete="current-password"
                     placeholder="Digite sua senha"
                     required>
 
@@ -145,7 +147,10 @@
 
                     <input
                         type="checkbox"
-                        id="lembrar">
+                        id="lembrar"
+                        name="lembrar"
+                        value="1"
+                        {% if lembrar %}checked{% endif %}>
 
                     <label for="lembrar">
                         Lembrar de mim

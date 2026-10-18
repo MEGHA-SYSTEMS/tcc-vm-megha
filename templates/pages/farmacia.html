@@ -118,12 +118,17 @@
                         Ver catálogo
                     </a>
 
-                    <a
-                        href="{{ url_for('login') }}"
-                        class="btn btn-primary btn-cadastro"
-                    >
-                        Login
-                    </a>
+                    {% if farmacia_logada %}
+
+    {% include '_perfil_nav.html' %}
+
+{% else %}
+
+    <a href="{{ url_for('login') }}" class="btn btn-primary btn-cadastro">
+        Login
+    </a>
+
+{% endif %}
 
                 </div>
             </div>

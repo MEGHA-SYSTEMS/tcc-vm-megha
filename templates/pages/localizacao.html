@@ -90,18 +90,23 @@
              id="navbarNav">
 
 
-            <div class="d-flex align-items-center gap-4">
+            <div class="d-flex align-items-center gap-3">
 
+                {% if farmacia_logada %}
 
-                <a href="{{ url_for('login') }}"
-                   class="btn btn-primary btn-cadastro">
+                {% include '_perfil_nav.html' %}
 
+                {% else %}
 
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
                     É farmácia? Cadastre-se aqui
-
-
                 </a>
 
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+                    Login
+                </a>
+
+                {% endif %}
 
             </div>
 

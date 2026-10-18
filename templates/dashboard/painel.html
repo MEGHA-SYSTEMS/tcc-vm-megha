@@ -509,6 +509,167 @@
 
     </div>
 
+    <!-- ====================================================================
+     COLE ESTE BLOCO no painel.html, logo ANTES da linha:
+     <!-- ================= EXCLUIR CONTA ================= -->
+
+
+    <!-- ================= ANÚNCIOS DO CARROSSEL ================= -->
+
+    {% set ns = namespace(ativos=0) %}
+    {% for a in anuncios %}
+      {% if a.situacao in ['pendente', 'no_ar'] %}
+        {% set ns.ativos = ns.ativos + 1 %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="mt-4">
+      <div class="painel-card">
+
+        <h2 class="painel-titulo">
+          Anúncios do carrossel
+          <span class="contador">{{ ns.ativos }} / {{ anuncios_max }}</span>
+        </h2>
+
+        <p class="text-muted">
+          Os banners aparecem no carrossel da página inicial, depois de aprovados.
+          Use uma imagem na proporção <strong>16:9</strong> (ideal: 1600 × 900 px),
+          em JPG, PNG ou WEBP, de até 5 MB. Não coloque setas nem botões na imagem:
+          o banner inteiro já é clicável.
+        </p>
+
+        <div class="row g-4">
+
+          <!-- NOVO ANÚNCIO -->
+
+          <div class="col-lg-5">
+
+            <form
+              method="POST"
+              action="{{ url_for('painel_adicionar_anuncio') }}"
+              enctype="multipart/form-data"
+            >
+
+              <div class="mb-3">
+                <label class="form-label" for="anuncio_imagem">Imagem do banner</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="anuncio_imagem"
+                  name="imagem_arquivo"
+                  accept="image/png, image/jpeg, image/webp"
+                  required
+                >
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="anuncio_validade">Vale até</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="anuncio_validade"
+                  name="valido_ate"
+                  required
+                >
+                <div class="form-text">Horário de Brasília, no máximo 90 dias.</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="anuncio_destino">Ao clicar, levar para</label>
+                <select class="form-select" id="anuncio_destino" name="destino">
+                  <option value="farmacia">Minha página da farmácia</option>
+                  {% for p in produtos %}
+                    <option value="{{ p.id }}">Produto: {{ p.nome }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary btn-cadastro w-100"
+                {% if ns.ativos >= anuncios_max %}disabled{% endif %}
+              >
+                Enviar anúncio
+              </button>
+
+              {% if ns.ativos >= anuncios_max %}
+                <div class="form-text">
+                  Você atingiu o limite de anúncios ativos.
+                </div>
+              {% endif %}
+
+            </form>
+
+          </div>
+
+
+          <!-- SEUS ANÚNCIOS -->
+
+          <div class="col-lg-7">
+
+            {% if anuncios %}
+
+              <div class="lista-produtos">
+
+                {% for a in anuncios %}
+
+                  <div class="item-produto">
+
+                    <img
+                      src="{{ a.imagem }}"
+                      alt="Banner do anúncio"
+                      style="width: 112px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; flex: none;"
+                      onerror="this.style.display='none'"
+                    >
+
+                    <div class="flex-grow-1">
+
+                      {% if a.situacao == 'no_ar' %}
+                        <span class="badge text-bg-success">No ar</span>
+                      {% elif a.situacao == 'pendente' %}
+                        <span class="badge text-bg-warning">Aguardando aprovação</span>
+                      {% elif a.situacao == 'recusado' %}
+                        <span class="badge text-bg-danger">Recusado</span>
+                      {% else %}
+                        <span class="badge text-bg-secondary">Expirado</span>
+                      {% endif %}
+
+                      <div class="small text-muted mt-1">
+                        Vale até {{ a.valido_ate_local.strftime('%d/%m/%Y %H:%M') }}
+                      </div>
+
+                    </div>
+
+                    <form
+                      method="POST"
+                      action="{{ url_for('painel_excluir_anuncio', anuncio_id=a.id) }}"
+                      onsubmit="return confirm('Excluir este anúncio?');"
+                    >
+                      <button type="submit" class="btn btn-outline-danger btn-sm">
+                        Excluir
+                      </button>
+                    </form>
+
+                  </div>
+
+                {% endfor %}
+
+              </div>
+
+            {% else %}
+
+              <p class="vazio">
+                Você ainda não enviou nenhum anúncio.
+              </p>
+
+            {% endif %}
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
 
     <!-- ================= EXCLUIR CONTA ================= -->
 

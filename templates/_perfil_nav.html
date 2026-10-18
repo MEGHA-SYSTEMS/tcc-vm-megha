@@ -1,0 +1,85 @@
+{# Perfil da farmácia logada (logo + nome). Clicar leva ao painel.
+   Use dentro de {% if farmacia_logada %} ... {% endif %}.
+   O CSS vai junto, então não precisa mexer em nenhum arquivo .css. #}
+
+<a href="{{ url_for('painel') }}" class="perfil-nav" title="Ir para o meu painel">
+
+    <span class="perfil-nav-avatar">
+        <span class="perfil-nav-inicial">{{ farmacia_logada.inicial }}</span>
+        {% if farmacia_logada.logo %}
+        <img src="{{ farmacia_logada.logo }}"
+             alt=""
+             onerror="this.style.display='none'">
+        {% endif %}
+    </span>
+
+    <span class="perfil-nav-nome">{{ farmacia_logada.nome }}</span>
+
+</a>
+
+<style>
+    .perfil-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 100%;
+
+        padding: 4px 16px 4px 4px;
+
+        background: #ffffff;
+        border: 1px solid #d9def6;
+        border-radius: 999px;
+
+        color: #1f2235;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+
+        transition: background .2s, box-shadow .2s;
+    }
+
+    .perfil-nav:hover {
+        background: #f1efff;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, .15);
+        color: #1f2235;
+    }
+
+    .perfil-nav-avatar {
+        position: relative;
+        flex: none;
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+        overflow: hidden;
+        background: #eceaff;
+    }
+
+    .perfil-nav-inicial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        color: #4f46e5;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .perfil-nav-avatar img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #ffffff;
+    }
+
+    .perfil-nav-nome {
+        max-width: 170px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>

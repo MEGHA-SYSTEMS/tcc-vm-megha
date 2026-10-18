@@ -1,4 +1,20 @@
 const CIDADE_PADRAO = "Matão, SP";
+const CHAVE_LOCAL = "poupemais_localizacao";
+const VALIDADE_MS = 30 * 60 * 1000; // 30 minutos
+
+function salvarLocalizacao(lat, lng) {
+    try {
+        localStorage.setItem(CHAVE_LOCAL, JSON.stringify({ lat, lng, quando: Date.now() }));
+    } catch (e) { /* navegador bloqueou o armazenamento, segue sem salvar */ }
+}
+
+function localizacaoSalva() {
+    try {
+        const s = JSON.parse(localStorage.getItem(CHAVE_LOCAL));
+        if (s && Date.now() - s.quando < VALIDADE_MS) return s;
+    } catch (e) {}
+    return null;
+}
 
 const map = L.map('map', {
     zoomControl: false,
@@ -118,12 +134,19 @@ async function carregarFarmacias() {
     } else if (farmacias.length) {
         map.fitBounds(farmacias.map(f => [f.lat, f.lng]), { padding: [40, 40], maxZoom: 16 });
     }
+
+    // localização guardada pela página inicial (ou por um clique anterior)
+    const salva = localizacaoSalva();
+    if (salva) {
+        // com ?farmacia=ID o foco continua na farmácia; só marca você no mapa
+        definirOrigem(salva.lat, salva.lng, "Você está aqui", !id);
+    }
 }
 
 
 /* ---------- origem (localização atual ou endereço) ---------- */
 
-function definirOrigem(lat, lng, rotulo) {
+function definirOrigem(lat, lng, rotulo, enquadrar = true) {
     origem = { lat, lng };
 
     if (marcadorOrigem) map.removeLayer(marcadorOrigem);
@@ -136,18 +159,20 @@ function definirOrigem(lat, lng, rotulo) {
 
     renderizarLista();
 
-    // enquadra você + as 3 farmácias mais próximas
-    const proximas = [...farmacias]
-        .sort((a, b) => a.distancia - b.distancia)
-        .slice(0, 3)
-        .map(f => [f.lat, f.lng]);
+    if (enquadrar) {
+        // enquadra você + as 3 farmácias mais próximas
+        const proximas = [...farmacias]
+            .sort((a, b) => a.distancia - b.distancia)
+            .slice(0, 3)
+            .map(f => [f.lat, f.lng]);
 
-    if (proximas.length) {
-        map.fitBounds([[lat, lng], ...proximas], { padding: [40, 40], maxZoom: 16 });
-    } else {
-        map.setView([lat, lng], 16);
+        if (proximas.length) {
+            map.fitBounds([[lat, lng], ...proximas], { padding: [40, 40], maxZoom: 16 });
+        } else {
+            map.setView([lat, lng], 16);
+        }
+        marcadorOrigem.openPopup();
     }
-    marcadorOrigem.openPopup();
 }
 
 document.getElementById("usar-localizacao").addEventListener("click", () => {
@@ -161,6 +186,7 @@ document.getElementById("usar-localizacao").addEventListener("click", () => {
     navigator.geolocation.getCurrentPosition(
         pos => {
             avisar("");
+            salvarLocalizacao(pos.coords.latitude, pos.coords.longitude);
             definirOrigem(pos.coords.latitude, pos.coords.longitude, "Você está aqui");
         },
         err => {

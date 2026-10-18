@@ -28,61 +28,7 @@
 <body>
 
 
-<!-- =====================================
-                NAVBAR
-====================================== -->
-
-<nav class="navbar navbar-expand-lg navbar-poupemais">
-
-    <div class="container-fluid">
-
-        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
-
-            <img src="{{ url_for('static', filename='logo.png') }}"
-                 class="logo-nav"
-                 alt="Logo PoupeMais">
-
-            <span class="ms-2 nome-site">PoupeMais</span>
-
-        </a>
-
-        <!-- A lupa saiu de dentro do link do logo (antes clicar nela voltava ao início) -->
-        <a href="{{ url_for('catalogo') }}" class="ms-3" aria-label="Buscar produtos">
-            <img src="{{ url_for('static', filename='img/Pesquisar.jpeg') }}"
-                 class="icone-nav-img"
-                 alt="Buscar">
-        </a>
-
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Abrir menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-
-            <div class="d-flex align-items-center gap-3">
-
-                <!-- CORREÇÃO: "Cadastre-se" apontava para o login -->
-                <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
-                    É farmácia? Cadastre-se aqui
-                </a>
-
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
-                    Login
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</nav>
+{% include '_navbar_publica.html' %}
 
 
 <main>
@@ -161,32 +107,32 @@
         <div class="cards-equipe">
 
             <div class="membro">
-                <img src="{{ url_for('static', filename='img/gabriel.jpg') }}" alt="Gabriel Possi">
+                <img src="{{ url_for('static', filename='img/gabriel.jpeg') }}" alt="Gabriel Possi">
                 <h5>Gabriel Possi</h5>
                 <span>Arquiteto</span>
             </div>
 
             <div class="membro">
                 <!-- Atenção: o arquivo se chama marcelle.jpg, mas o nome é Manuela -->
-                <img src="{{ url_for('static', filename='img/marcelle.jpg') }}" alt="Manuela Romano">
+                <img src="{{ url_for('static', filename='img/marcelle.jpeg') }}" alt="Manuela Romano">
                 <h5>Manuela Romano</h5>
                 <span>UX/UI</span>
             </div>
 
             <div class="membro">
-                <img src="{{ url_for('static', filename='img/alan.jpg') }}" alt="Alan Barros">
+                <img src="{{ url_for('static', filename='img/alan.jpeg') }}" alt="Alan Barros">
                 <h5>Alan Barros</h5>
                 <span>Data</span>
             </div>
 
             <div class="membro">
-                <img src="{{ url_for('static', filename='img/henri.jpg') }}" alt="Henri Silva">
+                <img src="{{ url_for('static', filename='img/henri.jpeg') }}" alt="Henri Silva">
                 <h5>Henri Silva</h5>
                 <span>Developer</span>
             </div>
 
             <div class="membro">
-                <img src="{{ url_for('static', filename='img/emily.jpg') }}" alt="Emily Pavão">
+                <img src="{{ url_for('static', filename='img/emily.jpeg') }}" alt="Emily Pavão">
                 <h5>Emily Pavão</h5>
                 <span>Documentadora</span>
             </div>

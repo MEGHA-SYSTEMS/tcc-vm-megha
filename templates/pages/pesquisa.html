@@ -13,36 +13,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-poupemais">
-    <div class="container-fluid">
-
-        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo PoupeMais" class="logo-nav">
-            <span class="ms-2 nome-site">PoupeMais</span>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Abrir menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 py-3 py-lg-0">
-
-                <form class="d-flex" action="{{ url_for('pesquisa') }}" method="get" role="search">
-                    <input type="search" name="q" value="{{ q }}" class="form-control"
-                           placeholder="Produto ou sintoma..." minlength="2" required
-                           aria-label="Buscar produtos ou sintomas">
-                    <button class="btn btn-primary btn-cadastro ms-2" type="submit">Buscar</button>
-                </form>
-
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">Login</a>
-            </div>
-        </div>
-
-    </div>
-</nav>
+{% include '_navbar_publica.html' %}
 
 <main class="container pb-5">
 

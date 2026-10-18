@@ -16,6 +16,9 @@
 /* navbar mais compacta que a do catálogo */
 body.painel .logo-nav {
     height: 56px;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
 }
 
 

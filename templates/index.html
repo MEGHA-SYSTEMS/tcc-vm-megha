@@ -88,18 +88,23 @@
 
             <div class="nav-acoes d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 py-3 py-lg-0">
 
+    {% if farmacia_logada %}
 
-                <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
-                    É farmácia? Cadastre-se aqui
-                </a>
+        {% include '_perfil_nav.html' %}
 
+    {% else %}
 
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
-                    Login
-                </a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-cadastro">
+            É farmácia? Cadastre-se aqui
+        </a>
 
+        <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+            Login
+        </a>
 
-            </div>
+    {% endif %}
+
+</div>
 
 
         </div>
@@ -169,23 +174,63 @@
 
 
 
-<!-- ==========================================
-     BANNERS DESLIZANTES
-========================================== -->
+<!-- ================= CARROSSEL DE ANÚNCIOS ================= -->
+{% if anuncios %}
+<section class="container my-4">
+  <div id="carrosselAnuncios" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
+    {% if anuncios|length > 1 %}
+    <div class="carousel-indicators">
+      {% for a in anuncios %}
+        <button
+          type="button"
+          data-bs-target="#carrosselAnuncios"
+          data-bs-slide-to="{{ loop.index0 }}"
+          {% if loop.first %}class="active" aria-current="true"{% endif %}
+          aria-label="Anúncio {{ loop.index }}"
+        ></button>
+      {% endfor %}
+    </div>
+    {% endif %}
 
-<section class="container py-4">
+    <div class="carousel-inner" style="border-radius: 12px; overflow: hidden;">
+      {% for a in anuncios %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
 
+          {% if a.destino == 'produto' and a.produto_slug %}
+            {% set link = url_for('produto', produto_id=a.produto_slug) %}
+          {% else %}
+            {% set link = url_for('perfil_farmacia', farmacia_id=a.farmacia_id) %}
+          {% endif %}
 
-    <div class="scroll-produtos">
-        <img src="{{ url_for('static', filename='img/Produto1.jpg') }}" draggable="false" alt="Produto">
-        <img src="{{ url_for('static', filename='img/Produto2.jpg') }}" draggable="false" alt="Produto">
-        <img src="{{ url_for('static', filename='img/Produto3.jpg') }}" draggable="false" alt="Produto">
-        <img src="{{ url_for('static', filename='img/Produto4.jpeg') }}" draggable="false" alt="Produto">
+          <a href="{{ link }}">
+            <img
+              src="{{ a.imagem }}"
+              alt="Anúncio de {{ a.farmacia_nome }}"
+              class="d-block w-100"
+              style="aspect-ratio: 16 / 9; object-fit: cover;"
+            >
+          </a>
+
+        </div>
+      {% endfor %}
     </div>
 
+    {% if anuncios|length > 1 %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrosselAnuncios" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carrosselAnuncios" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Próximo</span>
+    </button>
+    {% endif %}
 
+  </div>
 </section>
+{% endif %}
+<!-- ================= FIM DO CARROSSEL DE ANÚNCIOS ================= -->
 
 
 
@@ -233,10 +278,13 @@
 
 
 <!-- ==========================================
-     PRODUTOS EM DESTAQUE
+     PRODUTOS EM PROMOÇÃO
+     Vêm do Firestore: só aparecem ofertas com desconto ainda válido.
+     Sem nenhuma promoção, a seção inteira some.
 ========================================== -->
 
 
+{% if promocoes %}
 <section class="container py-5">
 
 
@@ -246,19 +294,33 @@
         <h2 class="titulo-destaque">Cuide do seu bem estar</h2>
 
 
-        <div class="row text-center">
+        <div class="promo-grid">
 
+            {% for p in promocoes %}
+            <a href="{{ url_for('produto', produto_id=p.id) }}" class="promo-card">
 
-            {% for letra in ['A', 'B', 'C', 'D'] %}
-            <div class="col-auto">
-                <a href="{{ url_for('catalogo') }}">
-                    <img src="{{ url_for('static', filename='img/produto' ~ letra ~ '.jpg') }}"
-                         class="produto-card"
-                         alt="Produto em destaque">
-                </a>
-            </div>
+                <span class="promo-selo">{{ p.desconto }}% OFF</span>
+
+                {% if p.imagem %}
+                <img src="{{ p.imagem }}"
+                     class="promo-imagem"
+                     alt="{{ p.nome }}"
+                     loading="lazy">
+                {% else %}
+                <div class="promo-sem-imagem">{{ p.nome[0]|upper }}</div>
+                {% endif %}
+
+                <h3 class="promo-nome" title="{{ p.nome }}">{{ p.nome }}</h3>
+
+                <div class="promo-info">
+                    <small class="promo-antigo">R$ {{ p.preco_original|brl }}</small>
+                    <strong class="promo-novo">R$ {{ p.preco|brl }}</strong>
+                    <span class="promo-farmacia">{{ p.farmacia }}</span>
+                    <span class="promo-prazo">Promoção até {{ p.ate.strftime('%d/%m às %H:%M') }}</span>
+                </div>
+
+            </a>
             {% endfor %}
-
 
         </div>
 
@@ -267,6 +329,7 @@
 
 
 </section>
+{% endif %}
 
 
 
@@ -601,7 +664,8 @@
 
 <!-- ==========================================
      LOCALIZAÇÃO
-     (substitui /static/js/modal.js, que não pude ver)
+     "Permitir" pede a localização aqui mesmo, guarda no navegador e fecha
+     o aviso, sem mudar de página. A tela /localizacao lê o que foi guardado.
 ========================================== -->
 
 
@@ -612,7 +676,9 @@
     var btnPermitir = document.getElementById("permitir");
     var btnNegar = document.getElementById("negar");
     var cardLoc = document.getElementById("card-localizacao");
-    var CHAVE = "poupemais_loc";
+
+    var CHAVE = "poupemais_loc";                  // decisão: permitido / negado
+    var CHAVE_POSICAO = "poupemais_localizacao";  // posição (lida pelo localizacao.js)
 
 
     function lembrar(valor) {
@@ -620,6 +686,12 @@
     }
     function lido() {
         try { return localStorage.getItem(CHAVE); } catch (e) { return null; }
+    }
+    function salvarPosicao(lat, lng) {
+        try {
+            localStorage.setItem(CHAVE_POSICAO,
+                JSON.stringify({ lat: lat, lng: lng, quando: Date.now() }));
+        } catch (e) {}
     }
     function abrir() { modal.hidden = false; }
     function fechar() { modal.hidden = true; }
@@ -643,10 +715,10 @@
         navigator.geolocation.getCurrentPosition(
             function (pos) {
                 lembrar("permitido");
-                window.location.href =
-                    "{{ url_for('localizacao') }}" +
-                    "?lat=" + pos.coords.latitude.toFixed(6) +
-                    "&lng=" + pos.coords.longitude.toFixed(6);
+                salvarPosicao(pos.coords.latitude, pos.coords.longitude);
+                btnPermitir.disabled = false;
+                msg.textContent = "";
+                fechar();   // some o aviso e a pessoa continua na página
             },
             function (err) {
                 btnPermitir.disabled = false;
@@ -692,6 +764,22 @@
     // Pergunta uma única vez, ao entrar no site.
     if (lido() === null) {
         setTimeout(abrir, 800);
+    }
+
+
+    // Quem já permitiu: renova a posição guardada em silêncio (ela vale 30 min).
+    // Só roda se o navegador já estiver com a permissão concedida, para nunca
+    // reabrir o aviso do navegador sem a pessoa ter pedido.
+    if (lido() === "permitido" && "geolocation" in navigator &&
+        window.isSecureContext && navigator.permissions) {
+        navigator.permissions.query({ name: "geolocation" }).then(function (r) {
+            if (r.state !== "granted") return;
+            navigator.geolocation.getCurrentPosition(
+                function (pos) { salvarPosicao(pos.coords.latitude, pos.coords.longitude); },
+                function () {},
+                { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+            );
+        }).catch(function () {});
     }
 })();
 </script>
