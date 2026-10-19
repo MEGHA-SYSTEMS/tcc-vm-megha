@@ -67,6 +67,13 @@
             object-fit: cover;
             display: block;
         }
+        .produto-card {
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .produto-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+        }
     </style>
 </head>
 
@@ -120,15 +127,15 @@
 
                     {% if farmacia_logada %}
 
-    {% include '_perfil_nav.html' %}
+                        {% include '_perfil_nav.html' %}
 
-{% else %}
+                    {% else %}
 
-    <a href="{{ url_for('login') }}" class="btn btn-primary btn-cadastro">
-        Login
-    </a>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-cadastro">
+                            Login
+                        </a>
 
-{% endif %}
+                    {% endif %}
 
                 </div>
             </div>
@@ -300,7 +307,7 @@
 
                         <div class="col-6 col-md-4">
 
-                            <div class="card produto-card h-100">
+                            <div class="card produto-card h-100 position-relative">
 
                                 {% if produto.imagem %}
 
@@ -327,14 +334,18 @@
                                     </span>
 
                                     {% if produto.exige_receita %}
-                                    <span class="badge text-bg-warning align-self-start mb-1">
-                                        Exige receita médica
-                                    </span>
-                                    
+                                        <span class="badge text-bg-warning align-self-start mb-1">
+                                            Exige receita médica
+                                        </span>
                                     {% endif %}
 
                                     <h3>
-                                        {{ produto.nome }}
+                                        <a
+                                            href="{{ url_for('produto', produto_id=produto.id) }}"
+                                            class="stretched-link text-decoration-none text-reset"
+                                        >
+                                            {{ produto.nome }}
+                                        </a>
                                     </h3>
 
                                     {% if produto.principio_ativo %}

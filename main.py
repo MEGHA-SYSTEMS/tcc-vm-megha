@@ -40,6 +40,7 @@ from produtos_service import (
     adicionar_produto,
     editar_produto,
     excluir_produto,
+    gerar_chave,  # NOVO: usado para montar o link do produto na página da farmácia
     listar_produtos,
     obter_produto,
 )
@@ -706,6 +707,13 @@ def perfil_farmacia(farmacia_id):
     produtos = listar_produtos(
         farmacia_id
     )
+
+    # O link do produto usa o mesmo id da página /produto/<id>:
+    # a "chave" do medicamento com hífens no lugar dos espaços.
+    # (o id do documento da farmácia não serve, a página não o encontraria)
+    for p in produtos:
+        chave = p.get("chave") or gerar_chave(p.get("nome", ""))
+        p["id"] = chave.replace(" ", "-")
 
     return render_template(
         "pages/farmacia.html",

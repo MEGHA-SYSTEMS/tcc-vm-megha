@@ -31,12 +31,16 @@ FUSO_BR = timezone(timedelta(hours=-3))
 DESCONTO_MAX = 90  # % máximo permitido
 
 CATEGORIAS = [
-    "Analgésico e Antitérmico", "Anticoagulante", "Auxílio para o Sono",
-    "Controle da Diabetes", "Controle da Pressão Arterial",
-    "Controle da Tireoide", "Controle do Colesterol", "Cuidados Diários",
-    "Cuidados com a Pele", "Cuidados com a Visão", "Diurético",
-    "Prevenção Cardiovascular", "Proteção Gástrica", "Saúde Respiratória",
-    "Saúde das Articulações", "Saúde dos Ossos", "Suplemento Vitamínico",
+    "Analgésico e Antitérmico", "Anti-inflamatórios", "Antialérgicos",
+    "Anticoagulante", "Auxílio para o Sono", "Controle da Diabetes",
+    "Controle da Pressão Arterial", "Controle da Tireoide", 
+    "Controle do Colesterol", "Cuidados com a pele", "Cuidados Diários",
+    "Cuidados infantis", "Cuidados pessoais", "Cuidados com a Pele", 
+    "Cuidados com a Visão", "Diurético", "Equipamentos médicos",
+    "Higiene bucal", "Higiene e proteção", "Higiene pessoal", 
+    "Prevenção Cardiovascular", "Proteção Gástrica", "Proteção solar",  
+    "Saúde digestiva", "Saúde das Articulações", "Saúde dos Ossos", 
+    "Saúde Respiratória", "Suplemento Vitamínico", "Vitaminas", 
     "Outros",
 ]
 
