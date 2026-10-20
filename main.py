@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from functools import wraps
 
 from dotenv import load_dotenv
-from sintomas import AVISO_SINTOMAS, achar_categorias
+from sintomas import AVISO_SINTOMAS, buscar_por_sintoma
 
 load_dotenv()  # lê o .env ANTES de importar os serviços (Cloudinary, Firebase)
 
@@ -776,19 +776,18 @@ def _pesquisar(termo_digitado):
             "url": url_for("perfil_farmacia", farmacia_id=farmacia["uid"]),
         })
 
-    # Sintomas (dor de cabeça, azia, tosse...)
-    categorias_sintoma = achar_categorias(termo)
-    if categorias_sintoma:
+        # Sintomas (dor de cabeça, azia, tosse...)
+    # Só entram produtos sem receita; a busca olha categoria E descrição.
+    candidatos = [p for p in todos_produtos_cache() if not p.get("exige_receita")]
+    produtos_sintoma = buscar_por_sintoma(termo, candidatos)
+
+    if produtos_sintoma:
         ja_listados = {r["id"] for r in resultados if r["tipo"] == "produto"}
-        for p in todos_produtos_cache():
-            if (
-                p.get("categoria") in categorias_sintoma
-                and not p.get("exige_receita")  # remédio com receita não é sugerido
-                and p["id"] not in ja_listados
-            ):
+        for p in produtos_sintoma:
+            if p["id"] not in ja_listados:
                 resultados.append(_item_produto(p))
 
-    return resultados, bool(categorias_sintoma)
+    return resultados, bool(produtos_sintoma)
 
 
 @app.route("/busca")
