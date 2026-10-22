@@ -12,7 +12,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- CSS da página (mesmo do login) -->
+    <!-- CSS da página -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/recovery.css') }}">
@@ -63,7 +63,7 @@
                     É farmácia? Cadastre-se aqui
                 </a>
 
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-login">
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-login">
                     Login
                 </a>
 
@@ -75,23 +75,25 @@
 
 </nav>
 
+{% include '_voltar.html' %}
+
     <!-- ==========================================
      RECUPERAÇÃO DE SENHA
 ========================================== -->
 
-    <main class="login-container">
+    <main class="recovery-container">
 
         <h1>Esqueceu sua senha?</h1>
 
-        <p class="subtitulo">
+        <p class="recovery-subtitulo">
             Digite o e-mail da sua conta, enviaremos um link para
             você redefinir sua senha
         </p>
 
 
-        <div class="card-login card-recovery" id="card-email">
+        <div class="recovery-card" id="card-email">
 
-            <div class="campo">
+            <div class="recovery-campo">
 
                 <label for="email">
                     E-mail
@@ -103,9 +105,9 @@
 
 
             <button
-            type="button"
-            id="btn-enviar-link"
-            class="btn-enviar">
+                type="button"
+                id="btn-enviar-link"
+                class="recovery-btn">
 
                 Enviar link de redefinição
 
@@ -114,148 +116,18 @@
         </div>
 
 
-        <p id="mensagem-status" class="mensagem-status"></p>
+        <p id="mensagem-status" class="recovery-status"></p>
+
+        <a href="{{ url_for('login') }}" class="recovery-voltar">
+            ← Voltar para o login
+        </a>
 
     </main>
 
 
 
-    <!-- ==========================================
-     RODAPÉ
-========================================== -->
+    {% include '_footer.html' %}
 
-    <footer class="footer-poupemais">
-
-        <div class="container">
-
-            <div class="footer-top">
-
-
-                <div class="footer-col">
-
-                    <h3>
-                        Poupemais
-                    </h3>
-
-                    <p>
-                        Preços justos para um cuidado contínuo
-                    </p>
-
-                    <h5>
-                        Nossas redes:
-                    </h5>
-
-                    <div class="redes">
-
-                        <img src="{{ url_for('static', filename='img/twitter.png') }}" alt="Twitter">
-
-                        <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
-
-                        <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
-
-                        <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="LinkedIn">
-
-                    </div>
-
-                </div>
-
-
-                <div class="footer-col">
-
-                    <h6>
-                        Companhia
-                    </h6>
-
-                    <a href="{{ url_for('contato') }}">
-                        Contate-nos
-                    </a>
-
-                    <a href="{{ url_for('team') }}">
-                        Sobre nós
-                    </a>
-
-                    <a href="{{ url_for('termos') }}">
-                        Privacidade e política
-                    </a>
-
-                </div>
-
-
-                <div class="footer-col">
-
-                    <h6>
-                        Perfil
-                    </h6>
-
-                    <a href="#">
-                        Editar endereço
-                    </a>
-
-                </div>
-
-
-                <div class="footer-col">
-
-                    <h6>
-                        Atendimento
-                    </h6>
-
-                    <a href="#">
-                        Tire suas dúvidas
-                    </a>
-
-                    <a href="#">
-                        por Whatsapp
-                    </a>
-
-                    <a href="#">
-                        Central de atendimento
-                    </a>
-
-                </div>
-
-
-                <div class="footer-imagem">
-
-                    <img src="{{ url_for('static', filename='img/idosos.jpg') }}" alt="Idosa">
-
-                </div>
-
-
-            </div>
-
-
-            <hr>
-
-
-            <div class="footer-bottom">
-
-                <div>
-
-                    <h4>
-                        Formas de pagamento
-                    </h4>
-
-                    <p>
-                        Parcele em até 3x sem juros!
-                    </p>
-
-                    <div class="pagamentos">
-                        PIX • VISA • MASTERCARD
-                    </div>
-
-                </div>
-
-
-                <div class="logo-final">
-                    POUPE MAIS
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
 
 
     <!-- Bootstrap JS -->
@@ -290,14 +162,17 @@
 
             if (!emailDigitado) {
                 mensagem.textContent = 'Digite um e-mail válido.';
+                mensagem.className = 'recovery-status erro';
                 return;
             }
 
             mensagem.textContent = 'Enviando...';
+            mensagem.className = 'recovery-status';
 
             firebase.auth().sendPasswordResetEmail(emailDigitado)
                 .then(() => {
                     mensagem.textContent = 'Enviamos um link de redefinição para o seu e-mail. Verifique sua caixa de entrada (e o spam).';
+                    mensagem.className = 'recovery-status sucesso';
                 })
                 .catch((error) => {
                     console.error(error);
@@ -306,22 +181,24 @@
                     // em erros claros de formato.
                     if (error.code === 'auth/invalid-email') {
                         mensagem.textContent = 'Digite um e-mail válido.';
+                        mensagem.className = 'recovery-status erro';
                     } else {
                         mensagem.textContent = 'Se esse e-mail existir, enviamos um link de redefinição.';
+                        mensagem.className = 'recovery-status sucesso';
                     }
                 });
 
         });
 
-    // Por padrão, o link do e-mail abre uma página que o próprio Firebase
-    // hospeda, onde a pessoa já digita a senha nova — não precisa de mais
-    // nada da sua parte. Se quiser que o link abra o SEU nova_senha.html
-    // em vez da página do Firebase, é preciso configurar a "Action URL"
-    // em Authentication > Templates > Redefinição de senha, no Console,
-    // e tratar o "oobCode" da URL na sua página com
-    // firebase.auth().verifyPasswordResetCode(...) e
-    // firebase.auth().confirmPasswordReset(...). Me avisa se quiser isso
-    // que eu te ajudo a montar.
+        // Por padrão, o link do e-mail abre uma página que o próprio Firebase
+        // hospeda, onde a pessoa já digita a senha nova — não precisa de mais
+        // nada da sua parte. Se quiser que o link abra o SEU nova_senha.html
+        // em vez da página do Firebase, é preciso configurar a "Action URL"
+        // em Authentication > Templates > Redefinição de senha, no Console,
+        // e tratar o "oobCode" da URL na sua página com
+        // firebase.auth().verifyPasswordResetCode(...) e
+        // firebase.auth().confirmPasswordReset(...). Me avisa se quiser isso
+        // que eu te ajudo a montar.
 
     </script>
 
